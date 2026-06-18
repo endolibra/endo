@@ -1,0 +1,14 @@
+# macOS
+.DS_Store
+
+# original design exports / handoff (not part of the site)
+ポートフォリオサイト制作の参考資料-handoff.zip
+Yusuke Endo Portfolio.html
+
+# unused large source thumbnails (superseded)
+assets/works/picture.jpg
+assets/works/yunirin.jpg
+assets/works/tenji.jpg
+assets/works/featured.png
+assets/works/shiga.png
+assets/works/opencampus.png

@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>yusuke endo — 遠藤佑亮 / Portfolio</title>
+<meta name="description" content="遠藤佑亮（Yusuke Endo）ポートフォリオ。実写映像制作・グラフィックデザイン・展示デザイン。武蔵野美術大学 卒業、同大学院在籍。">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg:#0A0A0B; --ink:#ECEAE3; --mut:#8C8B84;
+    --orange:#F0531F; --yellow:#F5B814; --red:#E5123F; --turq:#56CBDD; --lav:#B9B6C9;
+    --movie:#1BA0DE; --graphic:#EE4A2D; --picture:#F2B40C; --product:#0A8A4F; --graduate:#BDB9EC;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  body{background:var(--bg);color:var(--ink);font-family:'Zen Kaku Gothic New',sans-serif;overflow-x:hidden;}
+  ::selection{background:var(--turq);color:var(--bg);}
+  a{color:inherit;text-decoration:none;}
+  img{display:block;}
+  [hidden]{display:none !important;}
+  @keyframes pf-cue{0%,100%{transform:translateY(0);opacity:.5}50%{transform:translateY(6px);opacity:1}}
+  /* slowly color-shifting gradient (fills rounded rectangles) */
+  .pf-gradbg{position:absolute;top:0;left:0;height:100%;width:500%;
+    /* very wide soft colours (~2 visible at a time). 5 colours listed TWICE; translate by one
+       identical cycle → seamless one-direction loop. cycle: gold → orange → sunset → dawn blue → turquoise */
+    background:linear-gradient(90deg,
+      #FFC24D,#F2671C,#EF4E5A,#8FB0E6,#3FC8D8,
+      #FFC24D,#F2671C,#EF4E5A,#8FB0E6,#3FC8D8,#FFC24D);
+    animation:pf-grad 48s linear infinite;will-change:transform;}
+  @keyframes pf-grad{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  @media(prefers-reduced-motion:reduce){.pf-gradbg{animation:none}}
+  .pf-link{transition:opacity .4s ease,color .4s ease;}
+  .pf-link:hover{opacity:.55;}
+  /* gallery cards : grayscale -> color on hover */
+  .pf-card{transition:transform .6s cubic-bezier(.16,1,.3,1);}
+  .pf-thumb{transition:transform 1.1s cubic-bezier(.16,1,.3,1),filter .7s ease;filter:grayscale(.92) brightness(.82) contrast(1.02);}
+  .pf-card:hover .pf-thumb{filter:grayscale(0) brightness(1) contrast(1);transform:scale(1.05);}
+  ::-webkit-scrollbar{width:9px;height:9px}
+  ::-webkit-scrollbar-track{background:var(--bg)}
+  ::-webkit-scrollbar-thumb{background:#26262a;border-radius:8px}
+  /* ---- grid system ---- */
+  .wrap{max-width:1480px;margin:0 auto;padding-left:clamp(20px,4vw,56px);padding-right:clamp(20px,4vw,56px);}
+  .g12{display:grid;grid-template-columns:repeat(12,1fr);gap:clamp(12px,1.6vw,24px);}
+  .rule{border-top:1px solid rgba(236,234,227,.18);}
+  .lbl{font-family:'JetBrains Mono';font-size:11px;letter-spacing:.1em;color:var(--mut);}
+  .sechead{align-items:baseline;padding:14px 0 26px;}
+  .sechead .t{grid-column:3 / 11;font-family:'JetBrains Mono';font-size:12px;letter-spacing:.1em;color:var(--ink);}
+  .sechead .n{grid-column:11 / 13;text-align:right;}
+  .sechead .k{grid-column:1 / 3;}
+  /* ---- about page ---- */
+  .ab-jp{font-family:'Zen Kaku Gothic New';font-weight:500;font-size:clamp(16px,1.65vw,23px);line-height:1.95;color:var(--turq);max-width:64ch;}
+  .ab-en{font-family:'Schibsted Grotesk';font-weight:400;font-size:clamp(12.5px,1.1vw,15.5px);line-height:1.9;color:rgba(86,203,221,.82);max-width:66ch;}
+  .ab-social{font-family:'Schibsted Grotesk';font-weight:600;font-size:clamp(15px,1.5vw,20px);color:var(--turq);transition:opacity .35s ease;}
+  .ab-social:hover{opacity:.55;}
+  /* ---- film cuts masonry ---- */
+  .cuts-masonry{column-count:4;column-gap:clamp(10px,1.4vw,18px);}
+  .cuts-masonry figure{margin:0 0 clamp(10px,1.4vw,18px);break-inside:avoid;overflow:hidden;background:#121214;}
+  .cuts-masonry img{width:100%;height:auto;display:block;filter:saturate(.98);}
+  @media(max-width:1100px){.cuts-masonry{column-count:3;}}
+  @media(max-width:600px){.cuts-masonry{column-count:2;}}
+  @media(max-width:760px){
+    .ab-onepanel{grid-template-columns:1fr !important;}
+    .ab-photo2{aspect-ratio:4/3;min-height:0 !important;}
+    .detail-portrait > div:first-child{grid-column:1 / 7 !important;}
+    .detail-portrait > div:last-child{grid-column:1 / 7 !important;}
+  }
+  @media(max-width:760px){
+    .pf-2col{grid-template-columns:1fr !important;}
+    .pf-gallery{grid-template-columns:repeat(2,1fr) !important;}
+    .pf-meta4{grid-template-columns:repeat(2,1fr) !important;}
+    .g12{grid-template-columns:repeat(6,1fr);}
+    .sechead .k{grid-column:1 / 3;}
+    .sechead .t{grid-column:3 / 5;}
+    .sechead .n{grid-column:5 / 7;}
+  }
+</style>
+</head>
+<body>
+<div id="app" style="min-height:100vh;position:relative;">
+
+  <!-- ============ HEADER ============ -->
+  <header id="site-header" style="position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:20px clamp(20px,4vw,56px);background:linear-gradient(to bottom,rgba(10,10,11,.92),rgba(10,10,11,0));">
+    <div data-action="goHome" class="pf-link" style="cursor:pointer;font-family:'Schibsted Grotesk';font-weight:600;font-size:16px;letter-spacing:.01em;color:#fff;text-transform:lowercase;">yusuke endo</div>
+    <div style="display:flex;align-items:center;gap:clamp(16px,2.4vw,30px);font-family:'JetBrains Mono';font-size:11px;letter-spacing:.06em;">
+      <span data-action="goAbout" class="pf-link" style="cursor:pointer;color:#fff;">ABOUT</span>
+      <a href="#contact" class="pf-link" style="color:#fff;">CONTACT</a>
+    </div>
+  </header>
+
+  <!-- ============ HOME ============ -->
+  <main data-when="isHome">
+
+    <!-- HERO : just the color-shifting rectangle + name -->
+    <section class="wrap" style="position:relative;min-height:100vh;display:flex;flex-direction:column;padding-top:clamp(82px,11vh,120px);padding-bottom:clamp(28px,5vh,56px);">
+      <!-- clean gradient rectangle -->
+      <div style="flex:1;display:flex;align-items:center;padding-bottom:clamp(18px,3vh,34px);">
+        <div id="pf-herorect" style="position:relative;width:100%;aspect-ratio:16/9;min-height:300px;border-radius:clamp(20px,2.4vw,34px);overflow:hidden;box-shadow:0 40px 120px -40px rgba(240,83,31,.4);">
+          <div class="pf-gradbg"></div>
+        </div>
+      </div>
+
+      <!-- name -->
+      <div class="g12" style="align-items:flex-end;">
+        <h1 style="grid-column:1 / 9;font-family:'Schibsted Grotesk';font-weight:600;font-size:clamp(30px,4.8vw,62px);line-height:.96;letter-spacing:-.02em;">Yusuke Endo</h1>
+        <div class="lbl" style="grid-column:9 / 13;text-align:right;color:var(--ink);">↓ SELECTED WORKS</div>
+      </div>
+    </section>
+
+    <!-- WORKS : gallery grid (color on hover) -->
+    <section class="wrap" style="padding-top:clamp(30px,5vh,70px);padding-bottom:clamp(80px,12vh,140px);">
+      <div class="g12 sechead rule">
+        <span class="lbl k">( 01 )</span>
+        <span class="t">SELECTED WORKS</span>
+        <span class="lbl n">11</span>
+      </div>
+      <div id="pf-gallery" class="pf-gallery" style="display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(12px,1.6vw,22px);"></div>
+    </section>
+
+  </main>
+
+  <!-- ============ ABOUT (own page) ============ -->
+  <main data-when="isAbout">
+    <section class="wrap" style="min-height:100vh;padding-top:clamp(92px,13vh,140px);padding-bottom:clamp(56px,9vh,110px);">
+      <div class="g12 sechead rule">
+        <span class="lbl k" style="color:var(--turq);">( ABOUT )</span>
+        <span class="t" style="color:var(--turq);">遠藤佑亮 — YUSUKE ENDO</span>
+        <span class="lbl n">2004—</span>
+      </div>
+
+      <!-- ONE rounded panel containing photo + text -->
+      <div class="ab-onepanel" style="border-radius:clamp(16px,1.8vw,28px);overflow:hidden;background:var(--orange);display:grid;grid-template-columns:5fr 7fr;align-items:stretch;">
+        <div class="ab-photo2" style="position:relative;background:#121214;min-height:440px;">
+          <img src="assets/about-portrait.jpg" alt="遠藤佑亮 / Yusuke Endo" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+        </div>
+        <div style="padding:clamp(30px,3.4vw,64px);display:flex;flex-direction:column;">
+          <div class="ab-jp">
+            2004年生まれ。<br>
+            通信制高校、武蔵野美術大学卒業。<br>
+            同大学、大学院に在籍中。<br>
+            実写映像制作、グラフィックデザイン、展示デザインで制作をしています。デザインの前段階にある着眼、発想、構造化を中心に大学院で勉強しています。
+          </div>
+          <div class="ab-en" style="margin-top:clamp(26px,3vw,40px);">
+            Born in 2004. Graduated from a correspondence high school and Musashino Art University. Currently enrolled in the graduate school at the same university. I work across live-action video production, graphic design, and exhibition design — focusing my graduate studies on the preliminary stages of design: observation, ideation, and structuring.
+          </div>
+          <div style="display:flex;gap:clamp(18px,2.4vw,34px);align-items:baseline;margin-top:auto;padding-top:clamp(34px,4vw,56px);">
+            <a href="https://www.instagram.com/endo_libra/reels/" target="_blank" rel="noopener" class="ab-social" style="text-decoration:underline;text-underline-offset:4px;">Instagram</a>
+            <a href="https://x.com/yaelyola" target="_blank" rel="noopener" class="ab-social">X</a>
+            <a href="mailto:yusukehaotoko@gmail.com" class="ab-social">Email</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ WORK DETAIL ============ -->
+  <main data-when="isWork">
+
+    <!-- STANDING STONE / 木は太陽に向かう (rich) -->
+    <article data-when="isSS">
+      <section style="position:relative;height:100vh;min-height:560px;overflow:hidden;">
+        <img id="pf-sshero" src="assets/ss/cut2.png" alt="" style="position:absolute;inset:0;width:100%;height:114%;object-fit:cover;filter:saturate(.95) brightness(.74);will-change:transform;">
+        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,11,.78),rgba(10,10,11,.15) 50%,rgba(10,10,11,.4));"></div>
+        <div style="position:absolute;left:clamp(20px,4vw,56px);right:clamp(20px,4vw,56px);bottom:clamp(40px,8vh,90px);">
+          <div style="font-family:'JetBrains Mono';font-size:12px;letter-spacing:.12em;color:var(--graduate);margin-bottom:18px;">卒業制作 / GRADUATE WORK · 2026</div>
+          <h1 style="font-family:'Zen Kaku Gothic New';font-weight:700;font-size:clamp(40px,8vw,112px);line-height:1.0;letter-spacing:.02em;">木は太陽に向かう</h1>
+          <p style="font-size:clamp(15px,1.6vw,24px);color:#E3E1DA;margin-top:18px;letter-spacing:.04em;font-family:'Schibsted Grotesk';">Trees grow toward the sun.</p>
+        </div>
+        <div style="position:absolute;left:50%;bottom:22px;transform:translateX(-50%);font-family:'JetBrains Mono';font-size:10px;color:var(--ink);letter-spacing:.1em;animation:pf-cue 2.2s ease-in-out infinite;">SCROLL</div>
+      </section>
+
+      <section style="max-width:1240px;margin:0 auto;padding:clamp(30px,5vh,52px) clamp(20px,4vw,56px);border-bottom:1px solid rgba(236,234,227,.16);">
+        <div class="pf-meta4" style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px;font-family:'JetBrains Mono';font-size:12px;letter-spacing:.03em;">
+          <div><div style="color:var(--mut);margin-bottom:8px;">WORK</div><div>卒業制作 / Graduate Work</div></div>
+          <div><div style="color:var(--mut);margin-bottom:8px;">YEAR</div><div>2026</div></div>
+          <div><div style="color:var(--mut);margin-bottom:8px;">OUTPUT</div><div>映像 · プロダクト · 冊子</div></div>
+          <div><div style="color:var(--mut);margin-bottom:8px;">ROLE</div><div>Direction · Film · Exhibition · Product</div></div>
+        </div>
+      </section>
+
+      <section style="max-width:1240px;margin:0 auto;padding:clamp(70px,12vh,150px) clamp(20px,4vw,56px);">
+        <div class="pf-2col" style="display:grid;grid-template-columns:.5fr 1fr;gap:clamp(24px,4vw,80px);" data-reveal>
+          <div style="font-family:'JetBrains Mono';font-size:11px;letter-spacing:.1em;color:var(--mut);">CONCEPT<br><span style="color:var(--graduate);">失われている感覚を、<br>3つの作品で取り戻す。</span></div>
+          <div>
+            <p style="font-size:clamp(20px,2.4vw,34px);font-weight:500;line-height:1.55;letter-spacing:.01em;">都会暮らしの中で、自然の中で得られる感覚・感性を、どう取り戻すか。</p>
+            <p style="font-size:15px;line-height:2.1;color:#C9C7C0;margin-top:32px;max-width:60ch;">山で体験した「個としての自分が溶けて、全体と同期する一体感」を起点に、映像・プロダクト・冊子の3つのアウトプットによって、失われている感覚の回復を試みた。鎌倉と滋賀での滞在をもとに制作した卒業制作。</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- OUTPUT 01 — FILM -->
+      <section style="max-width:1240px;margin:0 auto;padding:0 clamp(20px,4vw,56px) clamp(60px,10vh,120px);">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid rgba(236,234,227,.16);padding-bottom:14px;margin-bottom:30px;" data-reveal>
+          <span style="font-family:'JetBrains Mono';font-size:11px;letter-spacing:.1em;color:var(--movie);">OUTPUT 01 — 映像 / FILM</span>
+          <span style="font-family:'JetBrains Mono';font-size:11px;color:var(--mut);">7:17</span>
+        </div>
+        <div class="pf-2col" style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,64px);align-items:center;" data-reveal>
+          <div>
+            <h3 style="font-size:clamp(22px,2.6vw,34px);font-weight:500;line-height:1.4;">私たちはどこから来たのか</h3>
+            <p style="font-size:15px;line-height:2.1;color:#C9C7C0;margin-top:22px;max-width:46ch;">自分を生かしているものへ思いを馳せる。私にとって山に入るという行為は、山頂を目指す楽しみだけではなく、命の源泉を辿っていくような感覚を得たいがためのものだ。山の中では、自分の命がどこに繋がっているのかを感覚的に理解できていく。言葉にできない感覚や感情を伝えるために、この映像を制作した。</p>
+            <a href="https://youtu.be/KkI8P-2QbHw" target="_blank" rel="noopener" class="pf-link" style="display:inline-block;margin-top:24px;font-family:'JetBrains Mono';font-size:11px;letter-spacing:.06em;color:var(--movie);">WATCH ON YOUTUBE ↗</a>
+          </div>
+          <div style="display:flex;justify-content:center;">
+            <div style="width:100%;max-width:340px;aspect-ratio:9/16;background:#121214;border:1px solid rgba(236,234,227,.12);overflow:hidden;">
+              <iframe src="https://www.youtube.com/embed/KkI8P-2QbHw" title="私たちはどこから来たのか" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen style="width:100%;height:100%;border:0;"></iframe>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- OUTPUT 02 — PRODUCT -->
+      <section style="max-width:1240px;margin:0 auto;padding:0 clamp(20px,4vw,56px) clamp(60px,10vh,120px);">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid rgba(236,234,227,.16);padding-bottom:14px;margin-bottom:30px;" data-reveal>
+          <span style="font-family:'JetBrains Mono';font-size:11px;letter-spacing:.1em;color:var(--product);">OUTPUT 02 — プロダクト / PRODUCT</span>
+          <span style="font-family:'JetBrains Mono';font-size:11px;color:var(--mut);">Standing Stone</span>
+        </div>
+        <div class="pf-2col" style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,64px);align-items:center;" data-reveal>
+          <figure style="margin:0;"><img src="assets/ss/ss3.jpg" alt="Standing Stone — 香りで日の出を感じる装置" style="width:100%;height:auto;filter:saturate(.96);"></figure>
+          <div>
+            <h3 style="font-size:clamp(22px,2.6vw,34px);font-weight:500;line-height:1.4;">Standing Stone<br><span style="font-size:.62em;color:var(--mut);">香りで日の出を感じる装置</span></h3>
+            <p style="font-size:15px;line-height:2.1;color:#C9C7C0;margin-top:22px;max-width:46ch;">太陽が昇ると、自動で線香に火が灯る装置。朝が来たことを、情報ではなく香りで、身体で受け取ることができる。日の出は人間の都合とは関係なく、毎日少しずつ変わりながらやってくる。普段は想いを馳せなかった太陽に、意識を向けるきっかけをつくる。</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- OUTPUT 03 — PUBLICATION -->
+      <section style="max-width:1240px;margin:0 auto;padding:0 clamp(20px,4vw,56px) clamp(60px,10vh,120px);">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid rgba(236,234,227,.16);padding-bottom:14px;margin-bottom:30px;" data-reveal>
+          <span style="font-family:'JetBrains Mono';font-size:11px;letter-spacing:.1em;color:var(--graduate);">OUTPUT 03 — 冊子 / PUBLICATION</span>
+          <span style="font-family:'JetBrains Mono';font-size:11px;color:var(--mut);">身体と五感を生かす暮らし</span>
+        </div>
+        <div class="pf-2col" style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,64px);align-items:center;" data-reveal>
+          <div>
+            <h3 style="font-size:clamp(22px,2.6vw,34px);font-weight:500;line-height:1.4;">身体と五感を生かす暮らし</h3>
+            <p style="font-size:15px;line-height:2.1;color:#C9C7C0;margin-top:22px;max-width:46ch;">都市生活では、金銭と時間の効率によって多くが解決される。しかし「それだけでは面白くない」と、自ら別の関わり方を選んだ人たちがいる。自然の近くで身体を動かし五感を生かす5人——自然教育家、猟師、サウナ研究者、職人、半農生活者——を訪ねた。彼らの証言は、かつての日本人が「自分の生命がどこにつながっているか」を確かめていた感覚を、現代において取り戻す手がかりとなる。</p>
+          </div>
+          <figure style="margin:0;"><img src="assets/ss/ss1.jpg" alt="冊子 / Publication" style="width:100%;height:auto;filter:saturate(.96);"></figure>
+        </div>
+      </section>
+
+      <section data-reveal>
+        <figure style="margin:0;"><img src="assets/ss/ss6.jpg" alt="" style="width:100%;height:auto;filter:saturate(.96);"><figcaption style="max-width:1240px;margin:10px auto 0;padding:0 clamp(20px,4vw,56px);font-family:'JetBrains Mono';font-size:11px;color:var(--mut);letter-spacing:.03em;">展示風景 / Installation view</figcaption></figure>
+      </section>
+      <section class="pf-2col" style="max-width:1240px;margin:0 auto;padding:clamp(40px,7vh,80px) clamp(20px,4vw,56px) 0;display:grid;grid-template-columns:1fr 1fr;gap:clamp(12px,2vw,28px);" data-reveal>
+        <figure style="margin:0;"><img src="assets/ss/ss8.jpg" alt="" style="width:100%;height:auto;filter:saturate(.96);"><figcaption style="margin-top:10px;font-family:'JetBrains Mono';font-size:11px;color:var(--mut);">会場サイン / Exhibition signage</figcaption></figure>
+        <figure style="margin:0;"><img src="assets/ss/ss7.jpg" alt="" style="width:100%;height:auto;filter:saturate(.96);"><figcaption style="margin-top:10px;font-family:'JetBrains Mono';font-size:11px;color:var(--mut);">展示風景 / Installation view</figcaption></figure>
+      </section>
+      <section style="margin-top:clamp(40px,7vh,80px);" data-reveal>
+        <figure style="margin:0;"><img src="assets/ss/cut3.png" alt="" style="width:100%;height:auto;filter:saturate(.96);"><figcaption style="max-width:1240px;margin:10px auto 0;padding:0 clamp(20px,4vw,56px);font-family:'JetBrains Mono';font-size:11px;color:var(--mut);">映像より / Film still</figcaption></figure>
+      </section>
+
+      <!-- FILM CUTS (masonry) -->
+      <section class="wrap" style="padding-top:clamp(50px,8vh,100px);padding-bottom:clamp(60px,10vh,120px);" data-reveal>
+        <div class="g12 sechead rule">
+          <span class="lbl k" style="color:var(--movie);">CUTS</span>
+          <span class="t">映像より / FILM STILLS</span>
+          <span class="lbl n">30</span>
+        </div>
+        <div class="cuts-masonry" id="ss-cuts"></div>
+      </section>
+
+      <section style="max-width:1240px;margin:0 auto;padding:clamp(60px,10vh,120px) clamp(20px,4vw,56px);border-top:1px solid rgba(236,234,227,.16);margin-top:clamp(40px,7vh,80px);" data-reveal>
+        <div style="font-family:'JetBrains Mono';font-size:11px;letter-spacing:.1em;color:var(--mut);margin-bottom:30px;">CREDITS</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:22px;font-family:'JetBrains Mono';font-size:13px;letter-spacing:.02em;">
+          <div><div style="color:var(--mut);font-size:10px;margin-bottom:6px;">DIRECTION / EDIT</div><div>Yusuke Endo</div></div>
+          <div><div style="color:var(--mut);font-size:10px;margin-bottom:6px;">PHOTOGRAPHY</div><div>Yusuke Endo</div></div>
+          <div><div style="color:var(--mut);font-size:10px;margin-bottom:6px;">EXHIBITION</div><div>Yusuke Endo</div></div>
+          <div><div style="color:var(--mut);font-size:10px;margin-bottom:6px;">PRODUCT</div><div>Yusuke Endo</div></div>
+        </div>
+      </section>
+    </article>
+
+    <!-- GENERIC WORK (built in JS) -->
+    <article data-when="notSS">
+      <div id="pf-cur-body"></div>
+    </article>
+
+    <!-- prev / next -->
+    <section style="border-top:1px solid rgba(236,234,227,.16);max-width:1240px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;">
+      <div data-action="goHome" class="pf-link" style="padding:clamp(30px,5vh,56px) clamp(20px,4vw,56px);cursor:pointer;border-right:1px solid rgba(236,234,227,.16);">
+        <div style="font-family:'JetBrains Mono';font-size:11px;color:var(--mut);letter-spacing:.08em;">← INDEX</div>
+        <div style="font-size:clamp(18px,2vw,26px);font-weight:500;font-family:'Schibsted Grotesk';margin-top:8px;">All Works</div>
+      </div>
+      <div data-action="nextOpen" class="pf-link" style="padding:clamp(30px,5vh,56px) clamp(20px,4vw,56px);cursor:pointer;text-align:right;">
+        <div style="font-family:'JetBrains Mono';font-size:11px;color:var(--mut);letter-spacing:.08em;">NEXT →</div>
+        <div id="pf-next-en" style="font-size:clamp(18px,2vw,26px);font-weight:500;font-family:'Schibsted Grotesk';margin-top:8px;"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer id="contact" data-footer class="wrap" style="border-top:1px solid rgba(236,234,227,.16);padding-top:clamp(60px,11vh,130px);padding-bottom:46px;">
+    <div style="font-family:'JetBrains Mono';font-size:11px;letter-spacing:.1em;color:var(--turq);margin-bottom:30px;">CONTACT</div>
+    <h2 style="font-family:'Schibsted Grotesk';font-weight:500;font-size:clamp(34px,6vw,86px);line-height:1;letter-spacing:-.03em;margin-left:-.04em;">have a<br><span style="color:var(--orange);">nice day.</span></h2>
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:40px;flex-wrap:wrap;margin-top:clamp(36px,6vh,64px);">
+      <div style="display:flex;gap:14px;flex-wrap:wrap;">
+        <a href="https://www.instagram.com/endo_libra/reels/" target="_blank" rel="noopener" class="pf-link" style="border:1px solid rgba(236,234,227,.28);border-radius:40px;padding:12px 22px;font-family:'JetBrains Mono';font-size:12px;letter-spacing:.04em;">Instagram ↗</a>
+        <a href="https://x.com/yaelyola" target="_blank" rel="noopener" class="pf-link" style="border:1px solid rgba(236,234,227,.28);border-radius:40px;padding:12px 22px;font-family:'JetBrains Mono';font-size:12px;letter-spacing:.04em;">X ↗</a>
+        <a href="mailto:yusukehaotoko@gmail.com" class="pf-link" style="border:1px solid rgba(236,234,227,.28);border-radius:40px;padding:12px 22px;font-family:'JetBrains Mono';font-size:12px;letter-spacing:.04em;">Email ↗</a>
+      </div>
+      <div style="font-family:'JetBrains Mono';font-size:11px;color:var(--mut);text-align:right;line-height:1.9;">
+        <div>yusuke endo — 遠藤佑亮</div>
+        <div>© 2026 PORTFOLIO</div>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  var CAT = { GRADUATE:'#BDB9EC', MOVIE:'#1BA0DE', GRAPHIC:'#EE4A2D', PICTURE:'#F2B40C', PRODUCT:'#0A8A4F', TALK:'#9D8DF1' };
+
+  var WORKS = [
+    { id:'standing-stone', no:'01', en:'Trees grow toward the sun', ja:'木は太陽に向かう', cat:'GRADUATE', role:'映像 · プロダクト · 冊子', year:'2026', thumb:'assets/works/graduate-thumb.jpg', images:[] },
+    { id:'yunirin', no:'02', en:'UNIRIN', ja:'UNIRIN', cat:'MOVIE', role:'ディレクション · 撮影 · 編集', year:'2024', thumb:'assets/works/yunirin/thumb.jpg',
+      yt:'zF8fiQ9wXY0',
+      images:['assets/works/yunirin/01.jpg','assets/works/yunirin/02.jpg','assets/works/yunirin/03.jpg','assets/works/yunirin/04.jpg','assets/works/yunirin/05.jpg'],
+      desc:'「市ヶ谷の街を巻き込みたい」という思いから、巨大な一輪車を制作し、街なかを走らせたプロジェクト。新しいコミュニケーションのかたちを、行為そのものから生み出そうとした。クリエイティブイノベーション学科の課題作品。' },
+    { id:'axis', no:'03', en:'AXIS — CONNECT #011', ja:'AXIS CONNECT #011', cat:'MOVIE', role:'撮影 · 編集', year:'2025', thumb:'assets/works/axis/thumb.jpg',
+      images:['assets/works/axis/01.jpg','assets/works/axis/02.jpg'],
+      desc:'AXIS GALLERY のトークセッション「CONNECT #011」の撮影・編集を担当。「デザイナーの活動のあり方を考える──インハウスでありフリーランスデザイナーでもある新世代を迎えて」をテーマにしたセッションの記録映像を制作した。（2025.8.5 / AXIS GALLERY）' },
+    { id:'featured', no:'04', en:'Featured Project — THE CAMPUS', ja:'Featured Project', cat:'MOVIE', role:'撮影 · 編集', year:'2024', thumb:'assets/works/featured-thumb.jpg',
+      yt:'__UsX0oBQNc', ytV:true, layout:'small',
+      images:['assets/works/featured/01.jpg','assets/works/featured/02.jpg','assets/works/featured/03.jpg','assets/works/featured/04.jpg'],
+      desc:'THE CAMPUS を舞台に、人々の営みを映した映像作品。Adobe Stock の Featured Project に採用された。' },
+    { id:'shiga-yogo', no:'05', en:'Nagahama Project / Shiga', ja:'長浜プロジェクト', cat:'MOVIE', role:'ドキュメンタリー · 10:28', year:'2024', thumb:'assets/works/shiga-thumb.jpg',
+      yt:'JNhwOCYcToc',
+      images:['assets/works/shiga-yogo/01.jpg','assets/works/shiga-yogo/02.jpg','assets/works/shiga-yogo/03.jpg','assets/works/shiga-yogo/04.jpg','assets/works/shiga-yogo/05.jpg'],
+      desc:'日本最大の湖・琵琶湖の源流地域である滋賀県余呉町に赴き、水の循環と山での営みを映像で描いた。かつて7つの集落が存在したこの地域は、20年前のダム建設により消滅。しかし今も猟師や林業家、染物家が職業として山に入り、山が変化していく様子を見つめている。ダム計画によって分断・分散された村人の知恵を、映像という形でつなぎ直すことに挑戦した。' },
+    { id:'uni', no:'06', en:'uni* THE SNAP', ja:'uni* THE SNAP', cat:'GRAPHIC', role:'ブランディング · アートディレクション', year:'2024', thumb:'assets/works/uni.png',
+      images:['assets/works/uni/01.png','assets/works/uni/02.png','assets/works/uni/03.png','assets/works/uni/04.png','assets/works/uni/05.png'],
+      desc:'TOKYO CAMERA CLUB のスナップ展「THE SNAP」のためのブランディング。ロゴ・告知ポスター・リーフレット・名刺・アプリ UI までを横断してデザインした。' },
+    { id:'open-campus', no:'07', en:'Open Campus 2024', ja:'OPEN CAMPUS 2024', cat:'GRAPHIC', role:'キービジュアル · ポスター', year:'2024', thumb:'assets/works/opencampus-thumb.png',
+      images:['assets/works/open-campus/01.png','assets/works/open-campus/02.png','assets/works/open-campus/03.png','assets/works/open-campus/04.png'],
+      desc:'武蔵野美術大学 クリエイティブイノベーション学科のオープンキャンパス2024のキービジュアル・ポスターを制作。コンセプトは「作って、壊して、創って」。' },
+    { id:'touch', no:'08', en:'Touch to Travel', ja:'視覚障害者のためのプロダクト', cat:'PRODUCT', role:'ユニバーサルデザイン · 共同制作', year:'2024', thumb:'assets/works/product-blind.jpg',
+      mainPortrait:true, main:'assets/works/touch/main.jpg', layout:'grid2',
+      images:['assets/works/touch/01.jpg','assets/works/touch/02.jpg','assets/works/touch/03.jpg','assets/works/touch/04.jpg'],
+      desc:'視覚障害者へのインタビューから、「旅行へのニーズ」と「普段触れられないものを触れたい」というニーズを把握。都道府県の形をした入浴剤を開発し、提案した。（共同制作：村上信吏）' },
+    { id:'menko', no:'09', en:'menko', ja:'menko', cat:'PRODUCT', role:'プロダクト · グラフィック', year:'2024', thumb:'assets/works/menko.jpg',
+      images:['assets/works/menko/01.jpg','assets/works/menko/02.jpg','assets/works/menko/03.jpg'],
+      desc:'「投げないめんこ」という課題から、面子のデザインの古さを現代に合わせて刷新。モダンなグラフィックを幾何学的に配置しためんこを制作した。' },
+    { id:'macro', no:'10', en:'Ichigaya, Macro', ja:'市ヶ谷 マクロの視点', cat:'PICTURE', role:'写真', year:'2024', thumb:'assets/works/macro/01.jpg',
+      images:['assets/works/macro/01.jpg','assets/works/macro/02.jpg','assets/works/macro/03.jpg','assets/works/macro/04.jpg','assets/works/macro/05.jpg'],
+      desc:'市ヶ谷の街を、マクロレンズで覗いた写真シリーズ。普段は気に留めない物の表面やディテールに目を向けると、見慣れた街が知らない風景に変わっていく。' },
+    { id:'lens', no:'11', en:'lens', ja:'lens', cat:'MOVIE', role:'短編映像 · 編集', year:'2024', thumb:'assets/works/lens.png',
+      video:'assets/works/lens/lens.mp4',
+      images:['assets/works/lens/01.jpg','assets/works/lens/02.jpg','assets/works/lens/03.jpg','assets/works/lens/04.jpg'],
+      desc:'短編映像作品「lens」。撮影・編集を担当した。' }
+  ];
+
+  var state = { route:'home', workId:null };
+  function setState(p){ Object.assign(state,p); render(); }
+  var $=function(s,r){return (r||document).querySelector(s);};
+  var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s));};
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  function open(id){ setState({route:'work',workId:id}); top(); }
+  function goHome(){ setState({route:'home',workId:null}); top(); }
+  function top(){ try{window.scrollTo(0,0);}catch(e){} }
+
+  // ---- gallery (home) ----
+  function buildGallery(){
+    var host=$('#pf-gallery'); if(!host) return;
+    host.innerHTML = WORKS.map(function(w){
+      var cc=CAT[w.cat]||'#BDB9EC';
+      return '<div class="pf-card" data-open="'+esc(w.id)+'" style="cursor:pointer;position:relative;overflow:hidden;background:#121214;aspect-ratio:4/5;">'
+        + '<div class="pf-thumb" style="position:absolute;inset:0;background-image:url(\''+esc(w.thumb)+'\');background-size:cover;background-position:center;"></div>'
+        + '<div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,11,.78),transparent 58%);"></div>'
+        + '<div style="position:absolute;left:14px;right:14px;bottom:13px;display:flex;justify-content:space-between;align-items:flex-end;gap:8px;">'
+          + '<div><div style="font-family:\'JetBrains Mono\';font-size:10px;color:'+cc+';letter-spacing:.07em;">'+esc(w.cat)+'</div>'
+          + '<div style="font-size:17px;font-weight:500;margin-top:3px;line-height:1.2;">'+esc(w.ja)+'</div></div>'
+          + '<span style="font-family:\'JetBrains Mono\';font-size:10px;color:var(--mut);">'+esc(w.year)+'</span>'
+        + '</div></div>';
+    }).join('');
+  }
+
+  // ---- render ----
+  function render(){
+    var isHome=state.route==='home', isWork=state.route==='work';
+    var idx=-1; for(var i=0;i<WORKS.length;i++){ if(WORKS[i].id===state.workId){idx=i;break;} }
+    var cur=idx>=0?WORKS[idx]:null;
+    var next=idx>=0?WORKS[(idx+1)%WORKS.length]:WORKS[1];
+    var isSS=!!(cur&&cur.id==='standing-stone');
+    var flags={ isHome:isHome, isWork:isWork, isAbout:state.route==='about', isSS:isWork&&isSS, notSS:isWork&&!!cur&&!isSS };
+    $$('[data-when]').forEach(function(el){ el.hidden=!flags[el.getAttribute('data-when')]; });
+
+    if(flags.notSS && cur){ $('#pf-cur-body').innerHTML=buildWorkDetail(cur); }
+    if(isWork){ var ne=$('#pf-next-en'); if(ne) ne.textContent=next?next.en:''; }
+    actions.nextOpen=function(){ if(next) open(next.id); };
+
+    reveal();
+  }
+
+  // ---- generic work detail builder ----
+  function imgFig(src,extra){ return '<figure style="margin:0;'+(extra||'')+'"><img src="'+esc(src)+'" alt="" loading="lazy" style="width:100%;height:auto;display:block;filter:saturate(.98);"></figure>'; }
+  function mediaHTML(cur){
+    var h='';
+    if(cur.yt){
+      var ar=cur.ytV?'9 / 16':'16 / 9', mw=cur.ytV?'360px':'940px';
+      h+='<section class="wrap" style="padding-bottom:clamp(44px,7vh,96px);"><div style="display:flex;justify-content:center;"><div style="width:100%;max-width:'+mw+';aspect-ratio:'+ar+';background:#121214;border:1px solid rgba(236,234,227,.12);overflow:hidden;border-radius:6px;"><iframe src="https://www.youtube.com/embed/'+esc(cur.yt)+'" title="'+esc(cur.ja)+'" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen style="width:100%;height:100%;border:0;"></iframe></div></div></section>';
+    }
+    if(cur.video){
+      h+='<section class="wrap" style="padding-bottom:clamp(44px,7vh,96px);"><video src="'+esc(cur.video)+'" controls preload="metadata" playsinline style="display:block;width:100%;max-width:960px;margin:0 auto;border-radius:10px;background:#000;"></video></section>';
+    }
+    return h;
+  }
+  function galleryHTML(imgs,mode){
+    if(!imgs||!imgs.length) return '';
+    if(mode==='small'){
+      return '<section class="wrap" style="padding-bottom:clamp(80px,12vh,140px);"><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:clamp(12px,1.4vw,20px);">'
+        + imgs.map(function(s){return '<figure style="margin:0;position:relative;overflow:hidden;background:#121214;aspect-ratio:16/10;"><img src="'+esc(s)+'" loading="lazy" alt="" style="width:100%;height:100%;object-fit:cover;filter:saturate(.98);"></figure>';}).join('')
+        + '</div></section>';
+    }
+    if(mode==='grid2'){
+      return '<section style="max-width:1100px;margin:0 auto;padding:0 clamp(20px,4vw,56px) clamp(80px,12vh,140px);display:grid;grid-template-columns:1fr 1fr;gap:clamp(12px,2vw,24px);">'
+        + imgs.map(function(s){return imgFig(s);}).join('') + '</section>';
+    }
+    return '<section style="max-width:1100px;margin:0 auto;padding:0 clamp(20px,4vw,56px) clamp(80px,12vh,140px);display:flex;flex-direction:column;gap:clamp(16px,2.6vw,30px);">'
+      + imgs.map(function(s){return imgFig(s);}).join('') + '</section>';
+  }
+  function buildWorkDetail(cur){
+    var cc=CAT[cur.cat]||'#BDB9EC', h='';
+    if(cur.mainPortrait){
+      h+='<section class="wrap" style="padding-top:clamp(96px,13vh,150px);padding-bottom:clamp(44px,7vh,96px);">'
+        +'<div class="g12 detail-portrait" style="align-items:center;row-gap:clamp(26px,4vw,0px);">'
+          +'<div style="grid-column:1 / 6;border-radius:clamp(14px,1.4vw,22px);overflow:hidden;aspect-ratio:3/4;background:#121214;"><img src="'+esc(cur.main)+'" alt="" style="width:100%;height:100%;object-fit:cover;"></div>'
+          +'<div style="grid-column:7 / 13;">'
+            +'<div class="lbl" style="color:'+cc+';margin-bottom:14px;">'+esc(cur.cat)+' · '+esc(cur.year)+'</div>'
+            +'<h1 style="font-family:\'Schibsted Grotesk\';font-weight:600;font-size:clamp(28px,3.6vw,52px);line-height:1.04;letter-spacing:-.02em;">'+esc(cur.en)+'</h1>'
+            +'<p style="font-size:clamp(14px,1.3vw,18px);color:#C9C7C0;margin-top:12px;">'+esc(cur.ja)+' — <span style="color:var(--mut);">'+esc(cur.role)+'</span></p>'
+            +'<p style="font-size:15px;line-height:2.05;color:#C9C7C0;margin-top:26px;max-width:52ch;">'+esc(cur.desc||'')+'</p>'
+          +'</div>'
+        +'</div></section>';
+      return h + mediaHTML(cur) + galleryHTML(cur.images||[], cur.layout||'grid2');
+    }
+    var hero=(cur.images&&cur.images[0])||cur.thumb;
+    h+='<div style="width:100%;height:clamp(360px,72vh,820px);overflow:hidden;background:#121214;"><img src="'+esc(hero)+'" alt="" style="width:100%;height:100%;object-fit:cover;filter:saturate(.98) brightness(.9);"></div>';
+    h+='<section class="wrap" style="padding-top:clamp(40px,7vh,80px);">'
+      +'<div class="g12 sechead rule"><span class="lbl k" style="color:'+cc+';">'+esc(cur.cat)+'</span><span class="t">'+esc(cur.ja)+'</span><span class="lbl n">'+esc(cur.year)+'</span></div>'
+      +'<div class="g12" style="align-items:flex-end;padding-bottom:clamp(8px,2vh,20px);"><h1 style="grid-column:1 / 9;font-family:\'Schibsted Grotesk\';font-weight:600;font-size:clamp(28px,4vw,56px);line-height:1.02;letter-spacing:-.02em;">'+esc(cur.en)+'</h1><div class="lbl n" style="grid-column:9 / 13;">'+esc(cur.role)+'</div></div>'
+      +'</section>';
+    if(cur.desc){ h+='<section class="wrap" style="padding-bottom:clamp(40px,6vh,72px);"><div class="g12"><p style="grid-column:1 / 9;font-size:clamp(15px,1.5vw,18px);line-height:2.05;color:#C9C7C0;">'+esc(cur.desc)+'</p></div></section>'; }
+    h+=mediaHTML(cur);
+    h+=galleryHTML((cur.images||[]).slice(1), cur.layout||'stack');
+    return h;
+  }
+
+  // ---- film cuts (graduate) ----
+  function buildCuts(){
+    var host=document.getElementById('ss-cuts'); if(!host) return;
+    var h=''; for(var i=1;i<=30;i++){ var id=('0'+i).slice(-2); h+='<figure><img src="assets/ss/cuts/'+id+'.jpg" loading="lazy" alt=""></figure>'; }
+    host.innerHTML=h;
+  }
+
+  function goAbout(){ setState({route:'about',workId:null}); top(); }
+  var actions={ goHome:goHome, goAbout:goAbout, nextOpen:function(){} };
+  document.addEventListener('click',function(e){
+    var a=e.target.closest('[data-action]');
+    if(a){ var fn=actions[a.getAttribute('data-action')]; if(fn){ fn(); return; } }
+    var o=e.target.closest('[data-open]');
+    if(o){ open(o.getAttribute('data-open')); }
+  });
+
+  // ---- reveal on scroll ----
+  function reveal(){
+    setTimeout(function(){
+      var els=$$('[data-reveal]:not([data-shown])').filter(function(e){return e.offsetParent!==null;});
+      els.forEach(function(e){ e.style.opacity='0'; e.style.transform='translateY(16px)'; e.style.transition='opacity .9s cubic-bezier(.16,1,.3,1), transform .9s cubic-bezier(.16,1,.3,1)'; });
+      if(!('IntersectionObserver' in window)){ els.forEach(function(e){e.style.opacity='1';e.style.transform='none';e.setAttribute('data-shown','');}); return; }
+      var ob=new IntersectionObserver(function(ents){ ents.forEach(function(en){ if(en.isIntersecting){ en.target.style.opacity='1'; en.target.style.transform='none'; en.target.setAttribute('data-shown',''); ob.unobserve(en.target); } }); },{threshold:0.06});
+      els.forEach(function(e){ ob.observe(e); });
+    },50);
+  }
+
+  // ---- parallax (SS hero) ----
+  (function(){
+    window.addEventListener('scroll',function(){
+      var h=$('#pf-sshero'); if(h){ var y=window.scrollY; if(y<window.innerHeight) h.style.transform='translateY('+(y*0.18)+'px)'; }
+    },{passive:true});
+  })();
+
+  // ---- boot ----
+  buildGallery();
+  buildCuts();
+  render();
+})();
+</script>
+</body>
+</html>
