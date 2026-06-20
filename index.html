@@ -181,7 +181,10 @@
   .wk .yt-facade{border:3px solid var(--wk-line);}
   @media(prefers-reduced-motion:reduce){.wk figure img,.wk-h1 .ch{opacity:1 !important;transform:none !important;filter:none !important;clip-path:none !important;}}
   @media(max-width:760px){
-    .wk .g12 > *{grid-column:1 / 7 !important;}
+    /* keep the desktop 12-col editorial grid on mobile (offset images, 2-up meta, 3-up credits) */
+    .wk .g12{grid-template-columns:repeat(12,1fr) !important;}
+    .wk-h1{font-size:clamp(30px,8.5vw,52px);}
+    .wk-body{font-size:14px;line-height:1.95;}
     .wk-mediacol{order:-1;margin-bottom:22px;}
   }
   /* ---- statement (layered editorial type over the gradient bg) ---- */
