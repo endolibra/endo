@@ -8,7 +8,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Shippori+Mincho:wght@500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
   :root{
@@ -34,8 +34,33 @@
     animation:pf-grad 48s linear infinite;will-change:transform;}
   @keyframes pf-grad{from{transform:translateX(0)}to{transform:translateX(-50%)}}
   @media(prefers-reduced-motion:reduce){.pf-gradbg{animation:none}}
+  /* ---- scroll-reactive page background (toggle with BG_SHIFT in JS; off = plain black) ---- */
+  #bg-shift{position:fixed;inset:0;z-index:-1;pointer-events:none;
+    /* sunrise sky: sky blue → dawn peach → orange, shifting automatically over time */
+    background:linear-gradient(160deg,#46A3DA 0%,#F0A07F 30%,#EC5A2F 50%,#F0A07F 70%,#46A3DA 100%);
+    background-size:100% 220%;
+    animation:bg-move 26s ease-in-out infinite;will-change:background-position;}
+  @keyframes bg-move{0%{background-position:50% 0%}50%{background-position:50% 100%}100%{background-position:50% 0%}}
+  @media(prefers-reduced-motion:reduce){#bg-shift{animation:none}}
   .pf-link{transition:opacity .4s ease,color .4s ease;}
   .pf-link:hover{opacity:.55;}
+  /* youtube click-to-play facade */
+  .yt-facade{position:relative;overflow:hidden;cursor:pointer;background:#0E1A12;}
+  .yt-facade img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+  .yt-facade .yt-play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:70px;height:49px;border-radius:13px;background:rgba(18,18,18,.78);transition:background .3s ease,transform .3s ease;}
+  .yt-facade:hover .yt-play{background:#E0301E;transform:translate(-50%,-50%) scale(1.06);}
+  .yt-facade .yt-play::after{content:"";position:absolute;left:50%;top:50%;transform:translate(-38%,-50%);border-style:solid;border-width:9px 0 9px 15px;border-color:transparent transparent transparent #fff;}
+  /* morphing sparkle logo : home / back-to-top button */
+  .pf-logo{cursor:pointer;width:30px;height:30px;color:#fff;display:inline-flex;align-items:center;justify-content:center;
+    transition:transform .5s cubic-bezier(.16,1,.3,1);outline:none;}
+  .pf-logo svg{width:100%;height:100%;display:block;transform-origin:center;
+    animation:logoSpin 20s linear infinite, logoPulse 5s ease-in-out infinite;}
+  .pf-logo:hover{transform:scale(1.14);}
+  .pf-logo:hover svg{animation-duration:5s,5s;}
+  .pf-logo:active{transform:scale(.92);}
+  @keyframes logoSpin{from{rotate:0deg}to{rotate:360deg}}
+  @keyframes logoPulse{0%,100%{scale:1}50%{scale:.8}}
+  @media(prefers-reduced-motion:reduce){.pf-logo svg{animation:none;}}
   /* gallery cards : grayscale -> color on hover */
   .pf-card{transition:transform .6s cubic-bezier(.16,1,.3,1);}
   .pf-thumb{transition:transform 1.1s cubic-bezier(.16,1,.3,1),filter .7s ease;filter:grayscale(.92) brightness(.82) contrast(1.02);}
@@ -52,22 +77,120 @@
   .sechead .t{grid-column:3 / 11;font-family:'JetBrains Mono';font-size:12px;letter-spacing:.1em;color:var(--ink);}
   .sechead .n{grid-column:11 / 13;text-align:right;}
   .sechead .k{grid-column:1 / 3;}
-  /* ---- about page ---- */
-  .ab-jp{font-family:'Zen Kaku Gothic New';font-weight:500;font-size:clamp(16px,1.65vw,23px);line-height:1.95;color:var(--turq);max-width:64ch;}
-  .ab-en{font-family:'Schibsted Grotesk';font-weight:400;font-size:clamp(12.5px,1.1vw,15.5px);line-height:1.9;color:rgba(86,203,221,.82);max-width:66ch;}
-  .ab-social{font-family:'Schibsted Grotesk';font-weight:600;font-size:clamp(15px,1.5vw,20px);color:var(--turq);transition:opacity .35s ease;}
-  .ab-social:hover{opacity:.55;}
+  /* ---- about page (sky-blue bg, green type) ---- */
+  .about2{background:#8CCAE8;color:#1B7A44;min-height:100vh;}
+  .ab2-h{font-family:'Schibsted Grotesk';font-weight:600;font-size:clamp(28px,3.6vw,50px);letter-spacing:-.01em;line-height:1;color:#178041;}
+  .ab2-sub{font-family:'Schibsted Grotesk';font-weight:600;font-size:clamp(16px,1.5vw,22px);letter-spacing:-.01em;color:#178041;}
+  /* JP primary */
+  .ab2-jp{font-family:'Zen Kaku Gothic New';font-weight:500;font-size:clamp(14px,1.35vw,19px);line-height:2.0;color:#1B7A44;
+    line-break:strict;word-break:normal;overflow-wrap:anywhere;}
+  /* EN secondary */
+  .ab2-en{font-family:'Schibsted Grotesk';font-weight:400;font-size:clamp(12.5px,1.05vw,15px);line-height:1.8;color:rgba(27,122,68,.72);margin-top:clamp(16px,2.4vh,26px);
+    word-break:normal;overflow-wrap:break-word;}
+  .ab2-portrait{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;filter:grayscale(1) contrast(1.03);}
+  .ab2-cap{font-family:'JetBrains Mono';font-size:11px;letter-spacing:.08em;color:#178041;margin-top:10px;text-align:right;}
   /* ---- film cuts masonry ---- */
   .cuts-masonry{column-count:4;column-gap:clamp(10px,1.4vw,18px);}
   .cuts-masonry figure{margin:0 0 clamp(10px,1.4vw,18px);break-inside:avoid;overflow:hidden;background:#121214;}
   .cuts-masonry img{width:100%;height:auto;display:block;filter:saturate(.98);}
   @media(max-width:1100px){.cuts-masonry{column-count:3;}}
   @media(max-width:600px){.cuts-masonry{column-count:2;}}
+  /* ---- work detail : 木は太陽に向かう (sky-blue bg + green type, same as About) ---- */
+  .ss{background:#FFC60A;color:#E8451A;}
+  /* unified font : Zen Kaku Gothic New throughout; strict JP line-breaking */
+  .ss,.ss-lbl,.ss-h1,.ss-sub,.ss-meta,.ss-h3,.ss-lead,.ss-body,.ss-cap{font-family:'Zen Kaku Gothic New',sans-serif;line-break:strict;word-break:normal;overflow-wrap:normal;}
+  .ss-rule{border-top:1px solid rgba(232,69,26,.42);}
+  .ss-lbl{font-size:11px;letter-spacing:.1em;color:#E8451A;line-height:1.7;}
+  .ss-h1{font-weight:700;font-size:clamp(30px,4.8vw,74px);line-height:1.1;letter-spacing:.02em;color:#E8451A;white-space:nowrap;}
+  .ss-sub{font-size:clamp(13px,1.4vw,20px);color:rgba(232,69,26,.74);margin-top:16px;}
+  .ss-meta{font-size:12px;letter-spacing:.02em;color:#E8451A;margin-top:7px;}
+  .ss-h3{font-weight:700;font-size:clamp(22px,2.8vw,40px);line-height:1.35;color:#E8451A;}
+  .ss-lead{font-weight:500;font-size:clamp(19px,2.2vw,31px);line-height:1.6;letter-spacing:.005em;color:#E8451A;}
+  .ss-body{font-size:15px;line-height:2.05;color:#E8451A;}
+  .ss-body b{color:#E8451A;font-weight:600;}
+  .ss-cap{font-size:11px;letter-spacing:.05em;color:#E8451A;margin-top:10px;}
+  .ss-em{color:#E8451A;}
+  .ss figure{margin:0;}
+  .ss figure img{display:block;width:100%;height:auto;}
+  /* film stills : free-form mosaic (breaks the column grid) */
+  .ss-mosaic{display:grid;grid-template-columns:repeat(12,1fr);gap:clamp(8px,1vw,16px);grid-auto-rows:clamp(34px,3.9vw,64px);grid-auto-flow:dense;}
+  /* other SS photos : gentle slow reveal */
+  /* scroll-scrubbed reveals : JS sets opacity/transform/clip per scroll position; short transition smooths */
+  .ss figure img{opacity:0;transform:scale(1.05);clip-path:inset(0 0 14% 0);transition:opacity .18s linear,transform .18s linear,clip-path .18s linear;}
+  .ss-mosaic .c{overflow:hidden;background:#F0B000;will-change:transform;}
+  .ss-mosaic .c img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.98);
+    opacity:0;transform:scale(1.16);clip-path:inset(0 0 100% 0);transition:opacity .2s linear,transform .2s linear,clip-path .2s linear;}
+  .ss-h1{overflow:hidden;}
+  .ss-h1 .ch{display:inline-block;transform:translateY(118%) rotate(3deg);opacity:0;filter:blur(4px);transition:transform .2s linear,opacity .2s linear,filter .2s linear;}
+  .ss-h1 .ch.sp{width:.3em;}
+  @media(prefers-reduced-motion:reduce){.ss figure img,.ss-mosaic .c img,.ss-h1 .ch{opacity:1 !important;transform:none !important;filter:none !important;clip-path:none !important;}}
   @media(max-width:760px){
-    .ab-onepanel{grid-template-columns:1fr !important;}
-    .ab-photo2{aspect-ratio:4/3;min-height:0 !important;}
+    .ss .g12 > *{grid-column:1 / 7 !important;}
+    .ss-mediacol{order:-1;margin-bottom:22px;}
+    .ss-mosaic{grid-template-columns:repeat(6,1fr);grid-auto-rows:clamp(40px,9vw,80px);}
+  }
+  /* ---- generic work detail : category-themed editorial (mirrors .ss) ---- */
+  .wk{background:var(--wk-bg);color:var(--wk-ink);}
+  .wk,.wk-lbl,.wk-sub,.wk-meta,.wk-h3,.wk-lead,.wk-body,.wk-cap{font-family:'Zen Kaku Gothic New',sans-serif;line-break:strict;word-break:normal;overflow-wrap:normal;}
+  .wk-rule{border-top:1px solid var(--wk-line);}
+  .wk-lbl{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;color:var(--wk-ink2);line-height:1.7;}
+  .wk-h1{font-family:'Schibsted Grotesk',sans-serif;font-weight:600;font-size:clamp(32px,5.6vw,86px);line-height:1.0;letter-spacing:-.022em;color:var(--wk-ink);overflow:hidden;}
+  .wk-sub{font-size:clamp(13px,1.4vw,20px);color:var(--wk-ink2);margin-top:14px;}
+  .wk-meta{font-size:13px;letter-spacing:.01em;color:var(--wk-ink);margin-top:7px;line-height:1.7;}
+  .wk-h3{font-weight:700;font-size:clamp(22px,2.8vw,40px);line-height:1.35;color:var(--wk-ink);}
+  .wk-lead{font-weight:500;font-size:clamp(19px,2.2vw,31px);line-height:1.62;letter-spacing:.005em;color:var(--wk-ink);}
+  .wk-body{font-size:15px;line-height:2.05;color:var(--wk-ink);}
+  .wk-cap{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.05em;color:var(--wk-ink2);margin-top:10px;}
+  .wk-btn{display:inline-block;border:1px solid var(--wk-line);border-radius:40px;padding:13px 26px;font-family:'JetBrains Mono';font-size:12px;letter-spacing:.05em;color:var(--wk-ink);text-decoration:none;transition:background .25s,color .25s;}
+  .wk-btn:hover{background:var(--wk-ink);color:var(--wk-bg);}
+  .wk-btn-lg{border-width:2px;padding:18px 34px;border-radius:48px;font-size:14px;font-weight:600;}
+  .wk-btn-solid{transition:filter .25s;}
+  .wk-btn-solid:hover{filter:brightness(.9);}
+  /* highlight : per-line white bars */
+  .wk-markwrap{display:inline-block;max-width:100%;}
+  .wk-mark{color:#141414;-webkit-box-decoration-break:clone;box-decoration-break:clone;padding:.18em .3em;line-height:2.6;font-weight:500;background:#fff;}
+  /* text reveal : same feel as the home ( STATEMENT ) — rise + fade + slight blur, once on enter */
+  .wk-rise{opacity:0;transform:translateY(28px);filter:blur(7px);
+    transition:opacity 1.05s cubic-bezier(.16,1,.3,1),transform 1.05s cubic-bezier(.16,1,.3,1),filter 1s ease;}
+  .wk-rise.is-in{opacity:1;transform:none;filter:none;}
+  @media(prefers-reduced-motion:reduce){.wk-rise{opacity:1 !important;transform:none !important;filter:none !important;transition:none !important;}}
+  .wk figure{margin:0;}
+  .wk figure img{display:block;width:100%;height:auto;background:var(--wk-panel);
+    opacity:0;transform:scale(1.05);clip-path:inset(0 0 14% 0);filter:blur(7px);transition:opacity .55s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1),clip-path .8s cubic-bezier(.16,1,.3,1),filter .6s ease;}
+  .wk-h1 .ch{display:inline-block;transform:translateY(118%);opacity:0;transition:transform .55s cubic-bezier(.16,1,.3,1),opacity .55s ease;}
+  .wk-h1 .ch.sp{width:.28em;}
+  .wk .yt-facade{border:3px solid var(--wk-line);}
+  @media(prefers-reduced-motion:reduce){.wk figure img,.wk-h1 .ch{opacity:1 !important;transform:none !important;filter:none !important;clip-path:none !important;}}
+  @media(max-width:760px){
+    .wk .g12 > *{grid-column:1 / 7 !important;}
+    .wk-mediacol{order:-1;margin-bottom:22px;}
+  }
+  /* ---- statement (layered editorial type over the gradient bg) ---- */
+  .stmt{padding:clamp(120px,26vh,300px) 0;overflow:hidden;}
+  .stmt-big .ln{display:block;font-family:'Zen Kaku Gothic New',sans-serif;font-weight:500;
+    font-size:clamp(15px,1.7vw,23px);line-height:1.55;letter-spacing:.01em;color:#15140E;
+    overflow:hidden;margin:.34em 0;}
+  .stmt-big .ln-i{display:inline-block;transform:translateY(112%);opacity:.001;
+    transition:transform 1.05s cubic-bezier(.16,1,.3,1),opacity 1.05s ease;}
+  .stmt-on .stmt-big .ln-i{transform:none;opacity:1;}
+  .stmt-small{font-family:'Zen Kaku Gothic New';font-weight:500;font-size:clamp(15px,1.7vw,23px);
+    line-height:2.15;color:#211F16;}
+  .stmt-en{font-family:'Schibsted Grotesk';font-weight:400;font-size:clamp(12px,1.05vw,15px);
+    line-height:1.95;color:rgba(20,18,10,.6);margin-top:clamp(8px,1.2vh,16px);}
+  .stmt-rv{opacity:0;transform:translateY(24px);filter:blur(6px);
+    transition:opacity 1.1s cubic-bezier(.16,1,.3,1),transform 1.1s cubic-bezier(.16,1,.3,1),filter 1.1s ease;}
+  .stmt-on .stmt-rv{opacity:1;transform:none;filter:none;}
+  @media(prefers-reduced-motion:reduce){.stmt-rv,.stmt-big .ln-i{transition:none;transform:none;opacity:1;filter:none;}}
+  .stmt-content{position:relative;z-index:1;}
+  @media(max-width:760px){
+    .about2 .g12 > *{grid-column:1 / 7 !important;}
+    .ab2-portrait{max-width:240px;}
+    .ab2-cap{text-align:left;}
     .detail-portrait > div:first-child{grid-column:1 / 7 !important;}
     .detail-portrait > div:last-child{grid-column:1 / 7 !important;}
+    .stmt-small{grid-column:1 / 7 !important;}
+    .stmt-en{grid-column:1 / 7 !important;}
+    .stmt-big{grid-column:1 / 7 !important;}
   }
   @media(max-width:760px){
     .pf-2col{grid-template-columns:1fr !important;}
@@ -83,10 +206,17 @@
 <body>
 <div id="app" style="min-height:100vh;position:relative;">
 
+  <!-- scroll-reactive background (revert to black: set BG_SHIFT=false in the script) -->
+  <div id="bg-shift"></div>
+
   <!-- ============ HEADER ============ -->
   <header id="site-header" style="position:fixed;top:0;left:0;right:0;z-index:50;padding:20px 0;background:linear-gradient(to bottom,rgba(10,10,11,.92),rgba(10,10,11,0));">
     <div class="wrap" style="display:flex;align-items:center;justify-content:space-between;">
-      <div data-action="goHome" class="pf-link" style="cursor:pointer;font-family:'Schibsted Grotesk';font-weight:600;font-size:16px;letter-spacing:.01em;color:#fff;text-transform:lowercase;">yusuke endo</div>
+      <div data-action="goTop" class="pf-logo" role="button" tabindex="0" aria-label="Home — back to top" title="Home / Back to top">
+        <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
+          <path d="M12,0.4 L13,9.6 L20.2,3.8 L14.4,11 L23.6,12 L14.4,13 L20.2,20.2 L13,14.4 L12,23.6 L11,14.4 L3.8,20.2 L9.6,13 L0.4,12 L9.6,11 L3.8,3.8 L11,9.6 Z"/>
+        </svg>
+      </div>
       <div style="display:flex;align-items:center;gap:clamp(16px,2.4vw,30px);font-family:'JetBrains Mono';font-size:11px;letter-spacing:.06em;">
         <span data-action="goAbout" class="pf-link" style="cursor:pointer;color:#fff;">ABOUT</span>
         <a href="#contact" class="pf-link" style="color:#fff;">CONTACT</a>
@@ -101,8 +231,10 @@
     <section class="wrap" style="position:relative;min-height:100vh;display:flex;flex-direction:column;padding-top:clamp(82px,11vh,120px);padding-bottom:clamp(28px,5vh,56px);">
       <!-- clean gradient rectangle -->
       <div style="flex:1;display:flex;align-items:center;padding-bottom:clamp(18px,3vh,34px);">
-        <div id="pf-herorect" style="position:relative;width:100%;aspect-ratio:16/9;min-height:300px;border-radius:clamp(20px,2.4vw,34px);overflow:hidden;box-shadow:0 40px 120px -40px rgba(240,83,31,.4);">
-          <div class="pf-gradbg"></div>
+        <div id="pf-herorect" style="position:relative;width:100%;aspect-ratio:16/9;min-height:300px;border-radius:clamp(20px,2.4vw,34px);overflow:hidden;box-shadow:0 40px 120px -40px rgba(240,83,31,.4);background:#121214;">
+          <video id="pf-herovid" autoplay muted loop playsinline preload="auto" poster="assets/hero/03-poster.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+            <source src="assets/hero/03.mp4" type="video/mp4">
+          </video>
         </div>
       </div>
 
@@ -113,12 +245,44 @@
       </div>
     </section>
 
+    <!-- ============ STATEMENT (between hero & works) ============ -->
+    <section id="pf-stmt" class="stmt">
+      <div class="wrap" style="position:relative;">
+        <div class="stmt-content">
+        <div class="lbl stmt-rv" style="color:var(--ink);opacity:.75;margin-bottom:clamp(28px,5vh,56px);">( STATEMENT )</div>
+        <!-- metaphor : left-aligned, offset to ~quarter -->
+        <div class="g12 stmt-r1">
+          <div class="stmt-big" style="grid-column:3 / 11;text-align:left;">
+            <span class="ln"><span class="ln-i">巨木の下には、</span></span>
+            <span class="ln"><span class="ln-i" style="transition-delay:.09s;">その木と同じくらい</span></span>
+            <span class="ln"><span class="ln-i" style="transition-delay:.18s;">大きな根っこが、</span></span>
+            <span class="ln"><span class="ln-i" style="transition-delay:.27s;">広がっている。</span></span>
+          </div>
+          <p class="stmt-en stmt-rv" style="grid-column:3 / 11;text-align:left;transition-delay:.42s;">
+            Beneath a great tree spread roots as vast as the tree itself.
+          </p>
+        </div>
+        <!-- aspiration : lower left -->
+        <div class="g12 stmt-r2" style="margin-top:clamp(56px,11vh,140px);">
+          <p class="stmt-small stmt-rv" style="grid-column:5 / 13;transition-delay:.5s;">
+            目に見えていないけれど、大切なものに。<br>
+            日の目を浴びていないけれど、素敵なものに。<br>
+            そういったものに光を当てられるような、そんな人に私はなりたい。
+          </p>
+          <p class="stmt-en stmt-rv" style="grid-column:5 / 12;transition-delay:.62s;">
+            To what is unseen yet precious. To what stays in the shade yet beautiful. I want to be someone who can cast light on such things.
+          </p>
+        </div>
+        </div>
+      </div>
+    </section>
+
     <!-- WORKS : gallery grid (color on hover) -->
     <section class="wrap" style="padding-top:clamp(30px,5vh,70px);padding-bottom:clamp(80px,12vh,140px);">
       <div class="g12 sechead rule">
         <span class="lbl k">( 01 )</span>
         <span class="t">WORKS</span>
-        <span class="lbl n">11</span>
+        <span class="lbl n">12</span>
       </div>
       <div id="pf-gallery" class="pf-gallery" style="display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(12px,1.6vw,22px);"></div>
     </section>
@@ -127,34 +291,50 @@
 
   <!-- ============ ABOUT (own page) ============ -->
   <main data-when="isAbout">
-    <section class="wrap" style="min-height:100vh;padding-top:clamp(92px,13vh,140px);padding-bottom:clamp(56px,9vh,110px);">
-      <div class="g12 sechead rule">
-        <span class="lbl k" style="color:var(--turq);">( ABOUT )</span>
-        <span class="t" style="color:var(--turq);">遠藤佑亮 — YUSUKE ENDO</span>
-        <span class="lbl n">2004—</span>
-      </div>
+    <section class="about2">
+      <div class="wrap" style="padding-top:clamp(96px,14vh,150px);padding-bottom:clamp(70px,12vh,150px);">
 
-      <!-- ONE rounded panel containing photo + text -->
-      <div class="ab-onepanel" style="border-radius:clamp(16px,1.8vw,28px);overflow:hidden;background:var(--orange);display:grid;grid-template-columns:5fr 7fr;align-items:stretch;">
-        <div class="ab-photo2" style="position:relative;background:#121214;min-height:440px;">
-          <img src="assets/about-portrait.jpg" alt="遠藤佑亮 / Yusuke Endo" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
-        </div>
-        <div style="padding:clamp(30px,3.4vw,64px);display:flex;flex-direction:column;">
-          <div class="ab-jp">
-            2004年生まれ。<br>
-            通信制高校、武蔵野美術大学卒業。<br>
-            同大学、大学院に在籍中。<br>
-            実写映像制作、グラフィックデザイン、展示デザインで制作をしています。デザインの前段階にある着眼、発想、構造化を中心に大学院で勉強しています。
+        <!-- intro + portrait -->
+        <div class="g12" style="align-items:start;row-gap:clamp(28px,5vw,40px);">
+          <h2 class="ab2-sub" style="grid-column:1 / 3;">About</h2>
+          <div style="grid-column:3 / 10;">
+            <p class="ab2-jp">
+              デザインの原点であるアーツアンドクラフツ運動に共感し、広義も狭義も関係なくデザインを学びたいと思い、双方が叶う武蔵野美術大学に入学しました。入学後は、独学で映像やグラフィックを学び、在学中からいくつか案件に携わらせていただきました。一貫して「見過ごされているものに着目したい」という軸があり、マイナーなもの、ニッチなもの、個人的なナラティブに着目しデザイン介入に取り組みたいと思っています。特に最近の関心は「自然」にあり、自然との新しい接点を生み出す事業に関心があります。
+            </p>
+            <p class="ab2-en">
+              I resonated with the Arts and Crafts Movement, the foundation of design, and wanted to study design in both its broad and narrow senses. I enrolled at Musashino Art University because it let me pursue both. After enrolling, I taught myself video and graphic design and had the chance to work on several projects while still a student. My guiding principle has always been “to focus on what is overlooked,” and I aim to make design interventions that highlight the obscure, the niche, and personal narratives. Recently my particular interest is in “nature,” and I’m drawn to projects that create new points of connection with it.
+            </p>
           </div>
-          <div class="ab-en" style="margin-top:clamp(26px,3vw,40px);">
-            Born in 2004. Graduated from a correspondence high school and Musashino Art University. Currently enrolled in the graduate school at the same university. I work across live-action video production, graphic design, and exhibition design — focusing my graduate studies on the preliminary stages of design: observation, ideation, and structuring.
-          </div>
-          <div style="display:flex;gap:clamp(18px,2.4vw,34px);align-items:baseline;margin-top:auto;padding-top:clamp(34px,4vw,56px);">
-            <a href="https://www.instagram.com/endo_libra/reels/" target="_blank" rel="noopener" class="ab-social" style="text-decoration:underline;text-underline-offset:4px;">Instagram</a>
-            <a href="https://x.com/yaelyola" target="_blank" rel="noopener" class="ab-social">X</a>
-            <a href="mailto:yusukehaotoko@gmail.com" class="ab-social">Email</a>
+          <div style="grid-column:10 / 13;">
+            <img class="ab2-portrait" src="assets/about-portrait.jpg" alt="遠藤佑亮 / Yusuke Endo">
+            <div class="ab2-cap">⌄ Portrait</div>
           </div>
         </div>
+
+        <!-- profile -->
+        <div class="g12" style="align-items:start;margin-top:clamp(70px,13vh,170px);row-gap:clamp(20px,4vw,32px);">
+          <h3 class="ab2-sub" style="grid-column:1 / 3;">Profile</h3>
+          <div style="grid-column:3 / 11;">
+            <p class="ab2-jp">
+              2004年生まれ。<br>
+              通信制高校、武蔵野美術大学卒業。<br>
+              同大学、大学院に在籍中。<br>
+              実写映像制作、グラフィックデザイン、展示デザインで制作をしています。デザインの前段階にある着眼、発想、構造化を中心に大学院で勉強しています。
+            </p>
+            <p class="ab2-en">
+              Born in 2004.<br>
+              Graduated from a correspondence high school and Musashino Art University.<br>
+              Currently enrolled in the graduate school at the same university.<br>
+              My work spans live-action video production, graphic design, and exhibition design. In graduate school, I focus my studies on the pre-design phases: observation, ideation, and structuring.
+            </p>
+            <div style="display:flex;gap:clamp(18px,2.4vw,34px);align-items:baseline;margin-top:clamp(34px,5vh,56px);">
+              <a href="https://www.instagram.com/endo_libra/reels/" target="_blank" rel="noopener" class="ab2-sub pf-link" style="font-size:clamp(13px,1.1vw,15px);text-decoration:underline;text-underline-offset:4px;">Instagram</a>
+              <a href="https://x.com/yaelyola" target="_blank" rel="noopener" class="ab2-sub pf-link" style="font-size:clamp(13px,1.1vw,15px);">X</a>
+              <a href="mailto:yusukehaotoko@gmail.com" class="ab2-sub pf-link" style="font-size:clamp(13px,1.1vw,15px);">Email</a>
+            </div>
+          </div>
+        </div>
+
       </div>
     </section>
   </main>
@@ -163,115 +343,128 @@
   <main data-when="isWork">
 
     <!-- STANDING STONE / 木は太陽に向かう (rich) -->
-    <article data-when="isSS">
-      <section style="position:relative;height:100vh;min-height:560px;overflow:hidden;">
-        <img id="pf-sshero" src="assets/ss/cut2.jpg" alt="" style="position:absolute;inset:0;width:100%;height:114%;object-fit:cover;filter:saturate(.95) brightness(.74);will-change:transform;">
-        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,11,.78),rgba(10,10,11,.15) 50%,rgba(10,10,11,.4));"></div>
-        <div style="position:absolute;left:clamp(20px,4vw,56px);right:clamp(20px,4vw,56px);bottom:clamp(40px,8vh,90px);">
-          <div style="font-family:'JetBrains Mono';font-size:12px;letter-spacing:.12em;color:var(--graduate);margin-bottom:18px;">卒業制作 / GRADUATE WORK · 2026</div>
-          <h1 style="font-family:'Zen Kaku Gothic New';font-weight:700;font-size:clamp(40px,8vw,112px);line-height:1.0;letter-spacing:.02em;">木は太陽に向かう</h1>
-          <p style="font-size:clamp(15px,1.6vw,24px);color:#E3E1DA;margin-top:18px;letter-spacing:.04em;font-family:'Schibsted Grotesk';">Trees grow toward the sun.</p>
-        </div>
-        <div style="position:absolute;left:50%;bottom:22px;transform:translateX(-50%);font-family:'JetBrains Mono';font-size:10px;color:var(--ink);letter-spacing:.1em;animation:pf-cue 2.2s ease-in-out infinite;">SCROLL</div>
-      </section>
+    <article data-when="isSS" class="ss">
 
-      <section style="max-width:1240px;margin:0 auto;padding:clamp(30px,5vh,52px) clamp(20px,4vw,56px);border-bottom:1px solid rgba(236,234,227,.16);">
-        <div class="pf-meta4" style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px;font-family:'JetBrains Mono';font-size:12px;letter-spacing:.03em;">
-          <div><div style="color:var(--mut);margin-bottom:8px;">WORK</div><div>卒業制作 / Graduate Work</div></div>
-          <div><div style="color:var(--mut);margin-bottom:8px;">YEAR</div><div>2026</div></div>
-          <div><div style="color:var(--mut);margin-bottom:8px;">OUTPUT</div><div>映像 · プロダクト · 冊子</div></div>
-          <div><div style="color:var(--mut);margin-bottom:8px;">ROLE</div><div>Direction · Film · Exhibition · Product</div></div>
-        </div>
-      </section>
-
-      <section style="max-width:1240px;margin:0 auto;padding:clamp(70px,12vh,150px) clamp(20px,4vw,56px);">
-        <div class="pf-2col" style="display:grid;grid-template-columns:.5fr 1fr;gap:clamp(24px,4vw,80px);" data-reveal>
-          <div style="font-family:'JetBrains Mono';font-size:11px;letter-spacing:.1em;color:var(--mut);">CONCEPT<br><span style="color:var(--graduate);">失われている感覚を、<br>3つの作品で取り戻す。</span></div>
-          <div>
-            <p style="font-size:clamp(20px,2.4vw,34px);font-weight:500;line-height:1.55;letter-spacing:.01em;">都会暮らしの中で、自然の中で得られる感覚・感性を、どう取り戻すか。</p>
-            <p style="font-size:15px;line-height:2.1;color:#C9C7C0;margin-top:32px;max-width:60ch;">山で体験した「個としての自分が溶けて、全体と同期する一体感」を起点に、映像・プロダクト・冊子の3つのアウトプットによって、失われている感覚の回復を試みた。鎌倉と滋賀での滞在をもとに制作した卒業制作。</p>
+      <!-- intro : title + meta -->
+      <section class="wrap" style="padding-top:clamp(110px,16vh,190px);padding-bottom:clamp(40px,7vh,84px);">
+        <div class="g12" style="align-items:flex-end;" data-reveal>
+          <div class="ss-lbl" style="grid-column:1 / 5;">卒業制作<br>GRADUATE WORK 2026</div>
+          <div style="grid-column:5 / 13;text-align:right;">
+            <h1 class="ss-h1"><span>木は太陽に向かう</span></h1>
+            <p class="ss-sub">Trees grow toward the sun.</p>
           </div>
+        </div>
+        <div class="g12 ss-rule" style="margin-top:clamp(40px,7vh,80px);padding-top:18px;" data-reveal>
+          <div style="grid-column:1 / 4;"><div class="ss-lbl">WORK</div><div class="ss-meta">卒業制作 / Graduate Work</div></div>
+          <div style="grid-column:4 / 6;"><div class="ss-lbl">YEAR</div><div class="ss-meta">2026</div></div>
+          <div style="grid-column:6 / 9;"><div class="ss-lbl">LOCATION</div><div class="ss-meta">鎌倉・滋賀・大阪・東京・岐阜</div></div>
+          <div style="grid-column:9 / 13;"><div class="ss-lbl">OUTPUT</div><div class="ss-meta">映像 · プロダクト · 冊子</div></div>
+        </div>
+      </section>
+
+      <!-- hero image (parallax) : exhibition view -->
+      <section style="overflow:hidden;" data-reveal>
+        <div style="height:clamp(420px,82vh,900px);overflow:hidden;">
+          <img id="pf-sshero" src="assets/ss/ss6.jpg" alt="" style="width:100%;height:118%;object-fit:cover;will-change:transform;">
+        </div>
+        <div class="wrap"><div class="ss-cap">木は太陽に向かう / 展示風景</div></div>
+      </section>
+
+      <!-- concept -->
+      <section class="wrap" style="padding-top:clamp(80px,14vh,180px);padding-bottom:clamp(50px,9vh,120px);">
+        <div class="g12" style="align-items:start;" data-reveal>
+          <div class="ss-lbl" style="grid-column:1 / 3;">CONCEPT</div>
+          <div style="grid-column:3 / 10;">
+            <p class="ss-lead">都市生活に、<br>自然との新たな接続点を生み出せないか。</p>
+            <p class="ss-body" style="margin-top:clamp(28px,4vh,44px);max-width:54ch;">新しいライフスタイルの探求として取り組んだ卒業制作。<br>山で体験した「個としての自分が溶けて、全体と同期する一体感」を起点に、冊子・プロダクト・映像の3つの作品をつくり、展示を行った。</p>
+          </div>
+          <figure class="ss-mediacol" style="grid-column:10 / 13;">
+            <div style="aspect-ratio:3/4;overflow:hidden;background:#0E2A1A;"><img src="assets/ss/cut3.jpg" alt="" style="width:100%;height:100%;object-fit:cover;"></div>
+            <figcaption class="ss-cap">映像より / Film still</figcaption>
+          </figure>
         </div>
       </section>
 
       <!-- OUTPUT 01 — FILM -->
-      <section style="max-width:1240px;margin:0 auto;padding:0 clamp(20px,4vw,56px) clamp(60px,10vh,120px);">
-        <div style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid rgba(236,234,227,.16);padding-bottom:14px;margin-bottom:30px;" data-reveal>
-          <span style="font-family:'JetBrains Mono';font-size:11px;letter-spacing:.1em;color:var(--movie);">OUTPUT 01 — 映像 / FILM</span>
-          <span style="font-family:'JetBrains Mono';font-size:11px;color:var(--mut);">7:17</span>
+      <section class="wrap" style="padding-bottom:clamp(70px,12vh,150px);">
+        <div class="g12 ss-rule" style="padding-top:18px;align-items:baseline;" data-reveal>
+          <div class="ss-lbl" style="grid-column:1 / 7;">映像 / FILM</div>
+          <div class="ss-lbl" style="grid-column:7 / 13;text-align:right;">7:17</div>
         </div>
-        <div class="pf-2col" style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,64px);align-items:center;" data-reveal>
-          <div>
-            <h3 style="font-size:clamp(22px,2.6vw,34px);font-weight:500;line-height:1.4;">私たちはどこから来たのか</h3>
-            <p style="font-size:15px;line-height:2.1;color:#C9C7C0;margin-top:22px;max-width:46ch;">自分を生かしているものへ思いを馳せる。私にとって山に入るという行為は、山頂を目指す楽しみだけではなく、命の源泉を辿っていくような感覚を得たいがためのものだ。山の中では、自分の命がどこに繋がっているのかを感覚的に理解できていく。言葉にできない感覚や感情を伝えるために、この映像を制作した。</p>
-            <a href="https://youtu.be/KkI8P-2QbHw" target="_blank" rel="noopener" class="pf-link" style="display:inline-block;margin-top:24px;font-family:'JetBrains Mono';font-size:11px;letter-spacing:.06em;color:var(--movie);">WATCH ON YOUTUBE ↗</a>
+        <div class="g12" style="margin-top:clamp(34px,5vh,64px);align-items:center;" data-reveal>
+          <div style="grid-column:1 / 6;">
+            <h3 class="ss-h3" style="white-space:nowrap;">私たちはどこから来たのか</h3>
+            <p class="ss-body" style="margin-top:20px;max-width:40ch;">自分を生かしているものへ思いを馳せる。<br>山登りは、山頂を目指す楽しみだけでなく、命の源泉をたどっていくような感覚や生きている実感を得られるような感覚がある。山に入った時の不思議な感覚、言葉にできない面白さを伝えるために、この映像を制作した。</p>
+            <a href="https://youtu.be/KkI8P-2QbHw" target="_blank" rel="noopener" class="pf-link ss-em" style="display:inline-block;margin-top:24px;font-size:12px;letter-spacing:.06em;">WATCH ON YOUTUBE ↗</a>
           </div>
-          <div style="display:flex;justify-content:center;">
-            <div style="width:100%;max-width:340px;aspect-ratio:9/16;background:#121214;border:1px solid rgba(236,234,227,.12);overflow:hidden;">
-              <iframe src="https://www.youtube.com/embed/KkI8P-2QbHw" title="私たちはどこから来たのか" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen style="width:100%;height:100%;border:0;"></iframe>
+          <div class="ss-mediacol" style="grid-column:6 / 13;">
+            <div class="yt-facade" data-yt="KkI8P-2QbHw" style="width:100%;aspect-ratio:16/9;border-radius:4px;">
+              <img src="https://i.ytimg.com/vi/KkI8P-2QbHw/maxresdefault.jpg" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/KkI8P-2QbHw/hqdefault.jpg'" alt="私たちはどこから来たのか" loading="lazy">
+              <span class="yt-play"></span>
             </div>
           </div>
         </div>
       </section>
 
       <!-- OUTPUT 02 — PRODUCT -->
-      <section style="max-width:1240px;margin:0 auto;padding:0 clamp(20px,4vw,56px) clamp(60px,10vh,120px);">
-        <div style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid rgba(236,234,227,.16);padding-bottom:14px;margin-bottom:30px;" data-reveal>
-          <span style="font-family:'JetBrains Mono';font-size:11px;letter-spacing:.1em;color:var(--product);">OUTPUT 02 — プロダクト / PRODUCT</span>
-          <span style="font-family:'JetBrains Mono';font-size:11px;color:var(--mut);">Standing Stone</span>
+      <section class="wrap" style="padding-bottom:clamp(70px,12vh,150px);">
+        <div class="g12 ss-rule" style="padding-top:18px;align-items:baseline;" data-reveal>
+          <div class="ss-lbl" style="grid-column:1 / 7;">プロダクト / PRODUCT</div>
+          <div class="ss-lbl" style="grid-column:7 / 13;text-align:right;">Standing Stone</div>
         </div>
-        <div class="pf-2col" style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,64px);align-items:center;" data-reveal>
-          <figure style="margin:0;"><img src="assets/ss/ss3.jpg" alt="Standing Stone — 香りで日の出を感じる装置" style="width:100%;height:auto;filter:saturate(.96);"></figure>
-          <div>
-            <h3 style="font-size:clamp(22px,2.6vw,34px);font-weight:500;line-height:1.4;">Standing Stone<br><span style="font-size:.62em;color:var(--mut);">香りで日の出を感じる装置</span></h3>
-            <p style="font-size:15px;line-height:2.1;color:#C9C7C0;margin-top:22px;max-width:46ch;">太陽が昇ると、自動で線香に火が灯る装置。朝が来たことを、情報ではなく香りで、身体で受け取ることができる。日の出は人間の都合とは関係なく、毎日少しずつ変わりながらやってくる。普段は想いを馳せなかった太陽に、意識を向けるきっかけをつくる。</p>
+        <div class="g12" style="margin-top:clamp(34px,5vh,64px);align-items:center;" data-reveal>
+          <figure class="ss-mediacol" style="grid-column:1 / 7;"><img src="assets/ss/ss3.jpg" alt="Standing Stone — 香りで日の出を感じる装置"></figure>
+          <div style="grid-column:8 / 13;">
+            <h3 class="ss-h3">Standing Stone<br><span class="ss-em" style="font-size:.56em;">香りで日の出を感じる装置</span></h3>
+            <p class="ss-body" style="margin-top:20px;max-width:44ch;">日の出の時刻になると、自動で線香に着火する装置。<br>都市生活は、自然の動きに合わせて自分の行動を変えることが少ない。<br>日の出になると香りが漂うこの装置によって、太陽の動きを意識し、自然に合わせた都市のライフスタイルを提案したい。</p>
           </div>
         </div>
       </section>
 
       <!-- OUTPUT 03 — PUBLICATION -->
-      <section style="max-width:1240px;margin:0 auto;padding:0 clamp(20px,4vw,56px) clamp(60px,10vh,120px);">
-        <div style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid rgba(236,234,227,.16);padding-bottom:14px;margin-bottom:30px;" data-reveal>
-          <span style="font-family:'JetBrains Mono';font-size:11px;letter-spacing:.1em;color:var(--graduate);">OUTPUT 03 — 冊子 / PUBLICATION</span>
-          <span style="font-family:'JetBrains Mono';font-size:11px;color:var(--mut);">身体と五感を生かす暮らし</span>
+      <section class="wrap" style="padding-bottom:clamp(80px,13vh,160px);">
+        <div class="g12 ss-rule" style="padding-top:18px;align-items:baseline;" data-reveal>
+          <div class="ss-lbl" style="grid-column:1 / 7;">冊子 / PUBLICATION</div>
+          <div class="ss-lbl" style="grid-column:7 / 13;text-align:right;">身体と五感を生かす暮らし</div>
         </div>
-        <div class="pf-2col" style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,64px);align-items:center;" data-reveal>
-          <div>
-            <h3 style="font-size:clamp(22px,2.6vw,34px);font-weight:500;line-height:1.4;">身体と五感を生かす暮らし</h3>
-            <p style="font-size:15px;line-height:2.1;color:#C9C7C0;margin-top:22px;max-width:46ch;">都市生活では、金銭と時間の効率によって多くが解決される。しかし「それだけでは面白くない」と、自ら別の関わり方を選んだ人たちがいる。自然の近くで身体を動かし五感を生かす5人——自然教育家、猟師、サウナ研究者、職人、半農生活者——を訪ねた。彼らの証言は、かつての日本人が「自分の生命がどこにつながっているか」を確かめていた感覚を、現代において取り戻す手がかりとなる。</p>
+        <div class="g12" style="margin-top:clamp(34px,5vh,64px);align-items:center;" data-reveal>
+          <div style="grid-column:1 / 7;">
+            <h3 class="ss-h3" style="white-space:nowrap;">身体と五感を生かす暮らし<span class="ss-em" style="font-size:.55em;">（冊子）</span></h3>
+            <p class="ss-body" style="margin-top:20px;max-width:42ch;">都市生活では、金銭と時間の効率によって多くが解決される。しかし「それだけでは面白くない」と、自力で作ることや自然の近くに移住した人たちがいる。自然教育家、猟師、サウナ研究者、職人、半農生活者を取材した。彼らの語りは、現代人が失いつつある感覚を取り戻してくれる。</p>
           </div>
-          <figure style="margin:0;"><img src="assets/ss/ss1.jpg" alt="冊子 / Publication" style="width:100%;height:auto;filter:saturate(.96);"></figure>
+          <figure class="ss-mediacol" style="grid-column:7 / 13;"><img src="assets/ss/ss1.jpg" alt="冊子 / Publication"></figure>
         </div>
       </section>
 
-      <section data-reveal>
-        <figure style="margin:0;"><img src="assets/ss/ss6.jpg" alt="" style="width:100%;height:auto;filter:saturate(.96);"><figcaption style="max-width:1240px;margin:10px auto 0;padding:0 clamp(20px,4vw,56px);font-family:'JetBrains Mono';font-size:11px;color:var(--mut);letter-spacing:.03em;">展示風景 / Installation view</figcaption></figure>
+      <!-- exhibition -->
+      <section style="overflow:hidden;" data-reveal>
+        <figure><img src="assets/ss/cut2.jpg" alt=""></figure>
+        <div class="wrap"><div class="ss-cap">映像より / Film still</div></div>
       </section>
-      <section class="pf-2col" style="max-width:1240px;margin:0 auto;padding:clamp(40px,7vh,80px) clamp(20px,4vw,56px) 0;display:grid;grid-template-columns:1fr 1fr;gap:clamp(12px,2vw,28px);" data-reveal>
-        <figure style="margin:0;"><img src="assets/ss/ss8.jpg" alt="" style="width:100%;height:auto;filter:saturate(.96);"><figcaption style="margin-top:10px;font-family:'JetBrains Mono';font-size:11px;color:var(--mut);">会場サイン / Exhibition signage</figcaption></figure>
-        <figure style="margin:0;"><img src="assets/ss/ss7.jpg" alt="" style="width:100%;height:auto;filter:saturate(.96);"><figcaption style="margin-top:10px;font-family:'JetBrains Mono';font-size:11px;color:var(--mut);">展示風景 / Installation view</figcaption></figure>
-      </section>
-      <section style="margin-top:clamp(40px,7vh,80px);" data-reveal>
-        <figure style="margin:0;"><img src="assets/ss/cut3.jpg" alt="" style="width:100%;height:auto;filter:saturate(.96);"><figcaption style="max-width:1240px;margin:10px auto 0;padding:0 clamp(20px,4vw,56px);font-family:'JetBrains Mono';font-size:11px;color:var(--mut);">映像より / Film still</figcaption></figure>
-      </section>
-
-      <!-- FILM CUTS (masonry) -->
-      <section class="wrap" style="padding-top:clamp(50px,8vh,100px);padding-bottom:clamp(60px,10vh,120px);" data-reveal>
-        <div class="g12 sechead rule">
-          <span class="lbl k" style="color:var(--movie);">CUTS</span>
-          <span class="t">映像より / FILM STILLS</span>
-          <span class="lbl n">30</span>
+      <section class="wrap" style="padding-top:clamp(30px,5vh,60px);">
+        <div class="g12" style="row-gap:clamp(20px,3vw,32px);" data-reveal>
+          <figure style="grid-column:1 / 7;"><img src="assets/ss/ss8.jpg" alt=""><figcaption class="ss-cap">会場サイン / Exhibition signage</figcaption></figure>
+          <figure style="grid-column:7 / 13;"><img src="assets/ss/ss7.jpg" alt=""><figcaption class="ss-cap">展示風景 / Installation view</figcaption></figure>
         </div>
-        <div class="cuts-masonry" id="ss-cuts"></div>
+      </section>
+      <!-- film cuts (masonry) -->
+      <section class="wrap" style="padding-top:clamp(60px,10vh,120px);padding-bottom:clamp(60px,10vh,120px);" data-reveal>
+        <div class="g12 ss-rule" style="padding-top:16px;padding-bottom:26px;align-items:baseline;">
+          <div class="ss-lbl" style="grid-column:1 / 3;">CUTS</div>
+          <div class="ss-lbl" style="grid-column:3 / 11;">映像より / FILM STILLS</div>
+          <div class="ss-lbl" style="grid-column:11 / 13;text-align:right;">30</div>
+        </div>
+        <div class="ss-mosaic" id="ss-cuts"></div>
       </section>
 
-      <section style="max-width:1240px;margin:0 auto;padding:clamp(60px,10vh,120px) clamp(20px,4vw,56px);border-top:1px solid rgba(236,234,227,.16);margin-top:clamp(40px,7vh,80px);" data-reveal>
-        <div style="font-family:'JetBrains Mono';font-size:11px;letter-spacing:.1em;color:var(--mut);margin-bottom:30px;">CREDITS</div>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:22px;font-family:'JetBrains Mono';font-size:13px;letter-spacing:.02em;">
-          <div><div style="color:var(--mut);font-size:10px;margin-bottom:6px;">DIRECTION / EDIT</div><div>Yusuke Endo</div></div>
-          <div><div style="color:var(--mut);font-size:10px;margin-bottom:6px;">PHOTOGRAPHY</div><div>Yusuke Endo</div></div>
-          <div><div style="color:var(--mut);font-size:10px;margin-bottom:6px;">EXHIBITION</div><div>Yusuke Endo</div></div>
-          <div><div style="color:var(--mut);font-size:10px;margin-bottom:6px;">PRODUCT</div><div>Yusuke Endo</div></div>
+      <!-- credits -->
+      <section class="wrap ss-rule" style="padding-top:clamp(46px,7vh,70px);padding-bottom:clamp(60px,10vh,120px);" data-reveal>
+        <div class="ss-lbl" style="margin-bottom:30px;">CREDITS</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:22px;">
+          <div><div class="ss-lbl">DIRECTION / EDIT</div><div class="ss-meta">Yusuke Endo</div></div>
+          <div><div class="ss-lbl">PHOTOGRAPHY</div><div class="ss-meta">Yusuke Endo</div></div>
+          <div><div class="ss-lbl">EXHIBITION</div><div class="ss-meta">Yusuke Endo</div></div>
+          <div><div class="ss-lbl">PRODUCT</div><div class="ss-meta">Yusuke Endo</div></div>
         </div>
       </section>
     </article>
@@ -319,42 +512,63 @@
   "use strict";
 
   var CAT = { GRADUATE:'#BDB9EC', MOVIE:'#1BA0DE', GRAPHIC:'#EE4A2D', PICTURE:'#F2B40C', PRODUCT:'#0A8A4F', TALK:'#9D8DF1' };
+  // per-category page theme : bold colored bg + deep tonal ink (legible, like 木は太陽に向かう)
+  var THEME = {
+    GRADUATE:{ bg:'#BDB9EC', ink:'#241D52', panel:'#ABA6E4' },
+    MOVIE:   { bg:'#1A93C9', ink:'#06283C', panel:'#1583B5' },
+    GRAPHIC: { bg:'#E8431F', ink:'#380C03', panel:'#D23B1B' },
+    PICTURE: { bg:'#F2B40C', ink:'#5E3500', panel:'#E0A608' },
+    PRODUCT: { bg:'#0E8A52', ink:'#03301C', panel:'#0B7A48' },
+    TALK:    { bg:'#9D8DF1', ink:'#211846', panel:'#8E7DEC' }
+  };
+  function hexRgba(h,a){ h=String(h).replace('#',''); var r=parseInt(h.substr(0,2),16),g=parseInt(h.substr(2,2),16),b=parseInt(h.substr(4,2),16); return 'rgba('+r+','+g+','+b+','+a+')'; }
 
   var WORKS = [
     { id:'standing-stone', no:'01', en:'Trees grow toward the sun', ja:'木は太陽に向かう', cat:'GRADUATE', role:'映像 · プロダクト · 冊子', year:'2026', thumb:'assets/works/graduate-thumb.jpg', images:[] },
-    { id:'yunirin', no:'02', en:'UNIRIN', ja:'UNIRIN', cat:'MOVIE', role:'ディレクション · 撮影 · 編集', year:'2024', thumb:'assets/works/yunirin/thumb.jpg',
-      yt:'zF8fiQ9wXY0',
+    { id:'yunirin', no:'03', en:'UNIRIN', ja:'UNIRIN', cat:'MOVIE', role:'映像制作', year:'2024', thumb:'assets/works/yunirin/thumb.jpg',
+      motion:'slide', yt:'zF8fiQ9wXY0',
       images:['assets/works/yunirin/01.jpg','assets/works/yunirin/02.jpg','assets/works/yunirin/03.jpg','assets/works/yunirin/04.jpg','assets/works/yunirin/05.jpg'],
-      desc:'「市ヶ谷の街を巻き込みたい」という思いから、巨大な一輪車を制作し、街なかを走らせたプロジェクト。新しいコミュニケーションのかたちを、行為そのものから生み出そうとした。クリエイティブイノベーション学科の課題作品。' },
+      desc:'柚木信寿によるプロジェクト。「市ヶ谷の街を巻き込みたい」という思いから巨大な一輪車を制作し、街なかを走らせた。遠藤は映像制作を担当した。' },
     { id:'axis', no:'03', en:'AXIS — CONNECT #011', ja:'AXIS CONNECT #011', cat:'MOVIE', role:'撮影 · 編集', year:'2025', thumb:'assets/works/axis/thumb.jpg',
-      images:['assets/works/axis/01.jpg','assets/works/axis/02.jpg'],
+      motion:'wipe', descHighlight:true,
+      images:['assets/works/axis/peatix.jpg','assets/works/axis/02.jpg'],
       desc:'AXIS GALLERY のトークセッション「CONNECT #011」の撮影・編集を担当。「デザイナーの活動のあり方を考える──インハウスでありフリーランスデザイナーでもある新世代を迎えて」をテーマにしたセッションの記録映像を制作した。（2025.8.5 / AXIS GALLERY）' },
     { id:'featured', no:'04', en:'Featured Project — THE CAMPUS', ja:'Featured Project', cat:'MOVIE', role:'撮影 · 編集', year:'2024', thumb:'assets/works/featured-thumb.jpg',
-      yt:'__UsX0oBQNc', ytV:true, layout:'small',
+      motion:'zoom', leadSmall:true, yt:'__UsX0oBQNc', ytV:true,
       images:['assets/works/featured/01.jpg','assets/works/featured/02.jpg','assets/works/featured/03.jpg','assets/works/featured/04.jpg'],
       desc:'THE CAMPUS を舞台に、人々の営みを映した映像作品。Adobe Stock の Featured Project に採用された。' },
+    { id:'edible', no:'04b', en:'Edible Tokyo Rally', ja:'Edible Tokyo Rally', cat:'MOVIE', role:'web制作 · 映画カメラマン', year:'2026', thumb:'assets/works/edible/thumb.jpg',
+      theme:{ bg:'#0FA191', ink:'#07332E', panel:'#0C9183' }, motion:'tilt', ctaColor:'#F0531F', descHighlight:true,
+      yt:'wuU1-eGyDu4', ytV:true, web:'https://edible-tokyo-rally.vercel.app/',
+      images:['assets/works/edible/01.jpg','assets/works/edible/02.jpg'],
+      desc:'東京に、食べられる植物を育てている場所がある。都市で緑を育て、実践する人たちが一斉にガーデンを開いた3日間のイベント。会期後はさらに規模を拡大し、実践者たちへの取材を続けている。「なぜ都市で食べられる森をつくっているのか」——その問いへの語りを中心に据えたドキュメント映画。web制作と映画の撮影（カメラマン）を担当した。' },
     { id:'shiga-yogo', no:'05', en:'Nagahama Project / Shiga', ja:'長浜プロジェクト', cat:'MOVIE', role:'ドキュメンタリー · 10:28', year:'2024', thumb:'assets/works/shiga-thumb.jpg',
-      yt:'JNhwOCYcToc',
-      images:['assets/works/shiga-yogo/01.jpg','assets/works/shiga-yogo/02.jpg','assets/works/shiga-yogo/03.jpg','assets/works/shiga-yogo/04.jpg','assets/works/shiga-yogo/05.jpg'],
+      motion:'mask', descHighlight:true, yt:'JNhwOCYcToc',
+      images:['assets/works/shiga-yogo/04.jpg','assets/works/shiga-yogo/02.jpg','assets/works/shiga-yogo/03.jpg','assets/works/shiga-yogo/05.jpg'],
       desc:'日本最大の湖・琵琶湖の源流地域である滋賀県余呉町に赴き、水の循環と山での営みを映像で描いた。かつて7つの集落が存在したこの地域は、20年前のダム建設により消滅。しかし今も猟師や林業家、染物家が職業として山に入り、山が変化していく様子を見つめている。ダム計画によって分断・分散された村人の知恵を、映像という形でつなぎ直すことに挑戦した。' },
     { id:'uni', no:'06', en:'uni* THE SNAP', ja:'uni* THE SNAP', cat:'GRAPHIC', role:'ブランディング · アートディレクション', year:'2024', thumb:'assets/works/uni.png',
+      motion:'flip',
       images:['assets/works/uni/01.png','assets/works/uni/02.jpg','assets/works/uni/03.jpg','assets/works/uni/04.jpg','assets/works/uni/05.png'],
       desc:'TOKYO CAMERA CLUB のスナップ展「THE SNAP」のためのブランディング。ロゴ・告知ポスター・リーフレット・名刺・アプリ UI までを横断してデザインした。' },
-    { id:'open-campus', no:'07', en:'Open Campus 2024', ja:'OPEN CAMPUS 2024', cat:'GRAPHIC', role:'キービジュアル · ポスター', year:'2024', thumb:'assets/works/opencampus-thumb.png',
+    { id:'open-campus', no:'07', en:'Open Campus 2024', ja:'OPEN CAMPUS 2024', cat:'GRAPHIC', role:'ポスター · 共同制作', year:'2024', thumb:'assets/works/opencampus-thumb.png',
+      theme:{ bg:'#EC6BA0', ink:'#3E0F26', panel:'#E25C93' }, spans:[[1,9],[5,13],[5,9]], motion:'slide', descCol:'7 / 13', descLs:'.045em',
       images:['assets/works/open-campus/01.png','assets/works/open-campus/02.jpg','assets/works/open-campus/03.png','assets/works/open-campus/04.png'],
-      desc:'武蔵野美術大学 クリエイティブイノベーション学科のオープンキャンパス2024のキービジュアル・ポスターを制作。コンセプトは「作って、壊して、創って」。' },
-    { id:'touch', no:'08', en:'Touch to Travel', ja:'視覚障害者のためのプロダクト', cat:'PRODUCT', role:'ユニバーサルデザイン · 共同制作', year:'2024', thumb:'assets/works/touch/main.jpg',
-      mainPortrait:true, main:'assets/works/touch/main.jpg', layout:'grid2',
+      desc:'武蔵野美術大学・市ヶ谷キャンパスで行われるオープンキャンパス2024のポスターデザイン。最終候補まで残ったが、惜しくも採用とはならなかった。植物のように人々が交わり合い、真っ黒のビルキャンパスを植物のツルが覆っていく——そんな大学だと捉え、グラフィックに落とし込んだ。植物のモチーフと、市ヶ谷キャンパスをイメージした円のシェイプが連鎖していく様子を描き、メインコンセプト「作って、壊して、創る」を3つのレイヤーに分け、3枚の紙が重なってできているようなビジュアルにした。（共同制作：冨永日向、東條リサ）' },
+    { id:'touch', no:'08', en:'ofuro-tabi', ja:'お風呂で旅する', cat:'PRODUCT', role:'ユニバーサルデザイン · 共同制作', year:'2024', thumb:'assets/works/touch/main.jpg',
+      theme:{ bg:'#0E8A52', ink:'#F4C20D', panel:'#0B7A48' }, motion:'tilt', descHighlight:true,
+      mainPortrait:true, main:'assets/works/touch/main.jpg',
       images:['assets/works/touch/01.jpg','assets/works/touch/02.jpg','assets/works/touch/03.jpg','assets/works/touch/04.jpg'],
-      desc:'視覚障害者へのインタビューから、「旅行へのニーズ」と「普段触れられないものを触れたい」というニーズを把握。都道府県の形をした入浴剤を開発し、提案した。（共同制作：村上信吏）' },
+      desc:'お風呂で使うバスボムの中に、ご当地グッズ／点字シートが入っているプロダクト。第一弾は北海道・登別温泉。この地に伝わる鬼の伝説を点字シートに記し、鬼の金棒を制作——バスボムがお湯に溶けると、中から金棒が現れる体験にした。視覚障害者へのインタビューを重ねる中で、「旅行が好き」「お風呂が好き」、そして旅先では温泉に入り土地の歴史を知ることが楽しみだと分かった。「歴史を知る／温泉に入る」を自宅のお風呂で実現できれば、家のお風呂で旅ができるのではないか。そう考えて制作した。（共同制作：柚木信寿）' },
     { id:'menko', no:'09', en:'menko', ja:'menko', cat:'PRODUCT', role:'プロダクト · グラフィック', year:'2024', thumb:'assets/works/menko.jpg',
+      theme:{ bg:'#12306B', ink:'#DCE6FF', panel:'#1B3C7D' }, motion:'wipe',
       images:['assets/works/menko/01.jpg','assets/works/menko/02.jpg','assets/works/menko/03.jpg'],
-      desc:'「投げないめんこ」という課題から、面子のデザインの古さを現代に合わせて刷新。モダンなグラフィックを幾何学的に配置しためんこを制作した。' },
+      desc:'面子のデザインの古さを現代に合わせて刷新。モダンなグラフィックを幾何学的に配置しためんこを制作した。' },
     { id:'macro', no:'10', en:'Ichigaya, Macro', ja:'市ヶ谷 マクロの視点', cat:'PICTURE', role:'写真', year:'2024', thumb:'assets/works/macro/01.jpg',
+      motion:'mask', descHighlight:true,
       images:['assets/works/macro/01.jpg','assets/works/macro/02.jpg','assets/works/macro/03.jpg','assets/works/macro/04.jpg','assets/works/macro/05.jpg'],
       desc:'市ヶ谷の街を、マクロレンズで覗いた写真シリーズ。普段は気に留めない物の表面やディテールに目を向けると、見慣れた街が知らない風景に変わっていく。' },
     { id:'lens', no:'11', en:'lens', ja:'lens', cat:'MOVIE', role:'短編映像 · 編集', year:'2024', thumb:'assets/works/lens.jpg',
-      video:'assets/works/lens/lens.mp4',
+      motion:'flip', video:'assets/works/lens/lens.mp4',
       images:['assets/works/lens/01.jpg','assets/works/lens/02.jpg','assets/works/lens/03.jpg','assets/works/lens/04.jpg'],
       desc:'短編映像作品「lens」。撮影・編集を担当した。' }
   ];
@@ -364,9 +578,11 @@
   var $=function(s,r){return (r||document).querySelector(s);};
   var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s));};
   function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
-  function open(id){ setState({route:'work',workId:id}); top(); }
-  function goHome(){ setState({route:'home',workId:null}); top(); }
+  var homeScroll=0, ssUpd=null, wkUpd=null;
+  function open(id){ if(state.route==='home') homeScroll=window.scrollY||window.pageYOffset||0; top(); setState({route:'work',workId:id}); }
+  function goHome(){ var y=homeScroll; setState({route:'home',workId:null}); restoreScroll(y); }
   function top(){ try{window.scrollTo(0,0);}catch(e){} }
+  function restoreScroll(y){ try{ requestAnimationFrame(function(){ window.scrollTo(0,y); requestAnimationFrame(function(){ window.scrollTo(0,y); }); }); }catch(e){ window.scrollTo(0,y); } }
 
   // ---- gallery (home) ----
   function buildGallery(){
@@ -394,79 +610,262 @@
     var flags={ isHome:isHome, isWork:isWork, isAbout:state.route==='about', isSS:isWork&&isSS, notSS:isWork&&!!cur&&!isSS };
     $$('[data-when]').forEach(function(el){ el.hidden=!flags[el.getAttribute('data-when')]; });
 
-    if(flags.notSS && cur){ $('#pf-cur-body').innerHTML=buildWorkDetail(cur); }
+    if(flags.notSS && cur){
+      var art=document.querySelector('[data-when="notSS"]');
+      var th=cur.theme||THEME[cur.cat]||THEME.MOVIE;
+      art.className='wk';
+      art.setAttribute('data-motion', cur.motion||'rise');
+      art.style.setProperty('--wk-bg',th.bg);
+      art.style.setProperty('--wk-ink',th.ink);
+      art.style.setProperty('--wk-ink2',hexRgba(th.ink,.6));
+      art.style.setProperty('--wk-line',hexRgba(th.ink,.26));
+      art.style.setProperty('--wk-panel',th.panel);
+      $('#pf-cur-body').innerHTML=buildWorkDetail(cur);
+      wkMotion();
+      wkReveal();
+    } else { wkUpd=null; }
     if(isWork){ var ne=$('#pf-next-en'); if(ne) ne.textContent=next?next.en:''; }
     actions.nextOpen=function(){ if(next) open(next.id); };
 
     reveal();
+    if(flags.isSS && ssUpd){ requestAnimationFrame(ssUpd); setTimeout(ssUpd,120); }
+    if(flags.notSS && wkUpd){ requestAnimationFrame(wkUpd); setTimeout(wkUpd,120); }
   }
 
-  // ---- generic work detail builder ----
-  function imgFig(src,extra){ return '<figure style="margin:0;'+(extra||'')+'"><img src="'+esc(src)+'" alt="" loading="lazy" style="width:100%;height:auto;display:block;filter:saturate(.98);"></figure>'; }
+  // ---- generic work detail builder : category-themed editorial ----
   function mediaHTML(cur){
     var h='';
     if(cur.yt){
-      var ar=cur.ytV?'9 / 16':'16 / 9', mw=cur.ytV?'360px':'940px';
-      h+='<section class="wrap" style="padding-bottom:clamp(44px,7vh,96px);"><div style="display:flex;justify-content:center;"><div style="width:100%;max-width:'+mw+';aspect-ratio:'+ar+';background:#121214;border:1px solid rgba(236,234,227,.12);overflow:hidden;border-radius:6px;"><iframe src="https://www.youtube.com/embed/'+esc(cur.yt)+'" title="'+esc(cur.ja)+'" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen style="width:100%;height:100%;border:0;"></iframe></div></div></section>';
+      var ar=cur.ytV?'9 / 16':'16 / 9', mw=cur.ytV?'360px':'960px', yid=esc(cur.yt);
+      h+='<section class="wrap" style="padding-bottom:clamp(56px,9vh,120px);"><div style="display:flex;justify-content:center;">'
+        +'<div class="yt-facade" data-yt="'+yid+'" style="width:100%;max-width:'+mw+';aspect-ratio:'+ar+';border-radius:6px;">'
+        +'<img src="https://i.ytimg.com/vi/'+yid+'/maxresdefault.jpg" onerror="this.onerror=null;this.src=\'https://i.ytimg.com/vi/'+yid+'/hqdefault.jpg\'" alt="'+esc(cur.ja)+'" loading="lazy">'
+        +'<span class="yt-play"></span></div></div></section>';
     }
     if(cur.video){
-      h+='<section class="wrap" style="padding-bottom:clamp(44px,7vh,96px);"><video src="'+esc(cur.video)+'" controls preload="metadata" playsinline style="display:block;width:100%;max-width:960px;margin:0 auto;border-radius:10px;background:#000;"></video></section>';
+      h+='<section class="wrap" style="padding-bottom:clamp(56px,9vh,120px);"><video src="'+esc(cur.video)+'" controls preload="metadata" playsinline style="display:block;width:100%;max-width:960px;margin:0 auto;border-radius:8px;background:#000;"></video></section>';
+    }
+    if(cur.web){
+      var btnStyle = cur.ctaColor ? 'background:'+esc(cur.ctaColor)+';border-color:#fff;border-width:4px;color:#fff;' : '';
+      h+='<section class="wrap" style="padding-bottom:clamp(56px,9vh,120px);"><div class="g12" style="row-gap:16px;align-items:center;">'
+        +'<div class="wk-lbl wk-rise" style="grid-column:1 / 3;">WEBSITE</div>'
+        +'<div class="wk-rise" style="grid-column:3 / 13;transition-delay:.1s;"><a href="'+esc(cur.web)+'" target="_blank" rel="noopener" class="wk-btn wk-btn-lg'+(cur.ctaColor?' wk-btn-solid':'')+'" style="'+btnStyle+'">実際のサイトを見る ↗</a></div>'
+      +'</div></section>';
     }
     return h;
   }
-  function galleryHTML(imgs,mode){
+  // editorial gallery : alternating asymmetric (default) | compact grid (layout:'small')
+  function galleryHTML(imgs,cur){
     if(!imgs||!imgs.length) return '';
-    if(mode==='small'){
-      return '<section class="wrap" style="padding-bottom:clamp(80px,12vh,140px);"><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:clamp(12px,1.4vw,20px);">'
-        + imgs.map(function(s){return '<figure style="margin:0;position:relative;overflow:hidden;background:#121214;aspect-ratio:16/10;"><img src="'+esc(s)+'" loading="lazy" alt="" style="width:100%;height:100%;object-fit:cover;filter:saturate(.98);"></figure>';}).join('')
-        + '</div></section>';
+    if(cur && cur.layout==='small'){
+      var hs='<section class="wrap" style="padding-bottom:clamp(80px,13vh,160px);"><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:clamp(14px,1.6vw,24px);">';
+      for(var j=0;j<imgs.length;j++){
+        hs+='<figure class="wk-drift"><img src="'+esc(imgs[j])+'" alt="" loading="lazy" style="aspect-ratio:4/3;object-fit:cover;">'
+          +'<figcaption class="wk-cap">FIG.'+('0'+(j+1)).slice(-2)+'</figcaption></figure>';
+      }
+      return hs+'</div></section>';
     }
-    if(mode==='grid2'){
-      return '<section style="max-width:1100px;margin:0 auto;padding:0 clamp(20px,4vw,56px) clamp(80px,12vh,140px);display:grid;grid-template-columns:1fr 1fr;gap:clamp(12px,2vw,24px);">'
-        + imgs.map(function(s){return imgFig(s);}).join('') + '</section>';
+    var spans=(cur&&cur.spans)||[[1,9],[5,13],[1,13],[1,7],[6,13],[2,12]];
+    var h='<section class="wrap" style="padding-bottom:clamp(80px,13vh,160px);"><div class="g12" style="align-items:start;row-gap:clamp(56px,9vh,128px);">';
+    for(var i=0;i<imgs.length;i++){ var s=spans[i%spans.length];
+      h+='<figure class="wk-drift" style="grid-column:'+s[0]+' / '+s[1]+';">'
+        +'<img src="'+esc(imgs[i])+'" alt="" loading="lazy">'
+        +'<figcaption class="wk-cap">FIG.'+('0'+(i+1)).slice(-2)+'</figcaption></figure>';
     }
-    return '<section style="max-width:1100px;margin:0 auto;padding:0 clamp(20px,4vw,56px) clamp(80px,12vh,140px);display:flex;flex-direction:column;gap:clamp(16px,2.6vw,30px);">'
-      + imgs.map(function(s){return imgFig(s);}).join('') + '</section>';
+    return h+'</div></section>';
   }
   function buildWorkDetail(cur){
-    var cc=CAT[cur.cat]||'#BDB9EC', h='';
-    if(cur.mainPortrait){
-      h+='<section class="wrap" style="padding-top:clamp(96px,13vh,150px);padding-bottom:clamp(44px,7vh,96px);">'
-        +'<div class="g12 detail-portrait" style="align-items:center;row-gap:clamp(26px,4vw,0px);">'
-          +'<div style="grid-column:1 / 6;border-radius:clamp(14px,1.4vw,22px);overflow:hidden;aspect-ratio:3/4;background:#121214;"><img src="'+esc(cur.main)+'" alt="" style="width:100%;height:100%;object-fit:cover;"></div>'
-          +'<div style="grid-column:7 / 13;">'
-            +'<div class="lbl" style="color:'+cc+';margin-bottom:14px;">'+esc(cur.cat)+' · '+esc(cur.year)+'</div>'
-            +'<h1 style="font-family:\'Schibsted Grotesk\';font-weight:600;font-size:clamp(28px,3.6vw,52px);line-height:1.04;letter-spacing:-.02em;">'+esc(cur.en)+'</h1>'
-            +'<p style="font-size:clamp(14px,1.3vw,18px);color:#C9C7C0;margin-top:12px;">'+esc(cur.ja)+' — <span style="color:var(--mut);">'+esc(cur.role)+'</span></p>'
-            +'<p style="font-size:15px;line-height:2.05;color:#C9C7C0;margin-top:26px;max-width:52ch;">'+esc(cur.desc||'')+'</p>'
-          +'</div>'
-        +'</div></section>';
-      return h + mediaHTML(cur) + galleryHTML(cur.images||[], cur.layout||'grid2');
+    var h='';
+    var lead = (cur.mainPortrait && cur.main) || (cur.images&&cur.images[0]) || cur.thumb;
+    var rest = cur.mainPortrait ? (cur.images||[]) : (cur.images||[]).slice(1);
+    // ---- header : label · big EN title · meta ----
+    h+='<section class="wrap" style="padding-top:clamp(118px,16vh,196px);padding-bottom:clamp(34px,5vh,64px);">'
+      +'<div class="g12 wk-rule" style="padding-bottom:clamp(14px,2vh,22px);">'
+        +'<div class="wk-lbl wk-rise" style="grid-column:1 / 7;">'+esc(cur.cat)+'</div>'
+        +'<div class="wk-lbl wk-rise" style="grid-column:7 / 13;text-align:right;transition-delay:.08s;">'+esc(cur.year)+'</div>'
+      +'</div>'
+      +'<h1 class="wk-h1" style="margin-top:clamp(18px,3vh,38px);"><span>'+esc(cur.en)+'</span></h1>'
+      +'<div class="g12" style="margin-top:clamp(22px,3.4vh,44px);row-gap:18px;">'
+        +'<div class="wk-rise" style="grid-column:1 / 7;"><div class="wk-lbl">TITLE</div><div class="wk-meta">'+esc(cur.ja)+'</div></div>'
+        +'<div class="wk-rise" style="grid-column:7 / 13;transition-delay:.1s;"><div class="wk-lbl">ROLE</div><div class="wk-meta">'+esc(cur.role)+'</div></div>'
+      +'</div>'
+    +'</section>';
+    // ---- lead image ----
+    if(lead){
+      var lc, limg;
+      if(cur.leadSmall){ lc='grid-column:4 / 10;'; limg=' style="aspect-ratio:16/9;object-fit:cover;"'; }
+      else { lc = cur.mainPortrait ? 'grid-column:3 / 11;' : 'grid-column:1 / 13;'; limg=''; }
+      h+='<section class="wrap" style="padding-bottom:clamp(50px,8vh,108px);"><div class="g12"><figure style="'+lc+'"><img class="wk-leadimg" src="'+esc(lead)+'" alt="" loading="lazy"'+limg+'></figure></div></section>';
     }
-    var hero=(cur.images&&cur.images[0])||cur.thumb;
-    h+='<div style="width:100%;height:clamp(360px,72vh,820px);overflow:hidden;background:#121214;"><img src="'+esc(hero)+'" alt="" style="width:100%;height:100%;object-fit:cover;filter:saturate(.98) brightness(.9);"></div>';
-    h+='<section class="wrap" style="padding-top:clamp(40px,7vh,80px);">'
-      +'<div class="g12 sechead rule"><span class="lbl k" style="color:'+cc+';">'+esc(cur.cat)+'</span><span class="t">'+esc(cur.ja)+'</span><span class="lbl n">'+esc(cur.year)+'</span></div>'
-      +'<div class="g12" style="align-items:flex-end;padding-bottom:clamp(8px,2vh,20px);"><h1 style="grid-column:1 / 9;font-family:\'Schibsted Grotesk\';font-weight:600;font-size:clamp(28px,4vw,56px);line-height:1.02;letter-spacing:-.02em;">'+esc(cur.en)+'</h1><div class="lbl n" style="grid-column:9 / 13;">'+esc(cur.role)+'</div></div>'
-      +'</section>';
-    if(cur.desc){ h+='<section class="wrap" style="padding-bottom:clamp(40px,6vh,72px);"><div class="g12"><p style="grid-column:1 / 9;font-size:clamp(15px,1.5vw,18px);line-height:2.05;color:#C9C7C0;">'+esc(cur.desc)+'</p></div></section>'; }
+    // ---- about / concept ----
+    if(cur.desc){
+      var dcol = cur.descCol || '3 / 11';
+      var dls = cur.descLs ? 'letter-spacing:'+cur.descLs+';' : '';
+      var body = cur.descHighlight ? '<span class="wk-markwrap"><span class="wk-mark">'+esc(cur.desc)+'</span></span>' : esc(cur.desc);
+      h+='<section class="wrap" style="padding-bottom:clamp(56px,9vh,120px);"><div class="g12" style="row-gap:18px;">'
+        +'<div class="wk-lbl wk-rise" style="grid-column:1 / 3;">ABOUT</div>'
+        +'<p class="wk-body wk-rise" style="grid-column:'+dcol+';max-width:60ch;'+dls+'transition-delay:.12s;">'+body+'</p>'
+      +'</div></section>';
+    }
+    // ---- media (video / yt / web) ----
     h+=mediaHTML(cur);
-    h+=galleryHTML((cur.images||[]).slice(1), cur.layout||'stack');
+    // ---- gallery ----
+    h+=galleryHTML(rest,cur);
+    // ---- credits ----
+    h+='<section class="wrap" style="padding-bottom:clamp(90px,14vh,170px);"><div class="g12 wk-rule" style="padding-top:clamp(30px,5vh,56px);row-gap:26px;">'
+      +'<div class="wk-rise" style="grid-column:1 / 5;"><div class="wk-lbl">CATEGORY</div><div class="wk-meta">'+esc(cur.cat)+'</div></div>'
+      +'<div class="wk-rise" style="grid-column:5 / 9;transition-delay:.08s;"><div class="wk-lbl">ROLE</div><div class="wk-meta">'+esc(cur.role)+'</div></div>'
+      +'<div class="wk-rise" style="grid-column:9 / 13;transition-delay:.16s;"><div class="wk-lbl">YEAR</div><div class="wk-meta">'+esc(cur.year)+'</div></div>'
+    +'</div></section>';
     return h;
+  }
+  // ---- work page text reveal : ( STATEMENT )-style rise + fade + blur, once on enter ----
+  function wkReveal(){
+    var page=document.querySelector('.wk'); if(!page) return;
+    var els=Array.prototype.slice.call(page.querySelectorAll('.wk-rise'));
+    if(!els.length) return;
+    if(!('IntersectionObserver' in window)){ els.forEach(function(e){ e.classList.add('is-in'); }); return; }
+    // paint the initial (hidden) state first, THEN observe — so elements already in view on load also transition
+    els.forEach(function(e){ void e.offsetHeight; });
+    requestAnimationFrame(function(){ requestAnimationFrame(function(){
+      var ob=new IntersectionObserver(function(ents){ ents.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('is-in'); ob.unobserve(en.target); } }); },{threshold:.18});
+      els.forEach(function(e){ ob.observe(e); });
+    }); });
+  }
+  // ---- work page motion : title rise + figure reveal + gentle drift (scroll-scrubbed, sticky) ----
+  var wkBound=false, wkTick=false;
+  function wkMotion(){
+    var page=document.querySelector('.wk'); if(!page){ wkUpd=null; return; }
+    if(window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches){ wkUpd=null; return; }
+    var title=page.querySelector('.wk-h1');
+    if(title && !title._split){ title._split=true;
+      var txt=title.textContent, html='';
+      for(var k=0;k<txt.length;k++){ var ch=txt.charAt(k);
+        html+= ch===' ' ? '<span class="ch sp"></span>' : '<span class="ch">'+esc(ch)+'</span>'; }
+      title.innerHTML=html;
+    }
+    var chars = title ? Array.prototype.slice.call(title.querySelectorAll('.ch')) : [];
+    var figImgs = Array.prototype.slice.call(page.querySelectorAll('figure img'));
+    var drifters = Array.prototype.slice.call(page.querySelectorAll('.wk-drift'));
+    var mo = page.getAttribute('data-motion')||'rise';
+    var sp=[16,-12,20,-15,12,-18,14,-13];
+    drifters.forEach(function(d,i){ d._sp=sp[i%sp.length]; });
+    function cl(v){ return v<0?0:v>1?1:v; }
+    function f(v){ return v.toFixed(2); }
+    var vh;
+    function pr(top,a,b){ return cl((vh*a - top)/(vh*(a-b))); }
+    // per-work title char reveal (no blur — always crisp)
+    function titleStyle(ch,lo){ var inv=1-lo; ch.style.opacity=lo; ch.style.filter='';
+      if(mo==='slide'){ ch.style.transform='translateX('+f(-34*inv)+'px)'; }
+      else if(mo==='zoom'){ ch.style.transformOrigin='50% 100%'; ch.style.transform='scale('+f(.5+.5*lo)+')'; }
+      else if(mo==='tilt'){ ch.style.transformOrigin='0% 100%'; ch.style.transform='translateY('+f(120*inv)+'%) rotate('+f(11*inv)+'deg)'; }
+      else if(mo==='wipe'){ ch.style.transform='translateY('+f(112*inv)+'%) skewX('+f(-9*inv)+'deg)'; }
+      else if(mo==='flip'){ ch.style.transformOrigin='50% 50%'; ch.style.transform='perspective(520px) rotateX('+f(-90*inv)+'deg)'; }
+      else if(mo==='mask'){ ch.style.transform='translateY('+f(106*inv)+'%)'; }
+      else { ch.style.transform='translateY('+f(118*inv)+'%)'; }
+    }
+    // per-work figure reveal (i = index for alternating direction). motion blur clears as it settles.
+    function figStyle(im,p,i){ var inv=1-p, dir=(i%2?1:-1); im.style.opacity=p;
+      im.style.filter='blur('+f(7*inv)+'px)';
+      if(mo==='slide'){ im.style.transform='translateX('+f(dir*10*inv)+'%)'; im.style.clipPath='inset(0 0 0 0)'; }
+      else if(mo==='zoom'){ im.style.transform='scale('+f(1+.17*inv)+')'; im.style.clipPath='inset(0 0 0 0)'; }
+      else if(mo==='tilt'){ im.style.transform='translateY('+f(8*inv)+'%) rotate('+f(dir*2.4*inv)+'deg) scale('+f(1+.03*inv)+')'; im.style.clipPath='inset(0 0 0 0)'; }
+      else if(mo==='wipe'){ im.style.transform='none'; im.style.clipPath= dir>0 ? 'inset(0 '+f(100*inv)+'% 0 0)' : 'inset(0 0 0 '+f(100*inv)+'%)'; }
+      else if(mo==='mask'){ im.style.transform='none'; im.style.clipPath='inset('+f(50*inv)+'% 0 '+f(50*inv)+'% 0)'; }
+      else if(mo==='flip'){ im.style.transformOrigin='50% 100%'; im.style.transform='perspective(1000px) rotateX('+f(dir*16*inv)+'deg) scale('+f(1+.03*inv)+')'; im.style.clipPath='inset(0 0 0 0)'; }
+      else { im.style.transform='scale('+f(1+.04*inv)+')'; im.style.clipPath='inset(0 0 '+f(14*inv)+'% 0)'; }
+    }
+    wkUpd=function(){ wkTick=false; vh=window.innerHeight||1;
+      if(title && chars.length){
+        var tp=pr(title.getBoundingClientRect().top, 1.1, .35), n=chars.length;
+        for(var i=0;i<n;i++){ var ch=chars[i]; var lo=cl((tp - i*(0.55/n))/0.45);
+          lo=Math.max(lo, ch._mx||0); ch._mx=lo; titleStyle(ch,lo);
+        }
+      }
+      figImgs.forEach(function(im,i){ var p=pr(im.getBoundingClientRect().top, 1.05, .4);
+        p=Math.max(p, im._mx||0); im._mx=p;
+        if(im.classList.contains('wk-leadimg')){ var inv=1-p;   // lead : light blur -> crisp only
+          im.style.opacity=p; im.style.transform='none'; im.style.clipPath='inset(0 0 0 0)'; im.style.filter='blur('+f(9*inv)+'px)'; }
+        else figStyle(im,p,i); });
+      drifters.forEach(function(d){ var r=d.getBoundingClientRect();
+        var off=(r.top+r.height/2-vh/2)/vh; d.style.transform='translateY('+(off*d._sp).toFixed(1)+'px)'; });
+    };
+    if(!wkBound){ wkBound=true;
+      window.addEventListener('scroll',function(){if(wkUpd&&!wkTick){wkTick=true;requestAnimationFrame(wkUpd);}},{passive:true});
+      window.addEventListener('resize',function(){if(wkUpd&&!wkTick){wkTick=true;requestAnimationFrame(wkUpd);}},{passive:true});
+    }
+    wkUpd();
   }
 
   // ---- film cuts (graduate) ----
   function buildCuts(){
     var host=document.getElementById('ss-cuts'); if(!host) return;
-    var h=''; for(var i=1;i<=30;i++){ var id=('0'+i).slice(-2); h+='<figure><img src="assets/ss/cuts/'+id+'.jpg" loading="lazy" alt=""></figure>'; }
+    // varied col/row spans → free-form magazine collage (with intentional gaps)
+    var spans=[[5,5],[3,4],[4,3],[3,3],[6,5],[4,4],[3,5],[5,4],[3,3],[4,5],[3,4],[5,5],[4,3],[3,3],[6,4]];
+    var h=''; for(var i=1;i<=30;i++){ var id=('0'+i).slice(-2); var s=spans[(i-1)%spans.length];
+      h+='<div class="c" style="grid-column:span '+s[0]+';grid-row:span '+s[1]+';"><img src="assets/ss/cuts/'+id+'.jpg" loading="lazy" alt="" style="transition-delay:'+(((i-1)%14)*0.13).toFixed(3)+'s;"></div>'; }
     host.innerHTML=h;
+    ssMotion();
+  }
+
+  // ---- 木は太陽に向かう : title rise + film mosaic reveal & scroll drift ----
+  function ssMotion(){
+    var ssPage=document.querySelector('.ss'); if(!ssPage) return;
+    if(window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches){ return; }
+    var title=document.querySelector('.ss-h1');
+    if(title && !title._split){ title._split=true;
+      var txt=title.textContent, html='';
+      for(var k=0;k<txt.length;k++){ var ch=txt.charAt(k);
+        html+= ch===' ' ? '<span class="ch sp"></span>' : '<span class="ch">'+esc(ch)+'</span>'; }
+      title.innerHTML=html;
+    }
+    var chars = title ? Array.prototype.slice.call(title.querySelectorAll('.ch')) : [];
+    var figImgs = Array.prototype.slice.call(ssPage.querySelectorAll('figure img'));
+    var host=document.getElementById('ss-cuts');
+    var cells = host ? Array.prototype.slice.call(host.children) : [];
+    var sp=[22,-15,28,-20,16,-26,24,-17,20,-24,18,-22];
+    cells.forEach(function(c,i){ c._sp=sp[i%sp.length]; c._img=c.querySelector('img'); });
+    function cl(v){ return v<0?0:v>1?1:v; }
+    var tk=false, vh;
+    // p : 0 when element top is at (a*vh), 1 at (b*vh) — reveals as it scrolls up
+    function pr(top,a,b){ return cl((vh*a - top)/(vh*(a-b))); }
+    ssUpd=function(){ tk=false; vh=window.innerHeight||1;
+      // title : per-character, scrubbed with a stagger window (sticky : never un-reveal)
+      if(title && chars.length){
+        var tp=pr(title.getBoundingClientRect().top, .96, .52), n=chars.length;
+        for(var i=0;i<n;i++){ var ch=chars[i]; var lo=cl((tp - i*(0.55/n))/0.45);
+          lo=Math.max(lo, ch._mx||0); ch._mx=lo;
+          ch.style.opacity=lo;
+          ch.style.transform='translateY('+(118*(1-lo)).toFixed(1)+'%) rotate('+(3*(1-lo)).toFixed(2)+'deg)';
+          ch.style.filter='blur('+(4*(1-lo)).toFixed(2)+'px)';
+        }
+      }
+      // other photos (sticky)
+      figImgs.forEach(function(im){ var p=pr(im.getBoundingClientRect().top, .92, .5);
+        p=Math.max(p, im._mx||0); im._mx=p;
+        im.style.opacity=p; im.style.transform='scale('+(1+0.05*(1-p)).toFixed(3)+')'; im.style.clipPath='inset(0 0 '+(14*(1-p)).toFixed(1)+'% 0)'; });
+      // film cuts : reveal (sticky) + gentle live drift
+      cells.forEach(function(c){ var r=c.getBoundingClientRect();
+        if(c._img){ var p=pr(r.top, .98, .56); p=Math.max(p, c._imx||0); c._imx=p;
+          c._img.style.opacity=p; c._img.style.transform='scale('+(1+0.16*(1-p)).toFixed(3)+')'; c._img.style.clipPath='inset(0 0 '+(100*(1-p)).toFixed(1)+'% 0)'; }
+        var off=(r.top+r.height/2-vh/2)/vh; c.style.transform='translateY('+(off*c._sp).toFixed(1)+'px)';
+      });
+    };
+    window.addEventListener('scroll',function(){if(!tk){tk=true;requestAnimationFrame(ssUpd);}},{passive:true});
+    window.addEventListener('resize',function(){if(!tk){tk=true;requestAnimationFrame(ssUpd);}},{passive:true});
+    ssUpd();
   }
 
   function goAbout(){ setState({route:'about',workId:null}); top(); }
-  var actions={ goHome:goHome, goAbout:goAbout, nextOpen:function(){} };
+  function goTop(){ homeScroll=0; setState({route:'home',workId:null}); top(); }
+  var actions={ goHome:goHome, goTop:goTop, goAbout:goAbout, nextOpen:function(){} };
   document.addEventListener('click',function(e){
     var a=e.target.closest('[data-action]');
     if(a){ var fn=actions[a.getAttribute('data-action')]; if(fn){ fn(); return; } }
+    var f=e.target.closest('.yt-facade');
+    if(f){ if(!f._loaded){ f._loaded=true; var yid=f.getAttribute('data-yt');
+        f.innerHTML='<iframe src="https://www.youtube.com/embed/'+yid+'?autoplay=1&rel=0&playsinline=1" title="" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture;web-share" allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;border:0;"></iframe>'; }
+      return; }
     var o=e.target.closest('[data-open]');
     if(o){ open(o.getAttribute('data-open')); }
   });
@@ -484,9 +883,63 @@
 
   // ---- parallax (SS hero) ----
   (function(){
-    window.addEventListener('scroll',function(){
-      var h=$('#pf-sshero'); if(h){ var y=window.scrollY; if(y<window.innerHeight) h.style.transform='translateY('+(y*0.18)+'px)'; }
-    },{passive:true});
+    var tk=false;
+    function upd(){ tk=false;
+      var h=$('#pf-sshero'); if(!h) return;
+      var box=h.parentElement, r=box.getBoundingClientRect(), vh=window.innerHeight;
+      if(r.bottom<0||r.top>vh) return;
+      var prog=(r.top + r.height/2 - vh/2)/vh;     // -1..1
+      h.style.transform='translateY('+(prog*-44).toFixed(1)+'px)';
+    }
+    window.addEventListener('scroll',function(){ if(!tk){tk=true;requestAnimationFrame(upd);} },{passive:true});
+    window.addEventListener('resize',function(){ if(!tk){tk=true;requestAnimationFrame(upd);} },{passive:true});
+    upd();
+  })();
+
+  // ---- page background ----
+  // Auto color-shifting gradient (CSS animation). Set to false to revert to plain black.
+  var BG_SHIFT = true;
+  (function(){
+    var el=document.getElementById('bg-shift');
+    if(el && !BG_SHIFT) el.style.display='none';
+  })();
+
+  // ---- hero video : nudge autoplay (muted) ----
+  (function(){
+    var v=document.getElementById('pf-herovid'); if(!v) return;
+    v.muted=true; v.setAttribute('muted','');
+    var tryPlay=function(){ var p=v.play(); if(p&&p.catch) p.catch(function(){}); };
+    tryPlay();
+    v.addEventListener('canplay',tryPlay,{once:true});
+    document.addEventListener('click',tryPlay,{once:true});
+  })();
+
+  // ---- statement : staggered reveal + subtle parallax ----
+  (function(){
+    var sec=document.getElementById('pf-stmt'); if(!sec) return;
+    var r1=sec.querySelector('.stmt-r1'), r2=sec.querySelector('.stmt-r2');
+    if('IntersectionObserver' in window){
+      var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ sec.classList.add('stmt-on'); io.disconnect(); } }); },{threshold:0.18});
+      io.observe(sec);
+    } else { sec.classList.add('stmt-on'); }
+    var lines=Array.prototype.slice.call(sec.querySelectorAll('.stmt-big .ln, .stmt-small'));
+    function lerp(a,b,t){return Math.round(a+(b-a)*t);}
+    function clamp(v){return v<0?0:v>1?1:v;}
+    var ticking=false;
+    function upd(){ ticking=false;
+      var r=sec.getBoundingClientRect(), vh=window.innerHeight;
+      var p=(r.top + r.height/2 - vh/2)/vh;                       // -1..1, for parallax
+      if(r1) r1.style.transform='translateY('+(p*-30).toFixed(1)+'px)';   // metaphor : faster
+      if(r2) r2.style.transform='translateY('+(p*-10).toFixed(1)+'px)';   // aspiration : slower (depth)
+      // text colour : light grey -> near black as it scrolls into place
+      var dp=clamp((vh - r.top) / (r.height + vh*0.55));
+      var t=clamp(dp*1.25);
+      var col='rgb('+lerp(190,21,t)+','+lerp(185,20,t)+','+lerp(172,14,t)+')';
+      for(var i=0;i<lines.length;i++) lines[i].style.color=col;
+    }
+    window.addEventListener('scroll',function(){ if(!ticking){ ticking=true; requestAnimationFrame(upd); } },{passive:true});
+    window.addEventListener('resize',function(){ if(!ticking){ ticking=true; requestAnimationFrame(upd); } },{passive:true});
+    upd();
   })();
 
   // ---- boot ----
