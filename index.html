@@ -646,7 +646,7 @@
       h+='<section class="wrap" style="padding-bottom:clamp(56px,9vh,120px);"><video src="'+esc(cur.video)+'" controls preload="metadata" playsinline style="display:block;width:100%;max-width:960px;margin:0 auto;border-radius:8px;background:#000;"></video></section>';
     }
     if(cur.web){
-      var btnStyle = cur.ctaColor ? 'background:'+esc(cur.ctaColor)+';border-color:#000;border-width:4px;color:#fff;' : '';
+      var btnStyle = cur.ctaColor ? 'background:'+esc(cur.ctaColor)+';border-color:#000;border-width:1.5px;color:#fff;' : '';
       h+='<section class="wrap" style="padding-bottom:clamp(56px,9vh,120px);"><div class="g12" style="row-gap:16px;align-items:center;">'
         +'<div class="wk-lbl wk-rise" style="grid-column:1 / 3;">WEBSITE</div>'
         +'<div class="wk-rise" style="grid-column:3 / 13;transition-delay:.1s;"><a href="'+esc(cur.web)+'" target="_blank" rel="noopener" class="wk-btn wk-btn-lg'+(cur.ctaColor?' wk-btn-solid':'')+'" style="'+btnStyle+'">実際のサイトを見る ↗</a></div>'
@@ -827,17 +827,16 @@
     }
     var chars = title ? Array.prototype.slice.call(title.querySelectorAll('.ch')) : [];
     chars.forEach(function(ch){ ch.style.transformOrigin='50% 100%'; });
-    var SSTR='opacity .7s cubic-bezier(.16,1,.3,1),transform .85s cubic-bezier(.16,1,.3,1),filter .7s ease';
-    // title entrance : one-shot, plays each time the page is opened (not scroll-bound, since the title sits at the top)
+    // luxurious entrance : clean vertical mask reveal, expo-out ease, graceful stagger
+    var SSTR='opacity .6s ease,transform 1.25s cubic-bezier(.19,1,.22,1)';
     ssTitleIn=function(){
-      chars.forEach(function(ch,i){ var dir=(i%2?1:-1);
+      chars.forEach(function(ch){
         ch.style.transition='none'; ch.style.transitionDelay='0s'; ch.style.opacity='0';
-        ch.style.transform='translateY(135%) translateX('+(dir*8)+'px) rotate('+(dir*12)+'deg) scale(.62)';
-        ch.style.filter='blur(5px)'; });
+        ch.style.transform='translateY(115%)'; ch.style.filter='none'; });
       void (title&&title.offsetHeight);
       requestAnimationFrame(function(){ requestAnimationFrame(function(){
-        chars.forEach(function(ch,i){ ch.style.transition=SSTR; ch.style.transitionDelay=(i*0.045).toFixed(3)+'s';
-          ch.style.opacity='1'; ch.style.transform='none'; ch.style.filter='none'; });
+        chars.forEach(function(ch,i){ ch.style.transition=SSTR; ch.style.transitionDelay=(i*0.06).toFixed(3)+'s';
+          ch.style.opacity='1'; ch.style.transform='none'; });
       }); });
     };
     var figImgs = Array.prototype.slice.call(ssPage.querySelectorAll('figure img'));
