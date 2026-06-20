@@ -78,17 +78,17 @@
   .sechead .n{grid-column:11 / 13;text-align:right;}
   .sechead .k{grid-column:1 / 3;}
   /* ---- about page (sky-blue bg, green type) ---- */
-  .about2{background:#8CCAE8;color:#1B7A44;min-height:100vh;}
-  .ab2-h{font-family:'Schibsted Grotesk';font-weight:600;font-size:clamp(28px,3.6vw,50px);letter-spacing:-.01em;line-height:1;color:#178041;}
-  .ab2-sub{font-family:'Schibsted Grotesk';font-weight:600;font-size:clamp(16px,1.5vw,22px);letter-spacing:-.01em;color:#178041;}
+  .about2{background:#12306B;color:var(--ab-ink);min-height:100vh;--ab-ink:#FFF7DD;}
+  .ab2-h{font-family:'Schibsted Grotesk';font-weight:600;font-size:clamp(28px,3.6vw,50px);letter-spacing:-.01em;line-height:1;color:var(--ab-ink);}
+  .ab2-sub{font-family:'Schibsted Grotesk';font-weight:600;font-size:clamp(16px,1.5vw,22px);letter-spacing:-.01em;color:var(--ab-ink);}
   /* JP primary */
-  .ab2-jp{font-family:'Zen Kaku Gothic New';font-weight:500;font-size:clamp(14px,1.35vw,19px);line-height:2.0;color:#1B7A44;
+  .ab2-jp{font-family:'Zen Kaku Gothic New';font-weight:500;font-size:clamp(14px,1.35vw,19px);line-height:2.0;color:var(--ab-ink);
     line-break:strict;word-break:normal;overflow-wrap:anywhere;}
   /* EN secondary */
-  .ab2-en{font-family:'Schibsted Grotesk';font-weight:400;font-size:clamp(12.5px,1.05vw,15px);line-height:1.8;color:rgba(27,122,68,.72);margin-top:clamp(16px,2.4vh,26px);
+  .ab2-en{font-family:'Schibsted Grotesk';font-weight:400;font-size:clamp(12.5px,1.05vw,15px);line-height:1.8;color:rgba(255,247,221,.78);margin-top:clamp(16px,2.4vh,26px);
     word-break:normal;overflow-wrap:break-word;}
-  .ab2-portrait{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;filter:grayscale(1) contrast(1.03);}
-  .ab2-cap{font-family:'JetBrains Mono';font-size:11px;letter-spacing:.08em;color:#178041;margin-top:10px;text-align:right;}
+  .ab2-portrait{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;filter:saturate(1.03);}
+  .ab2-cap{font-family:'JetBrains Mono';font-size:11px;letter-spacing:.08em;color:var(--ab-ink);margin-top:10px;text-align:right;}
   /* ---- film cuts masonry ---- */
   .cuts-masonry{column-count:4;column-gap:clamp(10px,1.4vw,18px);}
   .cuts-masonry figure{margin:0 0 clamp(10px,1.4vw,18px);break-inside:avoid;overflow:hidden;background:#121214;}
@@ -116,7 +116,7 @@
   .ss-mosaic{display:grid;grid-template-columns:repeat(12,1fr);gap:clamp(8px,1vw,16px);grid-auto-rows:clamp(34px,3.9vw,64px);grid-auto-flow:dense;}
   /* other SS photos : gentle slow reveal */
   /* scroll-scrubbed reveals : JS sets opacity/transform/clip per scroll position; short transition smooths */
-  .ss figure img{opacity:0;transform:scale(1.05);clip-path:inset(0 0 14% 0);transition:opacity .18s linear,transform .18s linear,clip-path .18s linear;}
+  .ss figure img{opacity:0;transform:scale(1.05);clip-path:inset(0 0 14% 0);transition:opacity .18s linear,transform .22s cubic-bezier(.16,1,.3,1),clip-path .22s linear,filter .22s linear;}
   .ss-mosaic .c{overflow:hidden;background:#F0B000;will-change:transform;}
   .ss-mosaic .c img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.98);
     opacity:0;transform:scale(1.16);clip-path:inset(0 0 100% 0);transition:opacity .2s linear,transform .2s linear,clip-path .2s linear;}
@@ -305,9 +305,8 @@
               I resonated with the Arts and Crafts Movement, the foundation of design, and wanted to study design in both its broad and narrow senses. I enrolled at Musashino Art University because it let me pursue both. After enrolling, I taught myself video and graphic design and had the chance to work on several projects while still a student. My guiding principle has always been “to focus on what is overlooked,” and I aim to make design interventions that highlight the obscure, the niche, and personal narratives. Recently my particular interest is in “nature,” and I’m drawn to projects that create new points of connection with it.
             </p>
           </div>
-          <div style="grid-column:10 / 13;">
+          <div style="grid-column:11 / 13;">
             <img class="ab2-portrait" src="assets/about-portrait.jpg" alt="遠藤佑亮 / Yusuke Endo">
-            <div class="ab2-cap">⌄ Portrait</div>
           </div>
         </div>
 
@@ -527,7 +526,7 @@
     { id:'standing-stone', no:'01', en:'Trees grow toward the sun', ja:'木は太陽に向かう', cat:'GRADUATE', role:'映像 · プロダクト · 冊子', year:'2026', thumb:'assets/works/graduate-thumb.jpg', images:[] },
     { id:'yunirin', no:'03', en:'UNIRIN', ja:'UNIRIN', cat:'MOVIE', role:'映像制作', year:'2024', thumb:'assets/works/yunirin/thumb.jpg',
       motion:'slide', yt:'zF8fiQ9wXY0',
-      images:['assets/works/yunirin/01.jpg','assets/works/yunirin/02.jpg','assets/works/yunirin/03.jpg','assets/works/yunirin/04.jpg','assets/works/yunirin/05.jpg'],
+      images:['assets/works/yunirin/top.jpg','assets/works/yunirin/01.jpg','assets/works/yunirin/02.jpg','assets/works/yunirin/03.jpg','assets/works/yunirin/04.jpg','assets/works/yunirin/05.jpg'],
       desc:'柚木信寿によるプロジェクト。「市ヶ谷の街を巻き込みたい」という思いから巨大な一輪車を制作し、街なかを走らせた。遠藤は映像制作を担当した。' },
     { id:'axis', no:'03', en:'AXIS — CONNECT #011', ja:'AXIS CONNECT #011', cat:'MOVIE', role:'撮影 · 編集', year:'2025', thumb:'assets/works/axis/thumb.jpg',
       motion:'wipe', descHighlight:true,
@@ -536,12 +535,12 @@
     { id:'featured', no:'04', en:'Featured Project — THE CAMPUS', ja:'Featured Project', cat:'MOVIE', role:'撮影 · 編集', year:'2024', thumb:'assets/works/featured-thumb.jpg',
       motion:'zoom', leadSmall:true, yt:'__UsX0oBQNc', ytV:true,
       images:['assets/works/featured/01.jpg','assets/works/featured/02.jpg','assets/works/featured/03.jpg','assets/works/featured/04.jpg'],
-      desc:'THE CAMPUS を舞台に、人々の営みを映した映像作品。Adobe Stock の Featured Project に採用された。' },
+      desc:'THE CAMPUS を舞台に、人々の営みを映した映像作品。' },
     { id:'edible', no:'04b', en:'Edible Tokyo Rally', ja:'Edible Tokyo Rally', cat:'MOVIE', role:'web制作 · 映画カメラマン', year:'2026', thumb:'assets/works/edible/thumb.jpg',
-      theme:{ bg:'#0FA191', ink:'#07332E', panel:'#0C9183' }, motion:'tilt', ctaColor:'#F0531F', descHighlight:true,
+      theme:{ bg:'#0FA191', ink:'#07332E', panel:'#0C9183' }, motion:'tilt', ctaColor:'#F0531F', descHighlight:true, descCol:'2 / 12',
       yt:'wuU1-eGyDu4', ytV:true, web:'https://edible-tokyo-rally.vercel.app/',
       images:['assets/works/edible/01.jpg','assets/works/edible/02.jpg'],
-      desc:'東京に、食べられる植物を育てている場所がある。都市で緑を育て、実践する人たちが一斉にガーデンを開いた3日間のイベント。会期後はさらに規模を拡大し、実践者たちへの取材を続けている。「なぜ都市で食べられる森をつくっているのか」——その問いへの語りを中心に据えたドキュメント映画。web制作と映画の撮影（カメラマン）を担当した。' },
+      desc:'東京に、食べられる植物を育てている場所がある。\n都市で緑を育て、実践する人たちが一斉にガーデンを開いた3日間のイベント。\n会期後はさらに規模を拡大し、実践者たちへの取材を続けている。\n「なぜ都市で食べられる森をつくっているのか」——その問いへの語りを中心に据えたドキュメント映画。\nweb制作と映画の撮影（カメラマン）を担当した。' },
     { id:'shiga-yogo', no:'05', en:'Nagahama Project / Shiga', ja:'長浜プロジェクト', cat:'MOVIE', role:'ドキュメンタリー · 10:28', year:'2024', thumb:'assets/works/shiga-thumb.jpg',
       motion:'mask', descHighlight:true, yt:'JNhwOCYcToc',
       images:['assets/works/shiga-yogo/04.jpg','assets/works/shiga-yogo/02.jpg','assets/works/shiga-yogo/03.jpg','assets/works/shiga-yogo/05.jpg'],
@@ -551,7 +550,7 @@
       images:['assets/works/uni/01.png','assets/works/uni/02.jpg','assets/works/uni/03.jpg','assets/works/uni/04.jpg','assets/works/uni/05.png'],
       desc:'TOKYO CAMERA CLUB のスナップ展「THE SNAP」のためのブランディング。ロゴ・告知ポスター・リーフレット・名刺・アプリ UI までを横断してデザインした。' },
     { id:'open-campus', no:'07', en:'Open Campus 2024', ja:'OPEN CAMPUS 2024', cat:'GRAPHIC', role:'ポスター · 共同制作', year:'2024', thumb:'assets/works/opencampus-thumb.png',
-      theme:{ bg:'#EC6BA0', ink:'#3E0F26', panel:'#E25C93' }, spans:[[1,9],[5,13],[5,9]], motion:'slide', descCol:'7 / 13', descLs:'.045em',
+      theme:{ bg:'#EC6BA0', ink:'#3E0F26', panel:'#E25C93' }, spans:[[2,8],[7,12],[4,9]], motion:'slide', descCol:'7 / 13', descLs:'.045em', noLead:true, airy:true,
       images:['assets/works/open-campus/01.png','assets/works/open-campus/02.jpg','assets/works/open-campus/03.png','assets/works/open-campus/04.png'],
       desc:'武蔵野美術大学・市ヶ谷キャンパスで行われるオープンキャンパス2024のポスターデザイン。最終候補まで残ったが、惜しくも採用とはならなかった。植物のように人々が交わり合い、真っ黒のビルキャンパスを植物のツルが覆っていく——そんな大学だと捉え、グラフィックに落とし込んだ。植物のモチーフと、市ヶ谷キャンパスをイメージした円のシェイプが連鎖していく様子を描き、メインコンセプト「作って、壊して、創る」を3つのレイヤーに分け、3枚の紙が重なってできているようなビジュアルにした。（共同制作：冨永日向、東條リサ）' },
     { id:'touch', no:'08', en:'ofuro-tabi', ja:'お風呂で旅する', cat:'PRODUCT', role:'ユニバーサルデザイン · 共同制作', year:'2024', thumb:'assets/works/touch/main.jpg',
@@ -646,7 +645,7 @@
       h+='<section class="wrap" style="padding-bottom:clamp(56px,9vh,120px);"><video src="'+esc(cur.video)+'" controls preload="metadata" playsinline style="display:block;width:100%;max-width:960px;margin:0 auto;border-radius:8px;background:#000;"></video></section>';
     }
     if(cur.web){
-      var btnStyle = cur.ctaColor ? 'background:'+esc(cur.ctaColor)+';border-color:#fff;border-width:4px;color:#fff;' : '';
+      var btnStyle = cur.ctaColor ? 'background:'+esc(cur.ctaColor)+';border-color:#000;border-width:4px;color:#fff;' : '';
       h+='<section class="wrap" style="padding-bottom:clamp(56px,9vh,120px);"><div class="g12" style="row-gap:16px;align-items:center;">'
         +'<div class="wk-lbl wk-rise" style="grid-column:1 / 3;">WEBSITE</div>'
         +'<div class="wk-rise" style="grid-column:3 / 13;transition-delay:.1s;"><a href="'+esc(cur.web)+'" target="_blank" rel="noopener" class="wk-btn wk-btn-lg'+(cur.ctaColor?' wk-btn-solid':'')+'" style="'+btnStyle+'">実際のサイトを見る ↗</a></div>'
@@ -666,7 +665,10 @@
       return hs+'</div></section>';
     }
     var spans=(cur&&cur.spans)||[[1,9],[5,13],[1,13],[1,7],[6,13],[2,12]];
-    var h='<section class="wrap" style="padding-bottom:clamp(80px,13vh,160px);"><div class="g12" style="align-items:start;row-gap:clamp(56px,9vh,128px);">';
+    var airy=cur&&cur.airy;
+    var pad=airy?'clamp(120px,20vh,240px)':'clamp(80px,13vh,160px)';
+    var rg=airy?'clamp(100px,17vh,240px)':'clamp(56px,9vh,128px)';
+    var h='<section class="wrap" style="padding-bottom:'+pad+';"><div class="g12" style="align-items:start;row-gap:'+rg+';">';
     for(var i=0;i<imgs.length;i++){ var s=spans[i%spans.length];
       h+='<figure class="wk-drift" style="grid-column:'+s[0]+' / '+s[1]+';">'
         +'<img src="'+esc(imgs[i])+'" alt="" loading="lazy">'
@@ -676,8 +678,8 @@
   }
   function buildWorkDetail(cur){
     var h='';
-    var lead = (cur.mainPortrait && cur.main) || (cur.images&&cur.images[0]) || cur.thumb;
-    var rest = cur.mainPortrait ? (cur.images||[]) : (cur.images||[]).slice(1);
+    var lead = cur.noLead ? null : ((cur.mainPortrait && cur.main) || (cur.images&&cur.images[0]) || cur.thumb);
+    var rest = cur.noLead ? (cur.images||[]) : (cur.mainPortrait ? (cur.images||[]) : (cur.images||[]).slice(1));
     // ---- header : label · big EN title · meta ----
     h+='<section class="wrap" style="padding-top:clamp(118px,16vh,196px);padding-bottom:clamp(34px,5vh,64px);">'
       +'<div class="g12 wk-rule" style="padding-bottom:clamp(14px,2vh,22px);">'
@@ -701,10 +703,13 @@
     if(cur.desc){
       var dcol = cur.descCol || '3 / 11';
       var dls = cur.descLs ? 'letter-spacing:'+cur.descLs+';' : '';
-      var body = cur.descHighlight ? '<span class="wk-markwrap"><span class="wk-mark">'+esc(cur.desc)+'</span></span>' : esc(cur.desc);
+      var hasBreaks = cur.desc.indexOf('\n')>=0;
+      var dmw = hasBreaks ? 'none' : '60ch';   // manual breaks control line length -> no width cap
+      var dtxt = esc(cur.desc).replace(/\n/g,'<br>');
+      var body = cur.descHighlight ? '<span class="wk-markwrap"><span class="wk-mark">'+dtxt+'</span></span>' : dtxt;
       h+='<section class="wrap" style="padding-bottom:clamp(56px,9vh,120px);"><div class="g12" style="row-gap:18px;">'
         +'<div class="wk-lbl wk-rise" style="grid-column:1 / 3;">ABOUT</div>'
-        +'<p class="wk-body wk-rise" style="grid-column:'+dcol+';max-width:60ch;'+dls+'transition-delay:.12s;">'+body+'</p>'
+        +'<p class="wk-body wk-rise" style="grid-column:'+dcol+';max-width:'+dmw+';'+dls+'transition-delay:.12s;">'+body+'</p>'
       +'</div></section>';
     }
     // ---- media (video / yt / web) ----
@@ -829,25 +834,31 @@
     var tk=false, vh;
     // p : 0 when element top is at (a*vh), 1 at (b*vh) — reveals as it scrolls up
     function pr(top,a,b){ return cl((vh*a - top)/(vh*(a-b))); }
+    function fx(v){ return v.toFixed(2); }
     ssUpd=function(){ tk=false; vh=window.innerHeight||1;
-      // title : per-character, scrubbed with a stagger window (sticky : never un-reveal)
+      // title : per-character — alternating rise + spin + scale, springy stagger (sticky)
       if(title && chars.length){
-        var tp=pr(title.getBoundingClientRect().top, .96, .52), n=chars.length;
-        for(var i=0;i<n;i++){ var ch=chars[i]; var lo=cl((tp - i*(0.55/n))/0.45);
-          lo=Math.max(lo, ch._mx||0); ch._mx=lo;
-          ch.style.opacity=lo;
-          ch.style.transform='translateY('+(118*(1-lo)).toFixed(1)+'%) rotate('+(3*(1-lo)).toFixed(2)+'deg)';
-          ch.style.filter='blur('+(4*(1-lo)).toFixed(2)+'px)';
+        var tp=pr(title.getBoundingClientRect().top, 1.0, .5), n=chars.length;
+        for(var i=0;i<n;i++){ var ch=chars[i]; var lo=cl((tp - i*(0.6/n))/0.4);
+          lo=Math.max(lo, ch._mx||0); ch._mx=lo; var inv=1-lo, dir=(i%2?1:-1);
+          ch.style.opacity=lo; ch.style.transformOrigin='50% 100%';
+          ch.style.transform='translateY('+fx(135*inv)+'%) translateX('+fx(dir*8*inv)+'px) rotate('+fx(dir*12*inv)+'deg) scale('+fx(.62+.38*lo)+')';
+          ch.style.filter='blur('+fx(5*inv)+'px)';
         }
       }
-      // other photos (sticky)
-      figImgs.forEach(function(im){ var p=pr(im.getBoundingClientRect().top, .92, .5);
-        p=Math.max(p, im._mx||0); im._mx=p;
-        im.style.opacity=p; im.style.transform='scale('+(1+0.05*(1-p)).toFixed(3)+')'; im.style.clipPath='inset(0 0 '+(14*(1-p)).toFixed(1)+'% 0)'; });
-      // film cuts : reveal (sticky) + gentle live drift
-      cells.forEach(function(c){ var r=c.getBoundingClientRect();
-        if(c._img){ var p=pr(r.top, .98, .56); p=Math.max(p, c._imx||0); c._imx=p;
-          c._img.style.opacity=p; c._img.style.transform='scale('+(1+0.16*(1-p)).toFixed(3)+')'; c._img.style.clipPath='inset(0 0 '+(100*(1-p)).toFixed(1)+'% 0)'; }
+      // side photos : alternating slide-in + tilt + blur -> crisp (sticky)
+      figImgs.forEach(function(im,idx){ var p=pr(im.getBoundingClientRect().top, .98, .48);
+        p=Math.max(p, im._mx||0); im._mx=p; var inv=1-p, d=(idx%2?1:-1);
+        im.style.opacity=p;
+        im.style.transform='translateX('+fx(d*8*inv)+'%) rotate('+fx(d*2.4*inv)+'deg) scale('+fx(1+.06*inv)+')';
+        im.style.clipPath='inset(0 0 '+fx(14*inv)+'% 0)'; im.style.filter='blur('+fx(4*inv)+'px)';
+      });
+      // film cuts : assemble with varied wipe directions + scale + spin + live drift (sticky)
+      cells.forEach(function(c,ci){ var r=c.getBoundingClientRect();
+        if(c._img){ var p=pr(r.top, 1.0, .54); p=Math.max(p, c._imx||0); c._imx=p; var inv=1-p, m=ci%4;
+          var clip = m===0 ? 'inset(0 0 '+fx(100*inv)+'% 0)' : m===1 ? 'inset(0 '+fx(100*inv)+'% 0 0)' : m===2 ? 'inset('+fx(100*inv)+'% 0 0 0)' : 'inset(0 0 0 '+fx(100*inv)+'%)';
+          c._img.style.opacity=p; c._img.style.transform='scale('+fx(1+.22*inv)+') rotate('+fx((ci%2?1:-1)*2*inv)+'deg)'; c._img.style.clipPath=clip;
+        }
         var off=(r.top+r.height/2-vh/2)/vh; c.style.transform='translateY('+(off*c._sp).toFixed(1)+'px)';
       });
     };
