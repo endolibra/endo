@@ -55,11 +55,11 @@
   @media(prefers-reduced-motion:reduce){.pf-gradbg{animation:none}}
   /* ---- scroll-reactive page background (toggle with BG_SHIFT in JS; off = plain black) ---- */
   #bg-shift{position:fixed;inset:0;z-index:-1;pointer-events:none;
-    /* sunrise sky: sky blue → dawn peach → orange, shifting automatically over time */
-    background:linear-gradient(160deg,#46A3DA 0%,#F0A07F 30%,#EC5A2F 50%,#F0A07F 70%,#46A3DA 100%);
-    background-size:100% 220%;
-    animation:bg-move 26s ease-in-out infinite;will-change:background-position;}
-  @keyframes bg-move{0%{background-position:50% 0%}50%{background-position:50% 100%}100%{background-position:50% 0%}}
+    /* orange x blue, flowing top-left -> bottom-right, seamless loop (ends match) */
+    background:linear-gradient(135deg,#EC5A2F,#F2A23C,#46A3DA,#2E7CB8,#46A3DA,#F2A23C,#EC5A2F);
+    background-size:200% 200%;
+    animation:bg-flow 38s linear infinite;will-change:background-position;}
+  @keyframes bg-flow{from{background-position:100% 100%}to{background-position:0% 0%}}
   @media(prefers-reduced-motion:reduce){#bg-shift{animation:none}}
   .pf-link{transition:opacity .4s ease,color .4s ease;}
   .pf-link:hover{opacity:.55;}
