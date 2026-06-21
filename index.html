@@ -54,12 +54,18 @@
   @keyframes pf-grad{from{transform:translateX(0)}to{transform:translateX(-50%)}}
   @media(prefers-reduced-motion:reduce){.pf-gradbg{animation:none}}
   /* ---- scroll-reactive page background (toggle with BG_SHIFT in JS; off = plain black) ---- */
-  #bg-shift{position:fixed;inset:0;z-index:-1;pointer-events:none;
-    /* orange x blue, flowing top-left -> bottom-right, seamless loop (ends match) */
-    background:linear-gradient(135deg,#EC5A2F,#F2A23C,#46A3DA,#2E7CB8,#46A3DA,#F2A23C,#EC5A2F);
-    background-size:200% 200%;
-    animation:bg-flow 38s linear infinite;will-change:background-position;}
-  @keyframes bg-flow{from{background-position:100% 100%}to{background-position:0% 0%}}
+  /* orange x blue sunrise, flowing top-left -> bottom-right. A very wide layer (colour cycle listed
+     twice) is translated by exactly one cycle, then rotated 45deg -> diagonal, perfectly seamless. */
+  #bg-shift{position:fixed;top:50%;left:50%;width:600vmax;height:300vmax;transform-origin:center;
+    z-index:-1;pointer-events:none;
+    background:linear-gradient(90deg,
+      #EA5A2A,#F0824A,#F2A86E,#E7B7A8,#BEC2D4,#6E8CC0,#4E72B2,#6E8CC0,#BEC2D4,#E7B7A8,#F2A86E,#F0824A,
+      #EA5A2A,#F0824A,#F2A86E,#E7B7A8,#BEC2D4,#6E8CC0,#4E72B2,#6E8CC0,#BEC2D4,#E7B7A8,#F2A86E,#F0824A,
+      #EA5A2A);
+    animation:bg-flow 150s linear infinite;will-change:transform;}
+  @keyframes bg-flow{
+    from{transform:translate(-50%,-50%) rotate(45deg) translateX(0);}
+    to{transform:translate(-50%,-50%) rotate(45deg) translateX(-50%);}}
   @media(prefers-reduced-motion:reduce){#bg-shift{animation:none}}
   .pf-link{transition:opacity .4s ease,color .4s ease;}
   .pf-link:hover{opacity:.55;}
