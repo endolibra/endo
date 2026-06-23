@@ -613,10 +613,26 @@
   var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s));};
   function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
   var homeScroll=0, ssUpd=null, wkUpd=null, ssTitleIn=null;
-  function open(id){ if(state.route==='home') homeScroll=window.scrollY||window.pageYOffset||0; top(); setState({route:'work',workId:id}); }
-  function goHome(){ var y=homeScroll; setState({route:'home',workId:null}); restoreScroll(y); }
+  // ---- history / URL routing : each work gets its own URL (e.g. /standing-stone); back button works ----
+  function pathFor(route,id){ return route==='work' ? '/'+id : route==='about' ? '/about' : '/'; }
+  function routeFromPath(p){
+    p=(p||'/').split('?')[0].split('#')[0].replace(/\/+$/,'');
+    if(!p) return {route:'home',workId:null};
+    if(p==='/about') return {route:'about',workId:null};
+    var id=p.replace(/^\//,'');
+    for(var i=0;i<WORKS.length;i++){ if(WORKS[i].id===id) return {route:'work',workId:id}; }
+    return {route:'home',workId:null};
+  }
+  function nav(route,id){ id=id||null; try{ history.pushState({route:route,workId:id},'',pathFor(route,id)); }catch(e){} setState({route:route,workId:id}); }
+  function open(id){ if(state.route==='home') homeScroll=window.scrollY||window.pageYOffset||0; nav('work',id); top(); }
+  function goHome(){ nav('home',null); restoreScroll(homeScroll); }
   function top(){ try{window.scrollTo(0,0);}catch(e){} }
   function restoreScroll(y){ try{ requestAnimationFrame(function(){ window.scrollTo(0,y); requestAnimationFrame(function(){ window.scrollTo(0,y); }); }); }catch(e){ window.scrollTo(0,y); } }
+  window.addEventListener('popstate', function(e){
+    var st = (e.state && e.state.route) ? e.state : routeFromPath(location.pathname);
+    setState({route:st.route, workId:st.workId||null});
+    if(st.route==='home'){ restoreScroll(homeScroll); } else { top(); }
+  });
 
   // ---- gallery (home) ----
   function buildGallery(){
@@ -923,8 +939,8 @@
     ssUpd();
   }
 
-  function goAbout(){ setState({route:'about',workId:null}); top(); }
-  function goTop(){ homeScroll=0; setState({route:'home',workId:null}); top(); }
+  function goAbout(){ nav('about',null); top(); }
+  function goTop(){ homeScroll=0; nav('home',null); top(); }
   var actions={ goHome:goHome, goTop:goTop, goAbout:goAbout, nextOpen:function(){} };
   document.addEventListener('click',function(e){
     var a=e.target.closest('[data-action]');
@@ -1012,7 +1028,11 @@
   // ---- boot ----
   buildGallery();
   buildCuts();
-  render();
+  // initial route from the URL (direct link / refresh lands on the right page)
+  var initRoute = routeFromPath(location.pathname);
+  try{ history.replaceState({route:initRoute.route, workId:initRoute.workId}, '', pathFor(initRoute.route, initRoute.workId)); }catch(e){}
+  setState({route:initRoute.route, workId:initRoute.workId});
+  if(initRoute.route!=='home'){ top(); }
 })();
 </script>
 </body>
