@@ -576,10 +576,18 @@
       yt:'wuU1-eGyDu4', ytV:true, web:'https://edible-tokyo-rally.vercel.app/',
       images:['assets/works/edible/01.jpg','assets/works/edible/02.jpg'],
       desc:'東京に、食べられる植物を育てている場所がある。\n都市で緑を育て、実践する人たちが一斉にガーデンを開いた3日間のイベント。\n会期後はさらに規模を拡大し、実践者たちへの取材を続けている。\n「なぜ都市で食べられる森をつくっているのか」——その問いへの語りを中心に据えたドキュメント映画。\nweb制作と映画の撮影（カメラマン）を担当した。' },
-    { id:'shiga-yogo', no:'05', en:'Nagahama Project / Shiga', ja:'長浜プロジェクト', cat:'MOVIE', role:'ドキュメンタリー · 10:28', year:'2024', thumb:'assets/works/shiga-thumb.jpg',
-      motion:'mask', descHighlight:true, yt:'JNhwOCYcToc',
+    { id:'shiga-yogo', no:'05', en:'Nagahama Project / Shiga', ja:'長浜プロジェクト', cat:'MOVIE', catLabel:'MOVIE · RESEARCH', role:'ドキュメンタリー · 10:28', year:'2024', thumb:'assets/works/shiga-thumb.jpg',
+      motion:'mask', descHighlight:true, noLead:true, yt:'JNhwOCYcToc',
       images:['assets/works/shiga-yogo/04.jpg','assets/works/shiga-yogo/02.jpg','assets/works/shiga-yogo/03.jpg','assets/works/shiga-yogo/05.jpg'],
-      desc:'日本最大の湖・琵琶湖の源流地域である滋賀県余呉町に赴き、水の循環と山での営みを映像で描いた。かつて7つの集落が存在したこの地域は、20年前のダム建設により消滅。しかし今も猟師や林業家、染物家が職業として山に入り、山が変化していく様子を見つめている。ダム計画によって分断・分散された村人の知恵を、映像という形でつなぎ直すことに挑戦した。' },
+      desc:'日本最大の湖・琵琶湖の源流地域である滋賀県余呉町に赴き、水の循環と山での営みを映像で描きました。',
+      blocks:[
+        { k:'figR', img:'assets/works/shiga-yogo/02.jpg', cap:'FIG.01', t:'この地域にはかつて7つの集落が存在していましたが、20年前、ダム建設により消滅。' },
+        { k:'figL', img:'assets/works/shiga-yogo/03.jpg', cap:'FIG.02', t:'しかし現在も、猟師や林業家、染物家などが職業として山に入り、山が変化していく様子をそれぞれの視点で見つめている。' },
+        { k:'text', t:'ダム計画によって、かつて村人が持っていた知恵は分断・分散されたが、形を変えながらも、その知恵は確かに受け継がれている。' },
+        { k:'fig', img:'assets/works/shiga-yogo/05.jpg', cap:'FIG.03' },
+        { k:'text', t:'このプロジェクトを通じて、私は「見知らぬ地で課題を見つけ、制作を通してその本質に迫る」という一連の流れを経験。そして、完成した映像を余呉の人々や市役所、大阪の住民に見ていただくことで、単なる映像作品にとどまらず、普段は見えていない関係性を浮かび上がらせ、新たな気づきを提供できた。' },
+        { k:'fig', img:'assets/works/shiga-yogo/research.jpg', cap:'RESEARCH / 余呉', wide:true }
+      ] },
     { id:'uni', no:'06', en:'uni* THE SNAP', ja:'uni* THE SNAP', cat:'GRAPHIC', role:'ブランディング · アートディレクション', year:'2024', thumb:'assets/works/uni.png',
       motion:'flip',
       images:['assets/works/uni/01.png','assets/works/uni/02.jpg','assets/works/uni/03.jpg','assets/works/uni/04.jpg','assets/works/uni/05.png'],
@@ -643,7 +651,7 @@
         + '<div class="pf-thumb" style="position:absolute;inset:0;background-image:url(\''+esc(w.thumb)+'\');background-size:cover;background-position:center;"></div>'
         + '<div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,11,.78),transparent 58%);"></div>'
         + '<div style="position:absolute;left:14px;right:14px;bottom:13px;display:flex;justify-content:space-between;align-items:flex-end;gap:8px;">'
-          + '<div><div style="font-family:\'JetBrains Mono\';font-size:10px;color:'+cc+';letter-spacing:.07em;">'+esc(w.cat)+'</div>'
+          + '<div><div style="font-family:\'JetBrains Mono\';font-size:10px;color:'+cc+';letter-spacing:.07em;">'+esc(w.catLabel||w.cat)+'</div>'
           + '<div style="font-size:17px;font-weight:500;margin-top:3px;line-height:1.2;">'+esc(w.ja)+'</div></div>'
           + '<span style="font-family:\'JetBrains Mono\';font-size:10px;color:var(--mut);">'+esc(w.year)+'</span>'
         + '</div></div>';
@@ -728,6 +736,27 @@
     }
     return h+'</div></section>';
   }
+  // interleaved text/photo blocks (per-work bespoke flow). Reuses .wk motion classes.
+  function blkText(t,col,delay){
+    return '<p class="wk-body wk-rise" style="grid-column:'+col+';max-width:none;'+(delay?'transition-delay:'+delay+';':'')+'">'
+      +'<span class="wk-markwrap"><span class="wk-mark">'+esc(t).replace(/\n/g,'<br>')+'</span></span></p>';
+  }
+  function blkFig(img,cap,col){
+    return '<figure class="wk-drift" style="grid-column:'+col+';"><img src="'+esc(img)+'" alt="" loading="lazy">'
+      +(cap?'<figcaption class="wk-cap">'+esc(cap)+'</figcaption>':'')+'</figure>';
+  }
+  function buildBlocks(cur){
+    var out='';
+    cur.blocks.forEach(function(b){
+      out+='<section class="wrap" style="padding-bottom:clamp(46px,8vh,108px);"><div class="g12" style="align-items:start;row-gap:clamp(22px,4vh,40px);">';
+      if(b.k==='figR'){ out+=blkFig(b.img,b.cap,'1 / 7')+blkText(b.t,'8 / 13','.12s'); }
+      else if(b.k==='figL'){ out+=blkText(b.t,'1 / 6')+blkFig(b.img,b.cap,'7 / 13'); }
+      else if(b.k==='fig'){ out+=blkFig(b.img,b.cap, b.wide?'1 / 13':'3 / 11'); }
+      else { out+=blkText(b.t, b.col||'3 / 11'); }
+      out+='</div></section>';
+    });
+    return out;
+  }
   function buildWorkDetail(cur){
     var h='';
     var lead = cur.noLead ? null : ((cur.mainPortrait && cur.main) || (cur.images&&cur.images[0]) || cur.thumb);
@@ -735,7 +764,7 @@
     // ---- header : label · big EN title · meta ----
     h+='<section class="wrap" style="padding-top:clamp(118px,16vh,196px);padding-bottom:clamp(34px,5vh,64px);">'
       +'<div class="g12 wk-rule" style="padding-bottom:clamp(14px,2vh,22px);">'
-        +'<div class="wk-lbl wk-rise" style="grid-column:1 / 7;">'+esc(cur.cat)+'</div>'
+        +'<div class="wk-lbl wk-rise" style="grid-column:1 / 7;">'+esc(cur.catLabel||cur.cat)+'</div>'
         +'<div class="wk-lbl wk-rise" style="grid-column:7 / 13;text-align:right;transition-delay:.08s;">'+esc(cur.year)+'</div>'
       +'</div>'
       +'<h1 class="wk-h1" style="margin-top:clamp(18px,3vh,38px);"><span>'+esc(cur.en)+'</span></h1>'
@@ -766,11 +795,11 @@
     }
     // ---- media (video / yt / web) ----
     h+=mediaHTML(cur);
-    // ---- gallery ----
-    h+=galleryHTML(rest,cur);
+    // ---- gallery OR bespoke interleaved blocks ----
+    h+= cur.blocks ? buildBlocks(cur) : galleryHTML(rest,cur);
     // ---- credits ----
     h+='<section class="wrap" style="padding-bottom:clamp(90px,14vh,170px);"><div class="g12 wk-rule" style="padding-top:clamp(30px,5vh,56px);row-gap:26px;">'
-      +'<div class="wk-rise" style="grid-column:1 / 5;"><div class="wk-lbl">CATEGORY</div><div class="wk-meta">'+esc(cur.cat)+'</div></div>'
+      +'<div class="wk-rise" style="grid-column:1 / 5;"><div class="wk-lbl">CATEGORY</div><div class="wk-meta">'+esc(cur.catLabel||cur.cat)+'</div></div>'
       +'<div class="wk-rise" style="grid-column:5 / 9;transition-delay:.08s;"><div class="wk-lbl">ROLE</div><div class="wk-meta">'+esc(cur.role)+'</div></div>'
       +'<div class="wk-rise" style="grid-column:9 / 13;transition-delay:.16s;"><div class="wk-lbl">YEAR</div><div class="wk-meta">'+esc(cur.year)+'</div></div>'
     +'</div></section>';
