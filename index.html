@@ -59,9 +59,9 @@
   #bg-shift{position:fixed;top:50%;left:50%;width:600vmax;height:300vmax;transform-origin:center;
     z-index:-1;pointer-events:none;
     background:linear-gradient(90deg,
-      #EA5A2A,#F0824A,#F2A86E,#E7B7A8,#BEC2D4,#6E8CC0,#4E72B2,#6E8CC0,#BEC2D4,#E7B7A8,#F2A86E,#F0824A,
-      #EA5A2A,#F0824A,#F2A86E,#E7B7A8,#BEC2D4,#6E8CC0,#4E72B2,#6E8CC0,#BEC2D4,#E7B7A8,#F2A86E,#F0824A,
-      #EA5A2A);
+      #9A9A9E,#86868A,#6E6E74,#56565C,#3E3E44,#2A2A30,#3E3E44,#56565C,#6E6E74,#86868A,#9A9A9E,#A6A6AA,
+      #9A9A9E,#86868A,#6E6E74,#56565C,#3E3E44,#2A2A30,#3E3E44,#56565C,#6E6E74,#86868A,#9A9A9E,#A6A6AA,
+      #9A9A9E);
     animation:bg-flow 150s linear infinite;will-change:transform;}
   @keyframes bg-flow{
     from{transform:translate(-50%,-50%) rotate(45deg) translateX(0);}
@@ -104,6 +104,9 @@
   .sechead .k{grid-column:1 / 3;}
   /* ---- about page (sky-blue bg, green type) ---- */
   .about2{background:#12306B;color:var(--ab-ink);min-height:100vh;--ab-ink:#FFF7DD;}
+  /* on the About route, carry the deep blue through to the footer (hide the bg gradient) */
+  body.rt-about{background:#12306B;}
+  body.rt-about #bg-shift{display:none;}
   .ab2-h{font-family:'Schibsted Grotesk';font-weight:600;font-size:clamp(28px,3.6vw,50px);letter-spacing:-.01em;line-height:1;color:var(--ab-ink);}
   .ab2-sub{font-family:'Schibsted Grotesk';font-weight:600;font-size:clamp(16px,1.5vw,22px);letter-spacing:-.01em;color:var(--ab-ink);}
   /* JP primary */
@@ -142,9 +145,9 @@
   /* other SS photos : gentle slow reveal */
   /* scroll-scrubbed reveals : JS sets opacity/transform/clip per scroll position; short transition smooths */
   .ss figure img{opacity:0;transform:scale(1.05);clip-path:inset(0 0 14% 0);transition:opacity .18s linear,transform .22s cubic-bezier(.16,1,.3,1),clip-path .22s linear,filter .22s linear;}
-  .ss-mosaic .c{overflow:hidden;background:#F0B000;will-change:transform;}
+  .ss-mosaic .c{overflow:hidden;background:#F0B000;}
   .ss-mosaic .c img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.98);
-    opacity:0;transform:scale(1.16);clip-path:inset(0 0 100% 0);transition:opacity .2s linear,transform .2s linear,clip-path .2s linear;}
+    opacity:0;transform:translateY(14px) scale(1.04);transition:opacity .5s ease,transform .7s cubic-bezier(.16,1,.3,1);}
   .ss-h1{overflow:hidden;}
   .ss-h1 .ch{display:inline-block;transform:translateY(118%) rotate(3deg);opacity:0;filter:blur(4px);transition:transform .2s linear,opacity .2s linear,filter .2s linear;}
   .ss-h1 .ch.sp{width:.3em;}
@@ -178,6 +181,11 @@
   .wk-rise{opacity:0;transform:translateY(28px);filter:blur(7px);
     transition:opacity 1.05s cubic-bezier(.16,1,.3,1),transform 1.05s cubic-bezier(.16,1,.3,1),filter 1s ease;}
   .wk-rise.is-in{opacity:1;transform:none;filter:none;}
+  /* research notes + diagram card */
+  .wk-note-num{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border:1px solid var(--wk-line);border-radius:50%;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--wk-ink);}
+  .wk-note-h{font-family:'Zen Kaku Gothic New',sans-serif;font-weight:700;font-size:clamp(16px,1.7vw,22px);color:var(--wk-ink);margin-bottom:12px;}
+  .wk-card{background:#fff;border-radius:clamp(10px,1.4vw,18px);padding:clamp(14px,2.4vw,34px);overflow:hidden;}
+  .wk-card img{border-radius:0;background:#fff !important;}
   @media(prefers-reduced-motion:reduce){.wk-rise{opacity:1 !important;transform:none !important;filter:none !important;transition:none !important;}}
   .wk figure{margin:0;}
   .wk figure img{display:block;width:100%;height:auto;background:var(--wk-panel);
@@ -204,7 +212,7 @@
   .stmt-small{font-family:'Zen Kaku Gothic New';font-weight:500;font-size:clamp(15px,1.7vw,23px);
     line-height:2.15;color:#211F16;}
   .stmt-en{font-family:'Schibsted Grotesk';font-weight:400;font-size:clamp(12px,1.05vw,15px);
-    line-height:1.95;color:rgba(20,18,10,.6);margin-top:clamp(8px,1.2vh,16px);}
+    line-height:1.95;color:rgba(255,255,255,.62);margin-top:clamp(8px,1.2vh,16px);}
   .stmt-rv{opacity:0;transform:translateY(24px);filter:blur(6px);
     transition:opacity 1.1s cubic-bezier(.16,1,.3,1),transform 1.1s cubic-bezier(.16,1,.3,1),filter 1.1s ease;}
   .stmt-on .stmt-rv{opacity:1;transform:none;filter:none;}
@@ -266,7 +274,7 @@
     <section class="wrap" style="position:relative;min-height:100vh;display:flex;flex-direction:column;padding-top:clamp(82px,11vh,120px);padding-bottom:clamp(28px,5vh,56px);">
       <!-- clean gradient rectangle -->
       <div style="flex:1;display:flex;align-items:center;padding-bottom:clamp(18px,3vh,34px);">
-        <div id="pf-herorect" style="position:relative;flex:none;width:104vw;margin-left:calc(50% - 52vw);height:clamp(26px,3.6vh,46px);border-radius:clamp(10px,1.4vw,18px);overflow:hidden;box-shadow:0 16px 50px -28px rgba(240,83,31,.45);background:#121214;">
+        <div id="pf-herorect" style="position:relative;flex:none;width:104vw;margin-left:calc(50% - 52vw);height:clamp(48px,7vh,96px);border-radius:clamp(12px,1.6vw,22px);overflow:hidden;box-shadow:0 16px 50px -28px rgba(240,83,31,.45);background:#121214;">
           <video id="pf-herovid" autoplay muted loop playsinline preload="auto" poster="assets/hero/04-poster.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
             <source src="assets/hero/04.mp4" type="video/mp4">
           </video>
@@ -409,11 +417,11 @@
         <div class="g12" style="align-items:start;" data-reveal>
           <div class="ss-lbl" style="grid-column:1 / 3;">CONCEPT</div>
           <div style="grid-column:3 / 10;">
-            <p class="ss-lead">都市生活に、<br>自然との新たな接続点を生み出せないか。</p>
-            <p class="ss-body" style="margin-top:clamp(28px,4vh,44px);max-width:54ch;">新しいライフスタイルの探求として取り組んだ卒業制作。<br>山で体験した「個としての自分が溶けて、全体と同期する一体感」を起点に、冊子・プロダクト・映像の3つの作品をつくり、展示を行った。</p>
+            <p class="ss-lead">都市生活に、<br>自然との新たな接点を生み出せないか。</p>
+            <p class="ss-body" style="margin-top:clamp(28px,4vh,44px);max-width:54ch;">新しいライフスタイルの探求として取り組んだ卒業制作。<br>山で体験した「個としての自分が溶けて、全体と一体になる感覚」を起点に、冊子・プロダクト・映像の3つの作品をつくり、展示を行った。</p>
           </div>
           <figure class="ss-mediacol" style="grid-column:10 / 13;">
-            <div style="aspect-ratio:3/4;overflow:hidden;background:#0E2A1A;"><img src="assets/ss/cut3.jpg" alt="" style="width:100%;height:100%;object-fit:cover;"></div>
+            <div style="aspect-ratio:3/4;overflow:hidden;background:#0E2A1A;"><img loading="lazy" decoding="async" src="assets/ss/cut3.jpg" alt="" style="width:100%;height:100%;object-fit:cover;"></div>
             <figcaption class="ss-cap">映像より / Film still</figcaption>
           </figure>
         </div>
@@ -447,10 +455,10 @@
           <div class="ss-lbl" style="grid-column:7 / 13;text-align:right;">Standing Stone</div>
         </div>
         <div class="g12" style="margin-top:clamp(34px,5vh,64px);align-items:center;" data-reveal>
-          <figure class="ss-mediacol" style="grid-column:1 / 7;"><img src="assets/ss/ss3.jpg" alt="Standing Stone — 香りで日の出を感じる装置"></figure>
+          <figure class="ss-mediacol" style="grid-column:1 / 7;"><img loading="lazy" decoding="async" src="assets/ss/ss3.jpg" alt="Standing Stone — 香りで日の出を感じる装置"></figure>
           <div style="grid-column:8 / 13;">
-            <h3 class="ss-h3">Standing Stone<br><span class="ss-em" style="font-size:.56em;">香りで日の出を感じる装置</span></h3>
-            <p class="ss-body" style="margin-top:20px;max-width:44ch;">日の出の時刻になると、自動で線香に着火する装置。<br>都市生活は、自然の動きに合わせて自分の行動を変えることが少ない。<br>日の出になると香りが漂うこの装置によって、太陽の動きを意識し、自然に合わせた都市のライフスタイルを提案したい。</p>
+            <h3 class="ss-h3">香りで日の出を感じる装置</h3>
+            <p class="ss-body" style="margin-top:20px;max-width:44ch;">日の出と同時に、線香に自動着火する装置。<br>都市生活は、自然の動きに合わせて自分の生活・行動を変えることが少ない。<br>香りを通して日の出を感じるこの装置によって、自然の動きに合わせた都市のライフスタイルを提案したい。</p>
           </div>
         </div>
       </section>
@@ -464,21 +472,21 @@
         <div class="g12" style="margin-top:clamp(34px,5vh,64px);align-items:center;" data-reveal>
           <div style="grid-column:1 / 7;">
             <h3 class="ss-h3" style="white-space:nowrap;">身体と五感を生かす暮らし<span class="ss-em" style="font-size:.55em;">（冊子）</span></h3>
-            <p class="ss-body" style="margin-top:20px;max-width:42ch;">都市生活では、金銭と時間の効率によって多くが解決される。しかし「それだけでは面白くない」と、自力で作ることや自然の近くに移住した人たちがいる。自然教育家、猟師、サウナ研究者、職人、半農生活者を取材した。彼らの語りは、現代人が失いつつある感覚を取り戻してくれる。</p>
+            <p class="ss-body" style="margin-top:20px;max-width:42ch;">「働く」は、街で。「生きる」は、自然で。<br>自然教育家、猟師、サウナ研究者、職人、半農生活者を取材した。都市と自然の中間にあるライフスタイルを探るために、この取材を行った。彼らの語りは、現代人が失いつつある感覚を取り戻してくれる。</p>
           </div>
-          <figure class="ss-mediacol" style="grid-column:7 / 13;"><img src="assets/ss/ss1.jpg" alt="冊子 / Publication"></figure>
+          <figure class="ss-mediacol" style="grid-column:7 / 13;"><img loading="lazy" decoding="async" src="assets/ss/ss1.jpg" alt="冊子 / Publication"></figure>
         </div>
       </section>
 
       <!-- exhibition -->
       <section style="overflow:hidden;" data-reveal>
-        <figure><img src="assets/ss/cut2.jpg" alt=""></figure>
+        <figure><img src="assets/ss/filmstill.jpg" alt="" loading="lazy" decoding="async"></figure>
         <div class="wrap"><div class="ss-cap">映像より / Film still</div></div>
       </section>
       <section class="wrap" style="padding-top:clamp(30px,5vh,60px);">
         <div class="g12" style="row-gap:clamp(20px,3vw,32px);" data-reveal>
-          <figure style="grid-column:1 / 7;"><img src="assets/ss/ss8.jpg" alt=""><figcaption class="ss-cap">会場サイン / Exhibition signage</figcaption></figure>
-          <figure style="grid-column:7 / 13;"><img src="assets/ss/ss7.jpg" alt=""><figcaption class="ss-cap">展示風景 / Installation view</figcaption></figure>
+          <figure style="grid-column:1 / 7;"><img loading="lazy" decoding="async" src="assets/ss/ss8.jpg" alt=""><figcaption class="ss-cap">会場サイン / Exhibition signage</figcaption></figure>
+          <figure style="grid-column:7 / 13;"><img loading="lazy" decoding="async" src="assets/ss/ss7.jpg" alt=""><figcaption class="ss-cap">展示風景 / Installation view</figcaption></figure>
         </div>
       </section>
       <!-- film cuts (masonry) -->
@@ -560,59 +568,75 @@
   var WORKS = [
     { id:'standing-stone', no:'01', en:'Trees grow toward the sun', ja:'木は太陽に向かう', cat:'GRADUATE', role:'映像 · プロダクト · 冊子', year:'2026', thumb:'assets/works/graduate-thumb.jpg', images:[] },
     { id:'yunirin', no:'03', en:'UNIRIN', ja:'UNIRIN', cat:'MOVIE', role:'映像制作', year:'2024', thumb:'assets/works/yunirin/thumb.jpg',
-      motion:'slide', yt:'zF8fiQ9wXY0',
-      images:['assets/works/yunirin/top.jpg','assets/works/yunirin/01.jpg','assets/works/yunirin/02.jpg','assets/works/yunirin/03.jpg','assets/works/yunirin/04.jpg','assets/works/yunirin/05.jpg'],
-      desc:'柚木信寿によるプロジェクト。「市ヶ谷の街を巻き込みたい」という思いから巨大な一輪車を制作し、街なかを走らせた。遠藤は映像制作を担当した。' },
+      motion:'slide', descHighlight:true, yt:'zF8fiQ9wXY0',
+      images:['assets/works/yunirin/top.jpg','assets/works/yunirin/01.jpg','assets/works/yunirin/02.jpg','assets/works/yunirin/fig3.jpg','assets/works/yunirin/04.jpg','assets/works/yunirin/05.jpg'],
+      desc:'柚木信寿によるプロジェクト。\n「市ヶ谷の街を巻き込みたい」という思いから巨大な一輪車を制作し、街なかを走らせた。\n遠藤は映像制作を担当した。' },
     { id:'axis', no:'03', en:'AXIS — CONNECT #011', ja:'AXIS CONNECT #011', cat:'MOVIE', role:'撮影 · 編集', year:'2025', thumb:'assets/works/axis/thumb.jpg',
       motion:'wipe', descHighlight:true,
       images:['assets/works/axis/peatix.jpg','assets/works/axis/02.jpg'],
-      desc:'AXIS GALLERY のトークセッション「CONNECT #011」の撮影・編集を担当。「デザイナーの活動のあり方を考える──インハウスでありフリーランスデザイナーでもある新世代を迎えて」をテーマにしたセッションの記録映像を制作した。（2025.8.5 / AXIS GALLERY）' },
+      desc:'AXIS GALLERY のトークセッション「CONNECT #011」の撮影・編集を担当。\n「デザイナーの活動のあり方を考える──インハウスでありフリーランスデザイナーでもある新世代を迎えて」をテーマにしたセッションの記録映像を制作した。\n（2025.8.5 / AXIS GALLERY）' },
     { id:'featured', no:'04', en:'Featured Project — THE CAMPUS', ja:'Featured Project', cat:'MOVIE', role:'撮影 · 編集', year:'2024', thumb:'assets/works/featured-thumb.jpg',
-      motion:'zoom', leadSmall:true, yt:'__UsX0oBQNc', ytV:true,
+      motion:'zoom', leadSmall:true, descHighlight:true, yt:'__UsX0oBQNc', ytV:true,
       images:['assets/works/featured/01.jpg','assets/works/featured/02.jpg','assets/works/featured/03.jpg','assets/works/featured/04.jpg'],
-      desc:'THE CAMPUS を舞台に、人々の営みを映した映像作品。' },
+      desc:'コクヨオフィスで開催されたFeatured Project2024。\n本イベントの縦型映像を制作した。\n会場の熱気やワクワクするような空気感を意識して制作をした。' },
     { id:'edible', no:'04b', en:'Edible Tokyo Rally', ja:'Edible Tokyo Rally', cat:'MOVIE', role:'web制作 · 映画カメラマン', year:'2026', thumb:'assets/works/edible/thumb.jpg',
       theme:{ bg:'#0FA191', ink:'#07332E', panel:'#0C9183' }, motion:'tilt', ctaColor:'#F0531F', descHighlight:true, descCol:'2 / 12',
       yt:'wuU1-eGyDu4', ytV:true, web:'https://edible-tokyo-rally.vercel.app/',
       images:['assets/works/edible/01.jpg','assets/works/edible/02.jpg'],
-      desc:'東京に、食べられる植物を育てている場所がある。\n都市で緑を育て、実践する人たちが一斉にガーデンを開いた3日間のイベント。\n会期後はさらに規模を拡大し、実践者たちへの取材を続けている。\n「なぜ都市で食べられる森をつくっているのか」——その問いへの語りを中心に据えたドキュメント映画。\nweb制作と映画の撮影（カメラマン）を担当した。' },
+      desc:'都市で緑を育て、実践する人たちが一斉にガーデンを開いた3日間のイベント。\n会期後はさらに規模を拡大し、実践者たちへの取材を続けている。\n「なぜ都市で食べられる森をつくっているのか」——\nその問いへの語りを中心に据えたドキュメント映画。\nweb制作と映画の撮影（カメラマン）を担当した。' },
     { id:'shiga-yogo', no:'05', en:'Nagahama Project / Shiga', ja:'長浜プロジェクト', cat:'MOVIE', catLabel:'MOVIE · RESEARCH', role:'ドキュメンタリー · 10:28', year:'2024', thumb:'assets/works/shiga-thumb.jpg',
       motion:'mask', descHighlight:true, noLead:true, yt:'JNhwOCYcToc',
       images:['assets/works/shiga-yogo/04.jpg','assets/works/shiga-yogo/02.jpg','assets/works/shiga-yogo/03.jpg','assets/works/shiga-yogo/05.jpg'],
-      desc:'日本最大の湖・琵琶湖の源流地域である滋賀県余呉町に赴き、水の循環と山での営みを映像で描きました。',
+      desc:'日本最大の湖・琵琶湖の源流地域である滋賀県余呉町に赴き、\n水の循環と山での営みを映像で描きました。',
       blocks:[
-        { k:'figR', img:'assets/works/shiga-yogo/02.jpg', cap:'FIG.01', t:'この地域にはかつて7つの集落が存在していましたが、20年前、ダム建設により消滅。' },
-        { k:'figL', img:'assets/works/shiga-yogo/03.jpg', cap:'FIG.02', t:'しかし現在も、猟師や林業家、染物家などが職業として山に入り、山が変化していく様子をそれぞれの視点で見つめている。' },
-        { k:'text', t:'ダム計画によって、かつて村人が持っていた知恵は分断・分散されたが、形を変えながらも、その知恵は確かに受け継がれている。' },
-        { k:'fig', img:'assets/works/shiga-yogo/05.jpg', cap:'FIG.03' },
-        { k:'text', t:'このプロジェクトを通じて、私は「見知らぬ地で課題を見つけ、制作を通してその本質に迫る」という一連の流れを経験。そして、完成した映像を余呉の人々や市役所、大阪の住民に見ていただくことで、単なる映像作品にとどまらず、普段は見えていない関係性を浮かび上がらせ、新たな気づきを提供できた。' },
-        { k:'fig', img:'assets/works/shiga-yogo/research.jpg', cap:'RESEARCH / 余呉', wide:true }
+        { k:'figR', img:'assets/works/shiga-yogo/02.jpg', cap:'FIG.01', t:'この地域にはかつて7つの集落が存在していましたが、\n20年前、ダム建設により消滅。' },
+        { k:'figL', img:'assets/works/shiga-yogo/05.jpg', cap:'FIG.02', t:'しかし現在も、\n猟師や林業家、染物家などが職業として山に入り、\n山が変化していく様子を、それぞれの視点で見つめている。' },
+        { k:'text', t:'ダム計画によって、\nかつて村人が持っていた知恵は分断・分散されたが、\n形を変えながらも、その知恵は確かに受け継がれている。' },
+        { k:'fig', img:'assets/works/shiga-yogo/04.jpg', cap:'FIG.03' },
+        { k:'text', t:'このプロジェクトを通じて、\n私は「見知らぬ地で課題を見つけ、制作を通してその本質に迫る」という一連の流れを経験した。\nそして、完成した映像を余呉の人々や市役所、大阪の住民に見ていただくことで、\n単なる映像作品にとどまらず、普段は見えていない関係性を浮かび上がらせ、\n新たな気づきを提供できた。' },
+        { k:'rhead' },
+        { k:'note', n:'01', h:'失われた7つの集落', t:'かつては1人が狩猟・林業・染色など多角的な視点を持っていたが、\n現在では自然観や知識が、専門分化によって分散している。' },
+        { k:'note', n:'02', h:'20年の水の流れ', t:'「20年」は、\n余呉に流れる水が琵琶湖を通り大阪の蛇口から出るまでの時間。\nちょうど20年前に、7つの集落が壊された。\n今、大阪で流れている水は、\n集落が解体される直前に余呉で流れていた最後の水。\nこれから大阪で流れていく水は、どうなるのだろうか。' },
+        { k:'note', n:'03', h:'汚れ', t:'鹿の死体は川に流すが、プラスチックゴミにはブチギレる。\n山に対する視点や知識は分散されても、山を守る習慣や意識は無意識のレベルで残っている。' },
+        { k:'fig', img:'assets/works/shiga-yogo/closing.jpg', cap:'映像より / 鹿', wide:true }
       ] },
-    { id:'uni', no:'06', en:'uni* THE SNAP', ja:'uni* THE SNAP', cat:'GRAPHIC', role:'ブランディング · アートディレクション', year:'2024', thumb:'assets/works/uni.png',
+    { id:'uni', no:'06', en:'uni* THE SNAP', ja:'uni* THE SNAP', cat:'GRAPHIC', role:'ブランディング · アートディレクション', year:'2024', thumb:'assets/works/uni.jpg',
       motion:'flip',
-      images:['assets/works/uni/01.png','assets/works/uni/02.jpg','assets/works/uni/03.jpg','assets/works/uni/04.jpg','assets/works/uni/05.png'],
-      desc:'TOKYO CAMERA CLUB のスナップ展「THE SNAP」のためのブランディング。ロゴ・告知ポスター・リーフレット・名刺・アプリ UI までを横断してデザインした。' },
-    { id:'open-campus', no:'07', en:'Open Campus 2024', ja:'OPEN CAMPUS 2024', cat:'GRAPHIC', role:'ポスター · 共同制作', year:'2024', thumb:'assets/works/opencampus-thumb.png',
-      theme:{ bg:'#EC6BA0', ink:'#3E0F26', panel:'#E25C93' }, spans:[[2,8],[7,12],[4,9]], motion:'slide', descCol:'7 / 13', descLs:'.045em', noLead:true, airy:true,
-      images:['assets/works/open-campus/01.png','assets/works/open-campus/02.jpg','assets/works/open-campus/03.png','assets/works/open-campus/04.png'],
-      desc:'武蔵野美術大学・市ヶ谷キャンパスで行われるオープンキャンパス2024のポスターデザイン。最終候補まで残ったが、惜しくも採用とはならなかった。植物のように人々が交わり合い、真っ黒のビルキャンパスを植物のツルが覆っていく——そんな大学だと捉え、グラフィックに落とし込んだ。植物のモチーフと、市ヶ谷キャンパスをイメージした円のシェイプが連鎖していく様子を描き、メインコンセプト「作って、壊して、創る」を3つのレイヤーに分け、3枚の紙が重なってできているようなビジュアルにした。（共同制作：冨永日向、東條リサ）' },
+      images:['assets/works/uni/01.jpg','assets/works/uni/02.jpg','assets/works/uni/03.jpg','assets/works/uni/04.jpg','assets/works/uni/05.jpg'],
+      desc:'TOKYO CAMERA CLUB のブランディング。\nロゴ・告知ポスター・リーフレットをデザインした。' },
+    { id:'open-campus', no:'07', en:'Open Campus 2024', ja:'OPEN CAMPUS 2024', cat:'GRAPHIC', role:'ポスター · 共同制作', year:'2024', thumb:'assets/works/opencampus-thumb.jpg',
+      theme:{ bg:'#EC6BA0', ink:'#3E0F26', panel:'#E25C93' }, motion:'slide', noLead:true, descHighlight:true,
+      images:['assets/works/open-campus/01.jpg','assets/works/open-campus/02.jpg','assets/works/open-campus/03.jpg','assets/works/open-campus/04.jpg'],
+      desc:'武蔵野美術大学・市ヶ谷キャンパスで行われるオープンキャンパス2024のポスターデザイン。\n最終候補まで残ったが、惜しくも採用とはならなかった。',
+      blocks:[
+        { k:'fig', img:'assets/works/open-campus/01.jpg', cap:'FIG.01' },
+        { k:'fig', img:'assets/works/open-campus/02.jpg', cap:'FIG.02' },
+        { k:'fig', img:'assets/works/open-campus/03.jpg', cap:'FIG.03' },
+        { k:'figR', img:'assets/works/open-campus/04.jpg', cap:'FIG.04', t:'植物のように人々が交わり合い、\n真っ黒のビルキャンパスを植物のツルが覆っていく——\nそれを市ヶ谷キャンパスらしさだと捉え、\nグラフィックに落とし込んだ。\n植物のモチーフと、市ヶ谷キャンパスをイメージした円のシェイプが連鎖していく様子を描いた。\nメインコンセプト「作って、壊して、創る」を3つのレイヤーに分け、\n3枚の紙が折り重なって完成するビジュアルにした。\n（共同制作：冨永日向、東條リサ）' }
+      ] },
     { id:'touch', no:'08', en:'ofuro-tabi', ja:'お風呂で旅する', cat:'PRODUCT', role:'ユニバーサルデザイン · 共同制作', year:'2024', thumb:'assets/works/touch/main.jpg',
       theme:{ bg:'#0E8A52', ink:'#F4C20D', panel:'#0B7A48' }, motion:'tilt', descHighlight:true,
       mainPortrait:true, main:'assets/works/touch/main.jpg',
       images:['assets/works/touch/01.jpg','assets/works/touch/02.jpg','assets/works/touch/03.jpg','assets/works/touch/04.jpg'],
-      desc:'お風呂で使うバスボムの中に、ご当地グッズ／点字シートが入っているプロダクト。第一弾は北海道・登別温泉。この地に伝わる鬼の伝説を点字シートに記し、鬼の金棒を制作——バスボムがお湯に溶けると、中から金棒が現れる体験にした。視覚障害者へのインタビューを重ねる中で、「旅行が好き」「お風呂が好き」、そして旅先では温泉に入り土地の歴史を知ることが楽しみだと分かった。「歴史を知る／温泉に入る」を自宅のお風呂で実現できれば、家のお風呂で旅ができるのではないか。そう考えて制作した。（共同制作：柚木信寿）' },
+      desc:'視覚障害者の方にお話を伺い、\nバスボムを作ることでお風呂体験をデザインした。',
+      blocks:[
+        { k:'fig', img:'assets/works/touch/01.jpg', cap:'FIG.01' },
+        { k:'figL', img:'assets/works/touch/02.jpg', cap:'FIG.02', t:'インタビューを重ねる中で、\n「旅行が好き」「お風呂が好き」ということが分かった。\nそして旅行体験の中でも、\n温泉の効能・歴史を学ぶことに価値を感じている、という点に着眼した。' },
+        { k:'fig', img:'assets/works/touch/03.jpg', cap:'FIG.03' },
+        { k:'figR', img:'assets/works/touch/04.jpg', cap:'FIG.04', t:'バスボムの中には、ご当地グッズ／点字シートを仕込んでいる。\n点字シートには、温泉の地にまつわる伝記を記載した。\nプロトタイプとして北海道の形をした入浴剤を作成し、\nその中にグッズを仕込むことを実験した。\n家のお風呂で旅を楽しむためのプロダクト。\n（共同制作：柚木信寿）' }
+      ] },
     { id:'menko', no:'09', en:'menko', ja:'menko', cat:'PRODUCT', role:'プロダクト · グラフィック', year:'2024', thumb:'assets/works/menko.jpg',
       theme:{ bg:'#12306B', ink:'#DCE6FF', panel:'#1B3C7D' }, motion:'wipe',
       images:['assets/works/menko/01.jpg','assets/works/menko/02.jpg','assets/works/menko/03.jpg'],
-      desc:'面子のデザインの古さを現代に合わせて刷新。モダンなグラフィックを幾何学的に配置しためんこを制作した。' },
+      desc:'面子のデザインの古さを現代に合わせて刷新。\nモダンなグラフィックを幾何学的に配置しためんこを制作した。' },
     { id:'macro', no:'10', en:'Ichigaya, Macro', ja:'市ヶ谷 マクロの視点', cat:'PICTURE', role:'写真', year:'2024', thumb:'assets/works/macro/01.jpg',
       motion:'mask', descHighlight:true,
       images:['assets/works/macro/01.jpg','assets/works/macro/02.jpg','assets/works/macro/03.jpg','assets/works/macro/04.jpg','assets/works/macro/05.jpg'],
-      desc:'市ヶ谷の街を、マクロレンズで覗いた写真シリーズ。普段は気に留めない物の表面やディテールに目を向けると、見慣れた街が知らない風景に変わっていく。' },
+      desc:'市ヶ谷の街を、マクロレンズで覗いた写真シリーズ。\n普段は気に留めない物の表面やディテールに目を向けると、見慣れた街が知らない風景に変わっていく。' },
     { id:'lens', no:'11', en:'lens', ja:'lens', cat:'MOVIE', role:'短編映像 · 編集', year:'2024', thumb:'assets/works/lens.jpg',
-      motion:'flip', video:'assets/works/lens/lens.mp4',
+      motion:'flip', descHighlight:true, video:'assets/works/lens/lens.mp4',
       images:['assets/works/lens/01.jpg','assets/works/lens/02.jpg','assets/works/lens/03.jpg','assets/works/lens/04.jpg'],
-      desc:'短編映像作品「lens」。撮影・編集を担当した。' }
+      desc:'短編映像作品「lens」。\n撮影・編集を担当した。' }
   ];
 
   var state = { route:'home', workId:null };
@@ -621,14 +645,14 @@
   var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s));};
   function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
   var homeScroll=0, ssUpd=null, wkUpd=null, ssTitleIn=null;
-  // ---- history / URL routing : each work gets its own URL (e.g. /standing-stone); back button works ----
-  function pathFor(route,id){ return route==='work' ? '/'+id : route==='about' ? '/about' : '/'; }
-  function routeFromPath(p){
-    p=(p||'/').split('?')[0].split('#')[0].replace(/\/+$/,'');
-    if(!p) return {route:'home',workId:null};
-    if(p==='/about') return {route:'about',workId:null};
-    var id=p.replace(/^\//,'');
-    for(var i=0;i<WORKS.length;i++){ if(WORKS[i].id===id) return {route:'work',workId:id}; }
+  // ---- history / URL routing : hash-based (e.g. #/standing-stone). Works on file://, any static host
+  //      and Vercel with no rewrites — never 404s. Back button works. ----
+  function pathFor(route,id){ return route==='work' ? '#/'+id : route==='about' ? '#/about' : '#/'; }
+  function routeFromHash(h){
+    h=(h||'').replace(/^#/,'').replace(/^\/+/,'').replace(/\/+$/,'').split('?')[0];
+    if(!h) return {route:'home',workId:null};
+    if(h==='about') return {route:'about',workId:null};
+    for(var i=0;i<WORKS.length;i++){ if(WORKS[i].id===h) return {route:'work',workId:h}; }
     return {route:'home',workId:null};
   }
   function nav(route,id){ id=id||null; try{ history.pushState({route:route,workId:id},'',pathFor(route,id)); }catch(e){} setState({route:route,workId:id}); }
@@ -637,7 +661,7 @@
   function top(){ try{window.scrollTo(0,0);}catch(e){} }
   function restoreScroll(y){ try{ requestAnimationFrame(function(){ window.scrollTo(0,y); requestAnimationFrame(function(){ window.scrollTo(0,y); }); }); }catch(e){ window.scrollTo(0,y); } }
   window.addEventListener('popstate', function(e){
-    var st = (e.state && e.state.route) ? e.state : routeFromPath(location.pathname);
+    var st = (e.state && e.state.route) ? e.state : routeFromHash(location.hash);
     setState({route:st.route, workId:st.workId||null});
     if(st.route==='home'){ restoreScroll(homeScroll); } else { top(); }
   });
@@ -667,6 +691,7 @@
     var isSS=!!(cur&&cur.id==='standing-stone');
     var flags={ isHome:isHome, isWork:isWork, isAbout:state.route==='about', isSS:isWork&&isSS, notSS:isWork&&!!cur&&!isSS };
     $$('[data-when]').forEach(function(el){ el.hidden=!flags[el.getAttribute('data-when')]; });
+    document.body.classList.toggle('rt-about', state.route==='about');
 
     if(flags.notSS && cur){
       var art=document.querySelector('[data-when="notSS"]');
@@ -752,6 +777,10 @@
       if(b.k==='figR'){ out+=blkFig(b.img,b.cap,'1 / 7')+blkText(b.t,'8 / 13','.12s'); }
       else if(b.k==='figL'){ out+=blkText(b.t,'1 / 6')+blkFig(b.img,b.cap,'7 / 13'); }
       else if(b.k==='fig'){ out+=blkFig(b.img,b.cap, b.wide?'1 / 13':'3 / 11'); }
+      else if(b.k==='rhead'){ out+='<div class="wk-rise" style="grid-column:1 / 13;border-top:1px solid var(--wk-line);padding-top:clamp(14px,2vh,22px);display:flex;justify-content:space-between;gap:20px;"><span class="wk-lbl">RESEARCH / FIELD NOTES</span><span class="wk-lbl">滋賀・余呉</span></div>'; }
+      else if(b.k==='note'){ out+='<div class="wk-rise" style="grid-column:1 / 2;"><span class="wk-note-num">'+esc(b.n)+'</span></div>'
+        +'<div class="wk-rise" style="grid-column:2 / 10;transition-delay:.08s;"><div class="wk-note-h">'+esc(b.h)+'</div><p class="wk-body" style="max-width:62ch;">'+esc(b.t).replace(/\n/g,'<br>')+'</p></div>'; }
+      else if(b.k==='diagram'){ out+='<figure style="grid-column:1 / 13;"><div class="wk-card"><img src="'+esc(b.img)+'" alt="" loading="lazy" decoding="async" style="display:block;width:100%;height:auto;"></div>'+(b.cap?'<figcaption class="wk-cap">'+esc(b.cap)+'</figcaption>':'')+'</figure>'; }
       else { out+=blkText(b.t, b.col||'3 / 11'); }
       out+='</div></section>';
     });
@@ -946,13 +975,10 @@
         im.style.transform='translateX('+fx(d*8*inv)+'%) rotate('+fx(d*2.4*inv)+'deg) scale('+fx(1+.06*inv)+')';
         im.style.clipPath='inset(0 0 '+fx(14*inv)+'% 0)'; im.style.filter='blur('+fx(4*inv)+'px)';
       });
-      // film cuts : assemble with varied wipe directions + scale + spin + live drift (sticky)
-      cells.forEach(function(c,ci){ var r=c.getBoundingClientRect();
-        if(c._img){ var p=pr(r.top, 1.0, .54); p=Math.max(p, c._imx||0); c._imx=p; var inv=1-p, m=ci%4;
-          var clip = m===0 ? 'inset(0 0 '+fx(100*inv)+'% 0)' : m===1 ? 'inset(0 '+fx(100*inv)+'% 0 0)' : m===2 ? 'inset('+fx(100*inv)+'% 0 0 0)' : 'inset(0 0 0 '+fx(100*inv)+'%)';
-          c._img.style.opacity=p; c._img.style.transform='scale('+fx(1+.22*inv)+') rotate('+fx((ci%2?1:-1)*2*inv)+'deg)'; c._img.style.clipPath=clip;
-        }
-        var off=(r.top+r.height/2-vh/2)/vh; c.style.transform='translateY('+(off*c._sp).toFixed(1)+'px)';
+      // film cuts : light gentle fade + small rise, staggered by position (sticky) — kept cheap
+      cells.forEach(function(c){ if(!c._img) return;
+        var p=pr(c.getBoundingClientRect().top, 1.0, .62); p=Math.max(p, c._imx||0); c._imx=p; var inv=1-p;
+        c._img.style.opacity=p; c._img.style.transform='translateY('+fx(14*inv)+'px) scale('+fx(1+.04*inv)+')';
       });
       // text blocks : rise + fade + blur, scrubbed (sticky)
       texts.forEach(function(t){ var p=pr(t.getBoundingClientRect().top, 1.0, .5);
@@ -1043,10 +1069,10 @@
       var p=(r.top + r.height/2 - vh/2)/vh;                       // -1..1, for parallax
       if(r1) r1.style.transform='translateY('+(p*-30).toFixed(1)+'px)';   // metaphor : faster
       if(r2) r2.style.transform='translateY('+(p*-10).toFixed(1)+'px)';   // aspiration : slower (depth)
-      // text colour : light grey -> near black as it scrolls into place
+      // text colour : dim grey -> white as it scrolls into place
       var dp=clamp((vh - r.top) / (r.height + vh*0.55));
       var t=clamp(dp*1.25);
-      var col='rgb('+lerp(190,21,t)+','+lerp(185,20,t)+','+lerp(172,14,t)+')';
+      var col='rgb('+lerp(120,255,t)+','+lerp(120,255,t)+','+lerp(124,255,t)+')';
       for(var i=0;i<lines.length;i++) lines[i].style.color=col;
     }
     window.addEventListener('scroll',function(){ if(!ticking){ ticking=true; requestAnimationFrame(upd); } },{passive:true});
@@ -1058,7 +1084,7 @@
   buildGallery();
   buildCuts();
   // initial route from the URL (direct link / refresh lands on the right page)
-  var initRoute = routeFromPath(location.pathname);
+  var initRoute = routeFromHash(location.hash);
   try{ history.replaceState({route:initRoute.route, workId:initRoute.workId}, '', pathFor(initRoute.route, initRoute.workId)); }catch(e){}
   setState({route:initRoute.route, workId:initRoute.workId});
   if(initRoute.route!=='home'){ top(); }
