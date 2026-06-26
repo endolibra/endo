@@ -261,8 +261,8 @@
         </svg>
       </div>
       <div style="display:flex;align-items:center;gap:clamp(16px,2.4vw,30px);font-family:'JetBrains Mono';font-size:11px;letter-spacing:.06em;">
-        <span data-action="goAbout" class="pf-link" style="cursor:pointer;color:#fff;">ABOUT</span>
-        <a href="#contact" class="pf-link" style="color:#fff;">CONTACT</a>
+        <span data-action="goAbout" class="pf-link" style="cursor:pointer;color:#fff;">about</span>
+        <span data-action="goContact" class="pf-link" style="cursor:pointer;color:#fff;">contact</span>
       </div>
     </div>
   </header>
@@ -996,7 +996,8 @@
 
   function goAbout(){ nav('about',null); top(); }
   function goTop(){ homeScroll=0; nav('home',null); top(); }
-  var actions={ goHome:goHome, goTop:goTop, goAbout:goAbout, nextOpen:function(){} };
+  function goContact(){ var el=document.getElementById('contact'); if(el){ try{ el.scrollIntoView({behavior:'smooth',block:'start'}); }catch(e){ el.scrollIntoView(); } } }
+  var actions={ goHome:goHome, goTop:goTop, goAbout:goAbout, goContact:goContact, nextOpen:function(){} };
   document.addEventListener('click',function(e){
     var a=e.target.closest('[data-action]');
     if(a){ var fn=actions[a.getAttribute('data-action')]; if(fn){ fn(); return; } }
